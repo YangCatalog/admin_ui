@@ -1,0 +1,28 @@
+:host {
+    .login-board {
+        margin: 200px auto;
+        display: block;
+        max-width: 360px;
+        background-color: white;
+        border-radius: 5px;
+    }
+
+    .login-top {
+        height: 60px;
+        background: #3f51b5;
+        border-radius: 5px 5px 0 0;
+
+        .login-top-label {
+            color: #ffffff;
+            margin: 10px auto;
+        }
+    }
+
+    .login-form-wrap {
+        padding: 30px;
+    }
+
+    .login-form {
+        width: 300px;
+    }
+}

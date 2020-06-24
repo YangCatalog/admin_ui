@@ -1,0 +1,24 @@
+.mat-column-timestamp {
+    flex: 0 0 15%;
+}
+.mat-column-level {
+    flex: 0 0 10%;
+}
+.mat-column-class {
+    flex: 0 0 20%;
+}
+.mat-column-lineNumber {
+    flex: 0 0 5%;
+}
+
+.loader-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.filtered-logs-table {
+    margin-top: 20px;
+    white-space: pre-line;
+}

@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+@import './src/scss/_variables';
+
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.primary-color {
+    color: $primary !important;
+}
+
+.component-h1 {
+    font-size: 35px;
+    font-weight: 250;
+}

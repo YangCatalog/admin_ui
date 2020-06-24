@@ -1,0 +1,12 @@
+<mat-toolbar color="primary" class="mat-elevation-z8">
+    <span>YANG Catalog Admin</span>
+    <span class="spacer"></span>
+    <div *ngIf="authService.logged">
+        <a mat-button routerLink="/home">Home</a>
+        <a mat-button routerLink="/logs">Logs</a>
+        <a mat-raised-button color="accent" (click)="onLogOutClick()"
+            >Logout
+            <img class="logout-icon" src="assets/img/logout.svg" alt="logout icon" />
+        </a>
+    </div>
+</mat-toolbar>

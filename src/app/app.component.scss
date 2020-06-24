@@ -1,0 +1,7 @@
+@import '../scss/_variables';
+
+:host {
+    main {
+        padding: $headerHeight 30px;
+    }
+}
