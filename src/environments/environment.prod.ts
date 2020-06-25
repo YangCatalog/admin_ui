@@ -1,4 +1,6 @@
 export const environment = {
     production: true,
-    logged: true
+    logged: true,
+    username: '',
+    password: ''
 };

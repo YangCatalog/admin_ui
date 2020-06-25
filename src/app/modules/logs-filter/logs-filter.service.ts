@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +10,6 @@ export class LogsFilterService {
     constructor(private http: HttpClient) {}
 
     fetchLogsFileNames(): Observable<any> {
-        // return of({ data: ['yang', 'parseAndPopulate'] });
         return this.http.get<any>(this.logsRoute);
     }
 
@@ -21,6 +19,15 @@ export class LogsFilterService {
         };
 
         return this.http.post<any>(this.logsRoute, payload);
-        // return this.http.get('http://localhost:4200/assets/responseExample.json');
+    }
+
+    datetimeToTimestamp(time: any): number {
+        // By default in miliseconds = divide by 1000
+        return Math.round(new Date(time).getTime() / 1000);
+    }
+
+    isTracebackMessage(logMessage: string): boolean {
+        const tracebackRegexp = /[-] \d*\nTraceback/gm;
+        return tracebackRegexp.test(logMessage);
     }
 }

@@ -5,9 +5,8 @@
 export const environment = {
     production: false,
     logged: true,
-    apiUrl: 'http://35.158.109.5/',
     username: 'admin',
-    password: 'foo'
+    password: ''
 };
 
 /*

@@ -13,7 +13,6 @@ export class BasicAuthInterceptor implements HttpInterceptor {
         // add header with basic auth credentials if user is logged in and request is to the api url
         const userData = window.btoa(`${environment.username}:${environment.password}`);
 
-        // const isApiUrl = request.url.startsWith(environment.apiUrl);
         const isApiUrl = request.url.includes('api/');
         if (isApiUrl) {
             request = request.clone({

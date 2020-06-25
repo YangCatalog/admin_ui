@@ -1,8 +1,8 @@
 .mat-column-timestamp {
-    flex: 0 0 15%;
+    flex: 0 0 12%;
 }
 .mat-column-level {
-    flex: 0 0 10%;
+    flex: 0 0 8%;
 }
 .mat-column-class {
     flex: 0 0 20%;
@@ -21,4 +21,8 @@
 .filtered-logs-table {
     margin-top: 20px;
     white-space: pre-line;
+}
+
+.row {
+    margin: 10px 0;
 }
