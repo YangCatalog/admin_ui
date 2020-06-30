@@ -93,7 +93,10 @@
                     </div>
                 </div>
             </ng-container>
-            <button mat-raised-button type="submit" color="primary" [disabled]="isTableLoading">Filter</button>
+            <button mat-raised-button type="submit" color="primary" [disabled]="isTableLoading" class="loader-button">
+                <span [hidden]="isTableLoading">Filter</span>
+                <app-loader [isLoading]="isTableLoading"></app-loader>
+            </button>
         </form>
     </mat-card-content>
 </mat-card>
@@ -138,8 +141,10 @@
     </mat-table>
 </div>
 
+<!--
 <div class="mt-3">
     <mat-card *ngIf="isTableLoading">
         <mat-spinner class="loader"></mat-spinner>
     </mat-card>
 </div>
+-->

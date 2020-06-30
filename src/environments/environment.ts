@@ -4,9 +4,7 @@
 
 export const environment = {
     production: false,
-    logged: true,
-    username: 'admin',
-    password: ''
+    logged: true
 };
 
 /*

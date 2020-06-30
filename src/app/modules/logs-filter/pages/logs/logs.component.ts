@@ -13,7 +13,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 export class LogsComponent implements OnInit {
     logsFilterForm: FormGroup;
     fileNames: Array<string> = [];
-    levelOptions: Array<string> = ['INFO', 'DEBUG', 'ERROR', 'WARNING'];
+    levelOptions: Array<string> = ['', 'INFO', 'WARNING', 'DEBUG', 'ERROR'];
     displayedColumns: string[] = [];
     filteredLogsDataSource;
     isTableLoading = false;
@@ -153,22 +153,16 @@ export class LogsComponent implements OnInit {
 
     private parseData(output: string[]): any[] {
         const parsedOutput = [];
+        const splittedData = output.length === 1 ? output[0].split('\n') : output.join('').split('\n');
 
-        if (output.length === 1) {
-            const splittedData = output[0].split('\n');
-            splittedData.pop();
-            splittedData.forEach(line => {
-                const parsedLine = {
+        splittedData.pop();
+        splittedData.forEach(line => {
+            if (line !== '') {
+                parsedOutput.push({
                     message: line
-                };
-                parsedOutput.push(parsedLine);
-            });
-        } else {
-            const parsedLine = {
-                message: output.join('')
-            };
-            parsedOutput.push(parsedLine);
-        }
+                });
+            }
+        });
 
         return parsedOutput;
     }

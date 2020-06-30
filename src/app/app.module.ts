@@ -11,6 +11,7 @@ import { MaterialModule } from './material/material.module';
 import { LoginComponent } from './others/login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BasicAuthInterceptor } from './others/helpers/basic-auth.interceptor';
+import { SharedModule } from './shared.module';
 
 @NgModule({
     declarations: [AppComponent, HeaderComponent, HomeComponent, LoginComponent],
@@ -20,7 +21,8 @@ import { BasicAuthInterceptor } from './others/helpers/basic-auth.interceptor';
         BrowserAnimationsModule,
         HttpClientModule,
         ReactiveFormsModule,
-        MaterialModule
+        MaterialModule,
+        SharedModule
     ],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true }],
     bootstrap: [AppComponent]
