@@ -11,6 +11,7 @@ import { MaterialModule } from './material/material.module';
 import { LoginComponent } from './others/login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BasicAuthInterceptor } from './others/helpers/basic-auth.interceptor';
+import { ErrorInterceptor } from './others/helpers/error.interceptor';
 import { SharedModule } from './shared.module';
 
 @NgModule({
@@ -24,7 +25,10 @@ import { SharedModule } from './shared.module';
         MaterialModule,
         SharedModule
     ],
-    providers: [{ provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true }],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

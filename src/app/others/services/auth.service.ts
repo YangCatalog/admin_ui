@@ -9,7 +9,7 @@ import { first } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class AuthService {
-    logged = environment.logged;
+    logged = false;
     private loginRoute = `/api/admin/login`;
     private logoutRoute = `/api/admin/logout`;
 
@@ -26,22 +26,31 @@ export class AuthService {
     }
 
     logOut() {
-        this.http
-            .post<any>(this.logoutRoute, {})
-            .pipe(first())
-            .subscribe(response => {
-                if (response.info === 'Success') {
-                    this.logged = false;
-                    this.router.navigate(['/login']);
-                }
-            });
+        if (this.logged) {
+            this.http
+                .post<any>(this.logoutRoute, {})
+                .pipe(first())
+                .subscribe(response => {
+                    if (response.info === 'Success') {
+                        this.deleteCookie('session');
+                        this.router.navigate(['/login']);
+                        this.logged = false;
+                    }
+                });
+        }
     }
 
     isLoggedIn() {
+        // Check if cookie already exists
+        this.logged = document.cookie.split(';').some(cookie => cookie.startsWith('session'));
         return this.logged;
     }
 
-    setLoggenIn(logged: boolean) {
+    setLoggedIn(logged: boolean) {
         this.logged = logged;
+    }
+
+    private deleteCookie(cookieName: string) {
+        document.cookie = cookieName + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
     }
 }

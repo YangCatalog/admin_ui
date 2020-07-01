@@ -38,15 +38,15 @@ export class LoginComponent implements OnInit {
                 response => {
                     if (response.info === 'Success') {
                         this.router.navigate(['/home']);
-                        this.authService.setLoggenIn(true);
+                        this.authService.setLoggedIn(true);
                         this.hasError = false;
                     } else {
-                        this.authService.setLoggenIn(false);
+                        this.authService.setLoggedIn(false);
                         this.hasError = true;
                     }
                 },
                 err => {
-                    this.authService.setLoggenIn(false);
+                    this.authService.setLoggedIn(false);
                     this.hasError = true;
                 }
             );
