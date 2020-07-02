@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LogsFilterService } from '../../logs-filter.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { finalize } from 'rxjs/operators';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
     selector: 'app-logs',
@@ -13,16 +13,17 @@ import { MatPaginator } from '@angular/material/paginator';
 export class LogsComponent implements OnInit {
     logsFilterForm: FormGroup;
     fileNames: Array<string> = [];
-    levelOptions: Array<string> = ['INFO', 'DEBUG', 'ERROR', 'WARNING'];
-    displayedColumns: string[] = ['timestamp', 'level', 'class', 'message', 'lineNumber'];
+    levelOptions: Array<string> = ['', 'INFO', 'WARNING', 'DEBUG', 'ERROR'];
+    displayedColumns: string[] = [];
     filteredLogsDataSource;
-    isLoading = false;
+    isTableLoading = false;
+    isFormLoading = false;
 
     // MatPaginator Inputs
     paginatorOptions = {
         length: 1,
-        pageSize: 1,
-        pageIndex: 1,
+        pageSize: 1000,
+        pageIndex: 0,
         pageSizeOptions: [100, 250, 500, 1000]
     };
 
@@ -32,10 +33,10 @@ export class LogsComponent implements OnInit {
 
     ngOnInit(): void {
         this.buildForm();
-        this.isLoading = true;
+        this.isFormLoading = true;
         this.logsFilterService
             .fetchLogsFileNames()
-            .pipe(finalize(() => (this.isLoading = false)))
+            .pipe(finalize(() => (this.isFormLoading = false)))
             .subscribe(
                 response => {
                     // Sort filenames alphabetically
@@ -44,31 +45,49 @@ export class LogsComponent implements OnInit {
                     });
                 },
                 err => {
-                    console.log(err);
+                    console.log('ERROR: ' + err);
                 }
             );
     }
 
-    submitForm() {
+    onFormSubmit() {
         if (!this.logsFilterForm.valid) {
             return;
         }
-        const formData = this.getDirtyValues(this.logsFilterForm);
-        this.isLoading = true;
+        const formData = this.getFormData(this.logsFilterForm);
+        this.getLogsByFilter(formData);
+    }
+
+    onPageChange(e: PageEvent) {
+        const formData = this.getFormData(this.logsFilterForm);
+        formData['lines-per-page'] = e.pageSize;
+        formData['page'] = e.pageIndex + 1;
+        this.getLogsByFilter(formData);
+    }
+
+    applyFilter(event: Event) {
+        const filterValue = (event.target as HTMLInputElement).value;
+        if (filterValue.length > 2 || filterValue.length === 0) {
+            this.filteredLogsDataSource.filter = filterValue.trim().toLowerCase();
+        }
+    }
+
+    private getLogsByFilter(formData: any) {
+        this.isTableLoading = true;
         this.logsFilterForm.disable();
         this.filteredLogsDataSource = null;
         this.logsFilterService
             .getLogs(formData)
             .pipe(
                 finalize(() => {
-                    this.isLoading = false;
+                    this.isTableLoading = false;
                     this.logsFilterForm.enable();
                 })
             )
             .subscribe(
                 response => {
-                    const parsedOutput = response.meta.format ? this.parseOutput(response.output) : response.output;
-                    // this.setPaginatorValues(response.meta['lines-per-page'], response.meta.page, response.meta.pages);
+                    const parsedOutput = this.parseResponse(response);
+                    this.setPaginatorValues(response.meta['lines-per-page'], response.meta.page, response.meta.pages);
                     this.filteredLogsDataSource = new MatTableDataSource<any>(parsedOutput);
                     this.filteredLogsDataSource.paginator = this.paginator;
                 },
@@ -94,7 +113,19 @@ export class LogsComponent implements OnInit {
         });
     }
 
-    private parseOutput(output: string[]): any[] {
+    private parseResponse(response: any) {
+        let parsedData: any[] = [];
+        if (response.meta.format) {
+            parsedData = this.parseFormatedData(response.output);
+            this.displayedColumns = ['timestamp', 'level', 'class', 'message', 'lineNumber'];
+        } else {
+            parsedData = this.parseData(response.output);
+            this.displayedColumns = ['message'];
+        }
+        return parsedData;
+    }
+
+    private parseFormatedData(output: string[]): any[] {
         const parsedOutput = [];
 
         output.forEach(line => {
@@ -103,43 +134,59 @@ export class LogsComponent implements OnInit {
                 timestamp: splittedLine.slice(0, 2).join(' '),
                 level: splittedLine[2],
                 class: splittedLine[3],
-                message: splittedLine.slice(5, -2).join(' '),
-                lineNumber: splittedLine.slice(-1)
+                message: '',
+                lineNumber: ''
             };
+            // Traceback logs have different format (position of line number not at the very end
+            if (this.logsFilterService.isTracebackMessage(line)) {
+                const tracebackWord = splittedLine.find(word => word.includes('Traceback'));
+                parsedLine.message = splittedLine.slice(5).join(' ');
+                parsedLine.lineNumber = tracebackWord.split('\n')[0];
+            } else {
+                parsedLine.message = splittedLine.slice(5, -2).join(' ');
+                parsedLine.lineNumber = [...splittedLine.slice(-1)].pop();
+            }
             parsedOutput.push(parsedLine);
         });
         return parsedOutput;
     }
 
-    private getDirtyValues(form: any) {
+    private parseData(output: string[]): any[] {
+        const parsedOutput = [];
+        const splittedData = output.length === 1 ? output[0].split('\n') : output.join('').split('\n');
+
+        splittedData.pop();
+        splittedData.forEach(line => {
+            if (line !== '') {
+                parsedOutput.push({
+                    message: line
+                });
+            }
+        });
+
+        return parsedOutput;
+    }
+
+    private getFormData(form: any) {
         const dirtyValues = {};
 
         Object.keys(form.controls).forEach(key => {
             const currentControl = form.controls[key];
 
             if (currentControl.dirty && currentControl.value !== '' && currentControl.value !== null) {
-                if (currentControl.controls) dirtyValues[key] = this.getDirtyValues(currentControl);
+                if (currentControl.controls) dirtyValues[key] = this.getFormData(currentControl);
                 else dirtyValues[key] = currentControl.value;
             }
         });
         if (dirtyValues['from-date']) {
-            dirtyValues['from-date'] = this.convertToTimestamp(dirtyValues['from-date']);
+            dirtyValues['from-date'] = this.logsFilterService.datetimeToTimestamp(dirtyValues['from-date']);
         }
         return dirtyValues;
     }
 
-    private convertToTimestamp(time: any): number {
-        // By default in miliseconds = divide by 1000
-        return Math.round(new Date(time).getTime() / 1000);
-    }
-
-    private setPaginatorValues(lines: number, page: number, pages: number) {
-        console.log('lines ' + lines);
-        console.log('page ' + page);
-        console.log('pages ' + pages);
-
-        this.paginatorOptions.length = pages;
-        this.paginatorOptions.pageIndex = page;
-        this.paginatorOptions.pageSize = lines;
+    private setPaginatorValues(pageSize: number, pageIndex: number, pages: number) {
+        this.paginatorOptions.length = pageSize * pages;
+        this.paginatorOptions.pageIndex = pageIndex;
+        this.paginatorOptions.pageSize = pageSize;
     }
 }

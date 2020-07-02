@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LogsFilterRoutingModule } from './logs-filter-routing.module';
 import { LogsComponent } from './pages/logs/logs.component';
@@ -12,11 +11,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { SharedModule } from 'src/app/shared.module';
 
 @NgModule({
     declarations: [LogsComponent],
     imports: [
-        CommonModule,
         LogsFilterRoutingModule,
         ReactiveFormsModule,
         MatFormFieldModule,
@@ -27,7 +26,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatButtonModule,
         MatTableModule,
         MatProgressSpinnerModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        SharedModule
     ]
 })
 export class LogsFilterModule {}
