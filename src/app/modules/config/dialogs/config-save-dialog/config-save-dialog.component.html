@@ -1,0 +1,28 @@
+<ng-container *ngIf="!saved && !error">
+  <div class="mb-2">
+    <b>Save config</b>
+  </div>
+  <div class="mb-4">Do you wish to save changes?</div>
+  <div>
+    <button mat-raised-button (click)="save()" color="primary">Yes</button>
+    <button mat-raised-button matDialogClose class="ml-2" >Cancel</button>
+  </div>
+  <div *ngIf="isLoading" class="pt-4">
+    <mat-spinner class="mx-auto"></mat-spinner>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="error">
+  <div class="alert alert-danger mt-4" role="alert">
+    Error! Check config.
+  </div>
+  <button mat-raised-button matDialogClose>Close</button>
+</ng-container>
+
+<ng-container *ngIf="saved">
+  <div class="alert alert-success mt-4" role="alert">
+    Config saved!
+  </div>
+  <button mat-raised-button [mat-dialog-close]="'saved'">Close</button>
+</ng-container>
+

@@ -1,0 +1,16 @@
+<mat-card *ngIf="isLoading">
+  <mat-spinner class="mx-auto"></mat-spinner>
+</mat-card>
+
+<div *ngIf="!isLoading">
+  <form [formGroup]="configForm" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
+    <div *ngIf="!editing">
+      <button mat-raised-button (click)="enableConfigEdit()" class="mb-2" color="primary">Edit</button>
+    </div>
+    <div *ngIf="editing">
+      <button mat-raised-button type="submit" class="mb-2 bg-success text-white">Save</button>
+      <button mat-raised-button (click)="discardChanges()" class="mb-2 ml-2">Discard</button>
+    </div>
+    <textarea #configTextarea class="configt-textarea" formControlName="config" style="height:500px"></textarea>
+  </form>
+</div>
