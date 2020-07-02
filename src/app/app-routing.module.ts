@@ -23,6 +23,12 @@ const routes: Routes = [
         canLoad: [PageGuard]
     },
     {
+        path: 'mysql-management',
+        loadChildren: () => import('./modules/mysql-management/mysql-management.module').then(mod => mod.MysqlManagementModule),
+        canActivate: [PageGuard],
+        canLoad: [PageGuard]
+    },
+    {
         path: 'home',
         component: HomeComponent,
         canActivate: [PageGuard],
