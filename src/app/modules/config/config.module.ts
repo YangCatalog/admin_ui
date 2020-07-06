@@ -6,10 +6,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
-import { ConfigSaveDialogComponent } from './dialogs/config-save-dialog/config-save-dialog.component';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
-
-
+import { TextEditorComponent } from 'src/app/components/text-editor/text-editor.component';
+import { TextEditorSaveDialogComponent } from 'src/app/components/text-editor/text-editor-save-dialog/text-editor-save-dialog.component';
+import { SharedModule } from 'src/app/shared.module';
 @NgModule({
   providers: [
     {
@@ -23,7 +23,7 @@ import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/d
             }
     }
   ],
-  declarations: [ConfigComponent, ConfigSaveDialogComponent],
+  declarations: [ConfigComponent, TextEditorComponent, TextEditorSaveDialogComponent],
   imports: [
     CommonModule,
     ConfigRoutingModule,
@@ -31,7 +31,8 @@ import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/d
     MatCardModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    SharedModule
   ]
 })
 export class ConfigModule { }
