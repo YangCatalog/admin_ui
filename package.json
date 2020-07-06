@@ -5,12 +5,12 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build-prod": "ng build --base-href /admin --prod",
+    "build-prod": "ng build --base-href /admin/ --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "docker-build": "docker build -t yc-admin .",
-    "docker-run": "docker run -t -p 8000:80 --name yang-catalog-admin yc-admin"
+    "docker-run": "docker run -t -p 80:80 --name yang-catalog-admin yc-admin"
   },
   "private": true,
   "dependencies": {
