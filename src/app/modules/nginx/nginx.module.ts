@@ -1,11 +1,13 @@
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ConfigRoutingModule } from './config-routing.module';
-import { ConfigComponent } from './pages/config/config.component';
+import { NginxRoutingModule } from './nginx-routing.module';
+import { NginxComponent } from './pages/nginx/nginx.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { SharedModule } from 'src/app/shared.module';
+
 @NgModule({
   providers: [
     {
@@ -19,13 +21,13 @@ import { SharedModule } from 'src/app/shared.module';
             }
     }
   ],
-  declarations: [ConfigComponent],
+  declarations: [NginxComponent],
   imports: [
     CommonModule,
-    ConfigRoutingModule,
+    NginxRoutingModule,
     MatCardModule,
     MatProgressSpinnerModule,
     SharedModule
   ]
 })
-export class ConfigModule { }
+export class NginxModule { }

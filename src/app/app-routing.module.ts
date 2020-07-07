@@ -33,7 +33,13 @@ const routes: Routes = [
       loadChildren: () => import('./modules/config/config.module').then(mod => mod.ConfigModule),
       canActivate: [PageGuard],
       canLoad: [PageGuard]
-  },
+    },
+    {
+      path: 'nginx-config',
+      loadChildren: () => import('./modules/nginx/nginx.module').then(mod => mod.NginxModule),
+      canActivate: [PageGuard],
+      canLoad: [PageGuard]
+    },
     {
         path: 'home',
         component: HomeComponent,
