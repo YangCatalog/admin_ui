@@ -11,6 +11,7 @@ import { TextEditorComponent } from 'src/app/components/text-editor/text-editor.
 export class ConfigComponent implements OnInit {
   isLoading = true;
   configText: string;
+  error = false;
 
   @ViewChild('textEditor') textEditor: TextEditorComponent;
 
@@ -30,6 +31,7 @@ export class ConfigComponent implements OnInit {
         this.configText = response;
       },
       err => {
+        this.error = true;
         console.log(err);
       }
     );
