@@ -1,6 +1,6 @@
 {
     "/api/*": {
-        "target": "http://3.125.122.151",
+        "target": "http://18.157.73.108",
         "secure": false,
         "changeOrigin": true
     }

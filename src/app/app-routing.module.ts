@@ -7,26 +7,26 @@ import { PageGuard } from './others/guards/page.guard';
 
 const routes: Routes = [
     {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: '/login'
+      path: '',
+      pathMatch: 'full',
+      redirectTo: '/login'
     },
     {
-        path: 'login',
-        component: LoginComponent,
-        canActivate: [AuthGuard]
+      path: 'login',
+      component: LoginComponent,
+      canActivate: [AuthGuard]
     },
     {
-        path: 'logs',
-        loadChildren: () => import('./modules/logs-filter/logs-filter.module').then(mod => mod.LogsFilterModule),
-        canActivate: [PageGuard],
-        canLoad: [PageGuard]
+      path: 'logs',
+      loadChildren: () => import('./modules/logs-filter/logs-filter.module').then(mod => mod.LogsFilterModule),
+      canActivate: [PageGuard],
+      canLoad: [PageGuard]
     },
     {
-        path: 'mysql-management',
-        loadChildren: () => import('./modules/mysql-management/mysql-management.module').then(mod => mod.MysqlManagementModule),
-        canActivate: [PageGuard],
-        canLoad: [PageGuard]
+      path: 'mysql-management',
+      loadChildren: () => import('./modules/mysql-management/mysql-management.module').then(mod => mod.MysqlManagementModule),
+      canActivate: [PageGuard],
+      canLoad: [PageGuard]
     },
     {
       path: 'config',
@@ -41,14 +41,20 @@ const routes: Routes = [
       canLoad: [PageGuard]
     },
     {
-        path: 'home',
-        component: HomeComponent,
-        canActivate: [PageGuard],
-        canLoad: [PageGuard]
+      path: 'files',
+      loadChildren: () => import('./modules/files/files.module').then(mod => mod.FilesModule),
+      canActivate: [PageGuard],
+      canLoad: [PageGuard]
     },
     {
-        path: '**',
-        redirectTo: '/home'
+      path: 'home',
+      component: HomeComponent,
+      canActivate: [PageGuard],
+      canLoad: [PageGuard]
+    },
+    {
+      path: '**',
+      redirectTo: '/home'
     }
 ];
 
