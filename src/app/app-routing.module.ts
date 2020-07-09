@@ -23,6 +23,24 @@ const routes: Routes = [
         canLoad: [PageGuard]
     },
     {
+        path: 'mysql-management',
+        loadChildren: () => import('./modules/mysql-management/mysql-management.module').then(mod => mod.MysqlManagementModule),
+        canActivate: [PageGuard],
+        canLoad: [PageGuard]
+    },
+    {
+      path: 'config',
+      loadChildren: () => import('./modules/config/config.module').then(mod => mod.ConfigModule),
+      canActivate: [PageGuard],
+      canLoad: [PageGuard]
+    },
+    {
+      path: 'nginx-config',
+      loadChildren: () => import('./modules/nginx/nginx.module').then(mod => mod.NginxModule),
+      canActivate: [PageGuard],
+      canLoad: [PageGuard]
+    },
+    {
         path: 'home',
         component: HomeComponent,
         canActivate: [PageGuard],

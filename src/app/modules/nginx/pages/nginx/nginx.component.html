@@ -1,0 +1,11 @@
+<mat-card *ngIf="isLoading">
+  <mat-spinner class="mx-auto"></mat-spinner>
+</mat-card>
+
+<ng-container *ngIf="!error">
+  <app-text-editor #textEditor *ngIf="!isLoading" [text]="configText" (saveConfirm)="saveChange($event)"></app-text-editor>
+</ng-container>
+
+<div *ngIf="error">
+  Error while loading.
+</div>

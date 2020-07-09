@@ -1,0 +1,90 @@
+<div class="mb-2" *ngIf="!data.edit">
+  <b>Create record</b>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
+  <div class="mb-1">
+    <mat-form-field class="w-100">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="first-name">
+      <mat-error *ngIf="form.get('first-name').hasError('required')">
+        First Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="mb-1">
+    <mat-form-field class="w-100">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="last-name">
+      <mat-error *ngIf="form.get('last-name').hasError('required')">
+        Last Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="mb-1">
+    <mat-form-field class="w-100">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username">
+      <mat-error *ngIf="form.get('username').hasError('required')">
+        Username is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="mb-1">
+    <mat-form-field class="w-100">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" autocomplete="off">
+      <mat-error *ngIf="form.get('password').hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="mb-1">
+    <mat-form-field class="w-100">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email">
+      <mat-error *ngIf="form.get('email').hasError('email') && !form.hasError('required')">
+        Please enter a valid <strong>email address</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get('email').hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="mb-1">
+    <mat-form-field class="w-100">
+      <mat-label>Models Provider</mat-label>
+      <input matInput formControlName="models-provider">
+    </mat-form-field>
+  </div>
+
+  <div class="mb-1">
+    <mat-form-field class="w-100">
+      <mat-label>Access Rights SDO</mat-label>
+      <input matInput formControlName="access-rights-sdo">
+      <mat-error *ngIf="form.get('access-rights-sdo').hasError('at-leaste-one-access-right-required')">
+        At least one access right is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="mb-1">
+    <mat-form-field class="w-100">
+      <mat-label>Access Rights Vendor</mat-label>
+      <input matInput formControlName="access-rights-vendor">
+      <mat-error *ngIf="form.get('access-rights-vendor').hasError('at-leaste-one-access-right-required')">
+        At least one access right is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <button mat-raised-button [disabled]="form.invalid" type="submit" color="primary">Submit</button>
+    <button matDialogClose class="ml-2" mat-raised-button>Cancel</button>
+  </div>
+</form>
