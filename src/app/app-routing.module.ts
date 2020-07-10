@@ -47,6 +47,12 @@ const routes: Routes = [
       canLoad: [PageGuard]
     },
     {
+      path: 'scripts',
+      loadChildren: () => import('./modules/scripts/scripts.module').then(mod => mod.ScriptsModule),
+      canActivate: [PageGuard],
+      canLoad: [PageGuard]
+    },
+    {
       path: 'home',
       component: HomeComponent,
       canActivate: [PageGuard],
