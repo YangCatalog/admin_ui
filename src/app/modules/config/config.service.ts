@@ -14,7 +14,7 @@ export class ConfigService {
       'Accept': 'text/plain',
       'Content-Type': 'text/plain'
     });
-    return this.http.get('http://localhost:3000/plaintext', { headers, responseType: 'text'});
+    return this.http.get('/yangcatalog-config', { headers, responseType: 'text'});
   }
 
   saveConfig(config: string): Observable<any> {
@@ -22,6 +22,6 @@ export class ConfigService {
       'Accept': 'text/plain',
       'Content-Type': 'text/plain'
     });
-    return this.http.post('http://localhost:3000/plaintext', config, { headers, responseType: 'text'});
+    return this.http.put('/yangcatalog-config', config, { headers, responseType: 'text'});
   }
 }
