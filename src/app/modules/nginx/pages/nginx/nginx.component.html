@@ -1,12 +1,31 @@
 <h1 class="component-h1 primary-color">Nginx</h1>
 
-<mat-card *ngIf="isLoading">
-  <mat-spinner class="mx-auto"></mat-spinner>
+ <mat-card *ngIf="!isLoadingFiles && !error" class="mb-4">
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="formSubmit()">
+      <mat-form-field class="mr-4">
+        <mat-label>Select Nginx config</mat-label>
+        <mat-select formControlName="nginxConfigName">
+          <mat-option *ngFor="let nginxConfigName of nginxConfigNames" [value]="nginxConfigName">
+            {{nginxConfigName}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('nginxConfigName').hasError('required')">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+      <button type="submit" [disabled]="form.invalid" mat-raised-button color="primary">Load Nginx config</button>
+    </form>
+  </mat-card-content>
 </mat-card>
 
-<ng-container *ngIf="!error">
-  <app-text-editor #textEditor *ngIf="!isLoading" [text]="configText" (saveConfirm)="saveChange($event)"></app-text-editor>
+<ng-container *ngIf="!error && !!configText">
+  <app-text-editor #textEditor *ngIf="!isLoadingContent" [text]="configText" (saveConfirm)="saveChange($event)"></app-text-editor>
 </ng-container>
+
+<mat-card *ngIf="isLoadingFiles || isLoadingContent">
+  <mat-spinner class="mx-auto"></mat-spinner>
+</mat-card>
 
 <div *ngIf="error">
   Error while loading.

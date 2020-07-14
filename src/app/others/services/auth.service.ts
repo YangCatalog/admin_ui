@@ -41,9 +41,9 @@ export class AuthService {
     }
 
     isLoggedIn() {
-        // Check if cookie already exists
-        this.logged = document.cookie.split(';').some(cookie => cookie.startsWith('session'));
-        return this.logged;
+      // Check if cookie already exists
+      this.logged = document.cookie.split(';').some(cookie => cookie.startsWith('session'));
+      return this.logged;
     }
 
     setLoggedIn(logged: boolean) {

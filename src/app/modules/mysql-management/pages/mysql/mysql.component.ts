@@ -58,7 +58,7 @@ export class MysqlComponent implements OnInit {
       err => {
         console.log(err);
       }
-    )
+    );
   }
 
   buildForm() {
