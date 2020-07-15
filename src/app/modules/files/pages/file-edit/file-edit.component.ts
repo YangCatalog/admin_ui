@@ -22,7 +22,7 @@ export class FileEditComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    if (this.filesService.selectedFolder && this.filesService.selectedFile) {
+    if (this.filesService.selectedFilePath) {
       this.isLoading = true;
       this.filesService.fetchFileContent()
       .pipe(finalize(() => this.isLoading = false))
@@ -42,7 +42,7 @@ export class FileEditComponent implements OnInit {
 
   saveChange(editedText: string) {
     this.textEditor.startLoading();
-    this.filesService.saveFile(editedText)
+    this.filesService.updateFile(editedText)
     .pipe(finalize( () => {
       this.textEditor.stopLoading()
     } ))

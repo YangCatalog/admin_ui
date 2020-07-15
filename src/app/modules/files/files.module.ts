@@ -15,6 +15,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { FileEditComponent } from './pages/file-edit/file-edit.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
+import { FolderComponent } from './components/folder/folder.component';
+import { FileComponent } from './components/file/file.component';
 
 @NgModule({
   providers: [
@@ -29,7 +31,7 @@ import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.com
             }
     }
   ],
-  declarations: [FilesOverviewComponent, FileEditComponent, DeleteDialogComponent],
+  declarations: [FilesOverviewComponent, FileEditComponent, DeleteDialogComponent, FolderComponent, FileComponent],
   imports: [
     CommonModule,
     FilesRoutingModule,

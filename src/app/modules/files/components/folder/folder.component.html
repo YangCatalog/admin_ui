@@ -1,0 +1,15 @@
+<div>
+  <div class="d-inline-block cursor-pointer" (click)="toggle()">
+    <div class="d-flex">
+      <mat-icon *ngIf="!closed">folder_open</mat-icon>
+      <mat-icon *ngIf="closed">folder</mat-icon>
+      <span>{{name || '/'}}</span>
+      <span *ngIf="isLoading">&nbsp;- loading...</span>
+    </div>
+  </div>
+
+  <div class="ml-4" [hidden]=closed>
+    <app-file *ngFor="let file of content.files" [name]=file [parentPath]="newPath"></app-file>
+    <app-folder *ngFor="let folder of content.folders" [name]=folder [parentPath]="newPath"></app-folder>
+  </div>
+</div>
