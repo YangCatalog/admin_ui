@@ -31,7 +31,7 @@ export class NginxComponent implements OnInit {
     .pipe(finalize(() => (this.isLoadingFiles = false)))
     .subscribe(
       response => {
-        this.nginxConfigNames = response;
+        this.nginxConfigNames = response.data;
       },
       err => {
         console.log(err);
@@ -57,7 +57,7 @@ export class NginxComponent implements OnInit {
     .pipe(finalize(() => (this.isLoadingContent = false)))
     .subscribe(
       response => {
-        this.configText = response;
+        this.configText = response.data;
       },
       err => {
         this.error = true;
