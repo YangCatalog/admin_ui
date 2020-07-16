@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ScriptsService } from '../../scripts.service';
-import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
-import Script from '../../interfaces/script';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { Subscription } from 'rxjs';
@@ -15,12 +13,15 @@ import { finalize } from 'rxjs/operators';
 })
 export class ScriptsComponent implements OnInit {
   isLoading = true;
+  isLoadingOptions = false;
   isLoadingExecute = false;
+  selectedScript = '';
   success = false;
   error = false;
   form: FormGroup;
-  scripts: Script[];
+  scripts;
   dialogRefSubscription: Subscription;
+  scriptOptions;
 
   constructor(
     private scriptsService: ScriptsService,
@@ -30,55 +31,37 @@ export class ScriptsComponent implements OnInit {
 
   ngOnInit(): void {
     this.scriptsService.fetchScripts()
+    .pipe(finalize(() => this.isLoading = false))
     .subscribe(
       response => {
-        this.scripts = response.scripts;
-        this.buildForm();
-        this.isLoading = false;
+        this.scripts = response.data;
       },
       err => {
-        this.isLoading = false;
         console.log(err);
       }
     );
   }
 
+  onScriptSelectChange() {
+    this.isLoadingOptions = true;
+    this.scriptsService.fetchOptions(this.selectedScript)
+    .subscribe(
+      response => {
+        this.scriptOptions = response.data;
+        this.buildForm();
+        this.isLoadingOptions = false;
+      },
+      err => {
+        console.log(err);
+        this.isLoadingOptions = false;
+      }
+    );
+  }
+
   buildForm() {
-    this.form = this.formBuilder.group({
-      scripts: this.formBuilder.array([])
-    });
-    this.pushEmptyScript();
-  }
-
-  addScript() {
-    this.pushEmptyScript();
-  }
-
-  pushEmptyScript() {
-    const scripts = this.form.get('scripts') as FormArray;
-    scripts.push(this.formBuilder.group({
-      name: [null, Validators.required],
-      options: this.formBuilder.array([])
-    }));
-  }
-
-  scriptSelected(event: MatSelectChange, i: number) {
-    const value = event.value;
-    const scripts = this.form.get('scripts') as FormArray;
-    const scriptFormGroup = scripts.at(i);
-    const options = scriptFormGroup.get('options') as FormArray;
-    options.clear();
-
-    const availableScript = this.scripts.find(script => script.name === value);
-
-    if (availableScript.options && availableScript.options.length > 0) {
-      const availableOptions = availableScript.options;
-      availableOptions.forEach( avOpt => {
-        options.push(this.formBuilder.group({
-          label: avOpt,
-          value: false
-        }));
-      });
+    this.form = this.formBuilder.group({});
+    for (const [key, definition] of Object.entries(this.scriptOptions)) {
+      this.form.addControl(key, this.formBuilder.control(definition['default']));
     }
   }
 
@@ -87,14 +70,9 @@ export class ScriptsComponent implements OnInit {
 
     this.dialogRefSubscription = dialogRef.afterClosed().subscribe( confirm => {
       if (confirm) {
-        const data = { input: []};
-        this.form.value.scripts.forEach( script => {
-          const scr = { name: script.name };
-          if (script.options.length > 0) {
-            scr['options'] = script.options.filter(opt => opt.value).map(opt => opt.label);
-          }
-          data.input.push(scr);
-        });
+
+        const data = {input: {...this.form.value}};
+        data.input['script'] = this.selectedScript;
 
         this.isLoadingExecute = true;
         this.scriptsService.postScripts(data)
@@ -110,10 +88,5 @@ export class ScriptsComponent implements OnInit {
       }
       this.dialogRefSubscription.unsubscribe();
     });
-  }
-
-  removeScript(i: number) {
-    const scripts = this.form.get('scripts') as FormArray;
-    scripts.removeAt(i);
   }
 }
