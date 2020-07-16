@@ -1,6 +1,6 @@
 <div>
   <div class="d-inline-block cursor-pointer" (click)="toggle()">
-    <div class="d-flex files__main-icon-wrap">
+    <div class="d-flex flex-nowrap files__main-icon-wrap">
       <mat-icon [inline]="true" *ngIf="!closed">folder_open</mat-icon>
       <mat-icon [inline]="true" *ngIf="closed">folder</mat-icon>
       <span class="pl-2">{{name || '/'}}</span>
