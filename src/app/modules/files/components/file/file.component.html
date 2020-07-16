@@ -1,10 +1,12 @@
 <div>
   <div class="d-inline-block">
-    <div class="d-flex">
-      <mat-icon>text_snippet</mat-icon>
-      <span>{{name}}</span>
-      <mat-icon class="cursor-pointer" (click)="onEdit()">edit</mat-icon>
-      <mat-icon class="cursor-pointer" (click)="onDelete()">delete</mat-icon>
+    <div class="d-flex files__main-icon-wrap">
+      <mat-icon [inline]="true">text_snippet</mat-icon>
+      <span class="pl-2">{{name}}</span>
+      <div class="ml-2">
+        <mat-icon class="cursor-pointer" (click)="onEdit()">edit</mat-icon>
+        <mat-icon class="cursor-pointer" (click)="onDelete()">delete</mat-icon>
+      </div>
     </div>
   </div>
 </div>

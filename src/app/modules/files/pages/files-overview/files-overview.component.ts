@@ -1,14 +1,6 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FilesService } from '../../files.service';
-import { finalize } from 'rxjs/operators';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { DeleteDialogComponent } from '../../dialogs/delete-dialog/delete-dialog.component';
 import { Subscription } from 'rxjs';
-import { LogsFilterModule } from 'src/app/modules/logs-filter/logs-filter.module';
 import { FolderComponent } from '../../components/folder/folder.component';
 
 @Component({
