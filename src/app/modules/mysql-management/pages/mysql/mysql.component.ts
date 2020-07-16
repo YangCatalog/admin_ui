@@ -16,6 +16,7 @@ import { DeleteDialogComponent } from '../../dialogs/delete-dialog/delete-dialog
 })
 export class MysqlComponent implements OnInit {
   isLoading = false;
+  isLoadingTable = false;
   headers = [
     {label: 'ID', value: 'id'},
     {label: 'First Name', value: 'first-name'},
@@ -34,6 +35,7 @@ export class MysqlComponent implements OnInit {
   tablesList: string[];
   selectedTable: string;
   dialogRefSubscription: Subscription;
+  error = false;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -56,6 +58,7 @@ export class MysqlComponent implements OnInit {
         this.tablesList = response;
       },
       err => {
+        this.error = true;
         console.log(err);
       }
     );
@@ -73,12 +76,12 @@ export class MysqlComponent implements OnInit {
   }
 
   fetchTableRecords () {
-    this.isLoading = true;
+    this.isLoadingTable = true;
     this.tableReady = false;
     this.noRecords = false;
 
     this.mySqlService.fetchTable(this.selectedTable)
-    .pipe(finalize(() => (this.isLoading = false)))
+    .pipe(finalize(() => (this.isLoadingTable = false)))
     .subscribe(
       response => {
         if (response.length > 0) {
@@ -90,6 +93,7 @@ export class MysqlComponent implements OnInit {
         }
       },
       err => {
+        this.error = true;
         console.log(err);
       }
     )
@@ -108,6 +112,8 @@ export class MysqlComponent implements OnInit {
         this.dialogRefSubscription = dialogRef.afterClosed().subscribe( closeMsg => {
           if (closeMsg === 'success') {
             this.fetchTableRecords();
+          } else if (closeMsg === 'fail') {
+            this.error = true;
           }
           this.dialogRefSubscription.unsubscribe();
         });
@@ -130,11 +136,17 @@ export class MysqlComponent implements OnInit {
             this.fetchTableRecords();
           },
           err => {
+            this.error = true;
             console.log(err);
           }
         );
       }
       this.dialogRefSubscription.unsubscribe();
     });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
