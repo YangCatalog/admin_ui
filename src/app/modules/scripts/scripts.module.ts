@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ConfirmComponent } from './dialogs/confirm/confirm.component';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import { LabelParserPipe } from './pipes/label-parser.pipe';
 
 @NgModule({
   providers: [
@@ -26,7 +27,7 @@ import { MatInputModule } from '@angular/material/input';
             }
     }
   ],
-  declarations: [ScriptsComponent, ConfirmComponent],
+  declarations: [ScriptsComponent, ConfirmComponent, LabelParserPipe],
   imports: [
     CommonModule,
     ScriptsRoutingModule,

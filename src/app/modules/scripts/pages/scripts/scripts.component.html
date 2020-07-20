@@ -19,13 +19,14 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
       <ng-container *ngFor="let opt of scriptOptions | keyvalue">
         <div *ngIf="opt.value.type === 'bool'" class="mb-2">
-          <mat-checkbox formControlName="{{opt.key}}" class="mr-4" color="primary">{{opt.key}}</mat-checkbox>
+          <mat-checkbox formControlName="{{opt.key}}" class="mr-4" color="primary">{{opt.key | labelParser}}</mat-checkbox>
         </div>
 
         <div *ngIf="opt.value.type !== 'bool'">
           <mat-form-field class="form-field mb-2">
-            <mat-label>{{opt.key}}</mat-label>
-            <input matInput formControlName="{{opt.key}}" value="{{opt.value.default}}">
+            <mat-label>{{opt.key | labelParser}}</mat-label>
+            <input *ngIf="opt.value.type === 'str'" type="text" matInput formControlName={{opt.key}}>
+            <input *ngIf="opt.value.type === 'int'" type="number" step="1" matInput formControlName={{opt.key}}>
           </mat-form-field>
         </div>
       </ng-container>
