@@ -1,6 +1,6 @@
 <h1 class="component-h1 primary-color">Scripts</h1>
 
-<mat-card *ngIf="!isLoading" class=" mb-4">
+<mat-card *ngIf="!isLoading && !errorLoadingScripts" class=" mb-4">
   <mat-card-content>
     <mat-form-field>
       <mat-label>Select script</mat-label>
@@ -12,6 +12,10 @@
     </mat-form-field>
   </mat-card-content>
 </mat-card>
+
+<div *ngIf="(!isLoading && errorLoadingScripts) || (!isLoadingOptions && errorLoadingOptions)">
+  Error while loading.
+</div>
 
 <mat-card *ngIf="!isLoadingOptions && scriptOptions" class="mb-4">
   <mat-card-content>

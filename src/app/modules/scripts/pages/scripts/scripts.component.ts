@@ -15,6 +15,8 @@ export class ScriptsComponent implements OnInit {
   isLoading = true;
   isLoadingOptions = false;
   isLoadingExecute = false;
+  errorLoadingScripts = false;
+  errorLoadingOptions = false;
   selectedScript = '';
   success = false;
   error = false;
@@ -38,12 +40,14 @@ export class ScriptsComponent implements OnInit {
       },
       err => {
         console.log(err);
+        this.errorLoadingScripts = true;
       }
     );
   }
 
   onScriptSelectChange() {
     this.isLoadingOptions = true;
+    this.errorLoadingOptions = false;
     this.scriptsService.fetchOptions(this.selectedScript)
     .subscribe(
       response => {
@@ -54,6 +58,7 @@ export class ScriptsComponent implements OnInit {
       err => {
         console.log(err);
         this.isLoadingOptions = false;
+        this.errorLoadingOptions = true;
       }
     );
   }
