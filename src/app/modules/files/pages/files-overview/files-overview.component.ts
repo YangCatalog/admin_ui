@@ -10,6 +10,7 @@ import { FolderComponent } from '../../components/folder/folder.component';
 })
 export class FilesOverviewComponent implements OnInit, OnDestroy {
   treeChangeSubscription: Subscription;
+  error = false;
 
   @ViewChild('root') private root: FolderComponent;
 
@@ -18,7 +19,17 @@ export class FilesOverviewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.treeChangeSubscription = this.filesService.subject$.subscribe(
       data => {
-        this.root.reinit();
+        if (data === 'files-fetch-error') {
+          this.error = true;
+        }
+
+        if (data === 'file-delete-ok') {
+          this.root.reinit();
+        }
+
+        if (data === 'file-delete-error') {
+          this.error = true;
+        }
       }
     );
   }

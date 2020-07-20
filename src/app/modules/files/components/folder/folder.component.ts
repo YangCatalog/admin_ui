@@ -54,6 +54,7 @@ export class FolderComponent implements OnInit {
         this.content = response.data;
       },
       err => {
+        this.filesService.subject$.next('files-fetch-error');
         console.log(err);
       }
     );
