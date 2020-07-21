@@ -74,7 +74,11 @@ export class ScriptsComponent implements OnInit {
         control.setValue(definition['default']);
       }
 
-      if (['row_id', 'user_email'].includes(key)) {
+      if (key === 'user_email') {
+        control.setValidators([Validators.required, Validators.email]);
+      }
+
+      if (key === 'row_id') {
         control.setValidators(Validators.required);
       }
 
