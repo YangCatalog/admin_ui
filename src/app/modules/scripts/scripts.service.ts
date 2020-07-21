@@ -18,7 +18,8 @@ export class ScriptsService {
     return this.http.get<any>(`${this.route}/${script}`);
   }
 
-  postScripts(data): Observable<any> {
-    return this.http.post(this.route, data);
+  postScripts(formValue, selectedScript): Observable<any> {
+    const data = {input: formValue};
+    return this.http.post(`${this.route}/${selectedScript}`, data);
   }
 }
