@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class FilesService {
-  route = 'http://localhost:3000/tree';
+  route = '/api/admin/directory-structure';
   selectedFilePath: string;
   subject$ = new Subject<string>();
 
