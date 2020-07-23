@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-content>
+    <h2 class="mb-2">Check job status</h2>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form" novalidate autocomplete="off" >
+      <mat-form-field class="w-100 mb-2">
+        <mat-label>Job ID</mat-label>
+        <input matInput formControlName="jobId">
+      </mat-form-field>
+      <button mat-raised-button type="submit" color="primary" class="mb-2" [disabled]="form.invalid">
+        <span [hidden]="isLoading">Submit</span>
+        <app-loader [isLoading]="isLoading"></app-loader>
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,54 +1,12 @@
-<h1 class="component-h1 primary-color">Scripts</h1>
+<div class="row">
+  <div class="col">
+    <h2 class="component-h1 primary-color">Scripts</h2>
+    <app-script-execute></app-script-execute>
+  </div>
 
-<mat-card *ngIf="!isLoading && !errorLoadingScripts" class=" mb-4">
-  <mat-card-content>
-    <mat-form-field>
-      <mat-label>Select script</mat-label>
-      <mat-select [(value)]="selectedScript" (selectionChange)="onScriptSelectChange()">
-        <mat-option *ngFor="let script of scripts" [value]="script">
-          {{script}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </mat-card-content>
-</mat-card>
-
-<div *ngIf="(!isLoading && errorLoadingScripts) || (!isLoadingOptions && errorLoadingOptions)">
-  Error while loading.
+  <div class="col">
+    <h2 class="component-h1 primary-color">Jobs</h2>
+    <app-job-list></app-job-list>
+    <app-job-status-check></app-job-status-check>
+  </div>
 </div>
-
-<mat-card *ngIf="!isLoadingOptions && scriptOptions" class="mb-4">
-  <mat-card-content>
-    <h2 class="mb-4">Options</h2>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
-      <ng-container *ngFor="let opt of scriptOptions | keyvalue">
-        <div *ngIf="opt.value.type === 'bool'" class="mb-2">
-          <mat-checkbox formControlName="{{opt.key}}" class="mr-4" color="primary">{{opt.key | labelParser}}</mat-checkbox>
-        </div>
-
-        <div *ngIf="opt.value.type !== 'bool'">
-          <mat-form-field class="form-field mb-2">
-            <mat-label>{{opt.key | labelParser}}</mat-label>
-            <input *ngIf="opt.value.type === 'str'" type="text" matInput formControlName={{opt.key}}>
-            <input *ngIf="opt.value.type === 'int'" type="number" step="1" matInput formControlName={{opt.key}}>
-          </mat-form-field>
-        </div>
-      </ng-container>
-      <div class="pt-4">
-        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Execute</button>
-      </div>
-    </form>
-  </mat-card-content>
-</mat-card>
-
-<div class="mb-4" *ngIf="success" class="alert alert-success" role="alert">
-  Executed!
-</div>
-
-<div class="mb-4" *ngIf="error" class="alert alert-danger" role="alert">
-  Error!
-</div>
-
-<mat-card class="mb-4" *ngIf="isLoading || isLoadingOptions || isLoadingExecute">
-  <mat-spinner class="mx-auto"></mat-spinner>
-</mat-card>

@@ -13,6 +13,12 @@ import { ConfirmComponent } from './dialogs/confirm/confirm.component';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { LabelParserPipe } from './pipes/label-parser.pipe';
+import { ScriptExecuteComponent } from './components/script-execute/script-execute.component';
+import { JobListComponent } from './components/job-list/job-list.component';
+import { JobItemComponent } from './components/job-item/job-item.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { JobStatusCheckComponent } from './components/job-status-check/job-status-check.component';
+import { SharedModule } from 'src/app/shared.module';
 
 @NgModule({
   providers: [
@@ -27,7 +33,7 @@ import { LabelParserPipe } from './pipes/label-parser.pipe';
             }
     }
   ],
-  declarations: [ScriptsComponent, ConfirmComponent, LabelParserPipe],
+  declarations: [ScriptsComponent, ConfirmComponent, LabelParserPipe, ScriptExecuteComponent, JobListComponent, JobItemComponent, JobStatusCheckComponent],
   imports: [
     CommonModule,
     ScriptsRoutingModule,
@@ -38,7 +44,9 @@ import { LabelParserPipe } from './pipes/label-parser.pipe';
     MatCheckboxModule,
     MatButtonModule,
     MatDialogModule,
-    MatInputModule
+    MatInputModule,
+    ClipboardModule,
+    SharedModule
   ]
 })
 export class ScriptsModule { }
