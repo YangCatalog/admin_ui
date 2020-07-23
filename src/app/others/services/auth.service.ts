@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -12,6 +11,7 @@ export class AuthService {
     logged = false;
     private loginRoute = `/api/admin/login`;
     private logoutRoute = `/api/admin/logout`;
+    private pingRoute = `/api/admin/ping`;
 
     constructor(private router: Router, private http: HttpClient) {}
 
@@ -40,10 +40,34 @@ export class AuthService {
         }
     }
 
-    isLoggedIn() {
-        // Check if cookie already exists
-        this.logged = document.cookie.split(';').some(cookie => cookie.startsWith('session'));
-        return this.logged;
+    pingSession(pageGuard: string) {
+        const promise = new Promise<boolean>((resolve, reject) => {
+            this.http
+                .get(this.pingRoute)
+                .toPromise()
+                .then(
+                    (res: any) => {
+                        this.logged = res.info === 'Success';
+                        if (pageGuard === 'auth') {
+                            this.router.navigate(['/home']);
+                            resolve(!this.logged);
+                        } else {
+                            resolve(this.logged);
+                        }
+                    },
+                    err => {
+                        if (pageGuard === 'auth') {
+                            this.logged = false;
+                            resolve(!this.logged);
+                        } else {
+                            this.router.navigate(['/login']);
+                            this.logged = false;
+                            resolve(this.logged);
+                        }
+                    }
+                );
+        });
+        return promise;
     }
 
     setLoggedIn(logged: boolean) {
