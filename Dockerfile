@@ -13,4 +13,4 @@ RUN npm install
 COPY . .
 RUN npm run build-prod
 
-CMD cp -r  /usr/src/dist/yang-catalog-admin /usr/share/nginx/html/admin && chown -R ${YANG_ID}:${YANG_GID} /usr/share/nginx/html/admin
+CMD cp -r  /usr/src/dist/yang-catalog-admin/* /usr/share/nginx/html/admin/. && chown -R ${YANG_ID}:${YANG_GID} /usr/share/nginx/html/admin
