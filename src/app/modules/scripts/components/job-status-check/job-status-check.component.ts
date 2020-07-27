@@ -11,6 +11,8 @@ import { finalize } from 'rxjs/operators';
 export class JobStatusCheckComponent implements OnInit {
   form: FormGroup;
   isLoading = false;
+  response;
+  error = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,15 +26,21 @@ export class JobStatusCheckComponent implements OnInit {
   }
 
   onSubmit() {
+    this.error = false;
     this.isLoading = true;
+    this.response = null;
     this.scriptsService.getJobStatus(this.form.value.jobId)
     .pipe(finalize(() => this.isLoading = false))
     .subscribe(
       response => {
-        console.log(response);
+        if (response?.info?.result) {
+          this.response = response;
+        } else {
+          this.error = true;
+        }
       },
       err => {
-        console.log(err);
+        this.error = true;
       }
     );
   }

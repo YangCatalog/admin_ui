@@ -1,6 +1,6 @@
 <mat-card class="mb-4">
   <mat-card-content>
-    <div *ngIf="jobs.length === 0">No Jobs stored in local storage.</div>
+    <div *ngIf="jobs.length === 0">No jobs stored in local storage.</div>
     <ng-container *ngIf="jobs.length > 0">
       <div class="mb-2 d-flex justify-content-end">
         <button mat-raised-button color="primary" (click)="onClearFinished()">Clear finished</button>
