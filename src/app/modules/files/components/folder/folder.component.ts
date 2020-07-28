@@ -18,6 +18,12 @@ export class FolderComponent implements OnInit {
     files: [],
     folders: []
   };
+  ITEMS_RENDERED_AT_ONCE = 200;
+  INTERVAL_IN_MS = 10;
+  intervals = {
+    files: null,
+    folders: null
+  }
 
   constructor(private filesService: FilesService) { }
 
@@ -49,14 +55,35 @@ export class FolderComponent implements OnInit {
     }))
     .subscribe(
       response => {
-        this.content.files = response.data.files;
-        this.content.folders = response.data.folders;
+        this.progressiveRender(response.data.files, 'files');
+        this.progressiveRender(response.data.folders, 'folders');
       },
       err => {
         this.filesService.subject$.next('files-fetch-error');
         console.log(err);
       }
     );
+  }
+
+  progressiveRender(data, type) {
+    let currentIndex = 0;
+    this.intervals[type] = setInterval( () => {
+      const nextIndex = currentIndex + this.ITEMS_RENDERED_AT_ONCE;
+
+      for (let n = currentIndex; n <= nextIndex ; n++) {
+        if (n >= data.length) {
+          clearInterval(this.intervals[type]);
+          break;
+        }
+        this.content[type].push(data[n]);
+      }
+
+      currentIndex += this.ITEMS_RENDERED_AT_ONCE;
+    }, this.INTERVAL_IN_MS);
+  }
+
+  trackName(index: number, item: any) {
+    return item.name;
   }
 
   reinit() {

@@ -12,7 +12,7 @@
   </div>
 
   <div class="ml-4" [hidden]=closed>
-    <app-file *ngFor="let file of content.files" [file]=file [parentPath]="newPath"></app-file>
-    <app-folder *ngFor="let folder of content.folders" [folder]=folder [parentPath]="newPath"></app-folder>
+    <app-file *ngFor="let file of content.files; trackBy: trackName" [file]=file [parentPath]="newPath"></app-file>
+    <app-folder *ngFor="let folder of content.folders; trackBy: trackName" [folder]=folder [parentPath]="newPath"></app-folder>
   </div>
 </div>
