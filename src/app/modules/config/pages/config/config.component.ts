@@ -16,8 +16,8 @@ export class ConfigComponent implements OnInit {
   @ViewChild('textEditor') textEditor: TextEditorComponent;
 
   constructor(
-      private configService: ConfigService,
-    ) { }
+    private configService: ConfigService,
+  ) { }
 
   ngOnInit(): void {
     this.fetchConfig();
@@ -25,32 +25,32 @@ export class ConfigComponent implements OnInit {
 
   fetchConfig() {
     this.configService.fetchConfig()
-    .pipe(finalize(() => (this.isLoading = false)))
-    .subscribe(
-      response => {
-        this.configText = response;
-      },
-      err => {
-        this.error = true;
-        console.log(err);
-      }
-    );
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        response => {
+          this.configText = response.data;
+        },
+        err => {
+          this.error = true;
+          console.log(err);
+        }
+      );
   }
 
   saveChange(editedConfig: string) {
     this.textEditor.startLoading();
     this.configService.saveConfig(editedConfig)
-    .pipe(finalize( () => {
-      this.textEditor.stopLoading()
-    } ))
-    .subscribe(
-      response => {
-      this.textEditor.disableConfigEdit();
-      this.textEditor.showSuccess();
-      },
-      err => {
-        this.textEditor.showError();
-      }
-    );
+      .pipe(finalize(() => {
+        this.textEditor.stopLoading();
+      }))
+      .subscribe(
+        response => {
+          this.textEditor.disableConfigEdit();
+          this.textEditor.showSuccess();
+        },
+        err => {
+          this.textEditor.showError();
+        }
+      );
   }
 }

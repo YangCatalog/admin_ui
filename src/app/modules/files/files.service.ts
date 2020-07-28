@@ -6,8 +6,7 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class FilesService {
-  // route = '/api/admin/directory-structure';
-  route = 'http://localhost:3000/tree';
+  route = '/api/admin/directory-structure';
   selectedFilePath: string;
   subject$ = new Subject<string>();
 
@@ -17,12 +16,12 @@ export class FilesService {
     return this.http.get<any>(`${this.route}${path}`);
   }
 
-  fetchFileContent() {
+  fetchFileContent(): Observable<any> {
     const headers = new HttpHeaders({
-      'Accept': 'text/plain',
+      Accept: 'text/plain',
       'Content-Type': 'text/plain'
     });
-    return this.http.get(`${this.route}${this.selectedFilePath}`, { headers, responseType: 'text'});
+    return this.http.get(`${this.route}/read${this.selectedFilePath}`, { headers });
   }
 
   updateFile(fileContent: string): Observable<any> {
@@ -35,8 +34,7 @@ export class FilesService {
   }
 
   deleteFile(path: string) {
-    this.http.delete(`${this.route}${path}`)
-    .subscribe(
+    this.http.delete(`${this.route}${path}`).subscribe(
       response => {
         this.subject$.next('file-delete-ok');
       },

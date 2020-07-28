@@ -19,22 +19,22 @@ export class FileEditComponent implements OnInit {
   constructor(
     public filesService: FilesService,
     private router: Router
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     if (this.filesService.selectedFilePath) {
       this.isLoading = true;
       this.filesService.fetchFileContent()
-      .pipe(finalize(() => this.isLoading = false))
-      .subscribe(
-        response => {
-          this.fileText = response;
-        },
-        err => {
-          console.log(err);
-          this.error = true;
-        }
-      );
+        .pipe(finalize(() => this.isLoading = false))
+        .subscribe(
+          response => {
+            this.fileText = response.data;
+          },
+          err => {
+            console.log(err);
+            this.error = true;
+          }
+        );
     } else {
       this.router.navigate(['/files/overview']);
     }
@@ -43,18 +43,18 @@ export class FileEditComponent implements OnInit {
   saveChange(editedText: string) {
     this.textEditor.startLoading();
     this.filesService.updateFile(editedText)
-    .pipe(finalize( () => {
-      this.textEditor.stopLoading()
-    } ))
-    .subscribe(
-      response => {
-      this.textEditor.disableConfigEdit();
-      this.textEditor.showSuccess();
-      },
-      err => {
-        this.textEditor.showError();
-      }
-    );
+      .pipe(finalize(() => {
+        this.textEditor.stopLoading();
+      }))
+      .subscribe(
+        response => {
+          this.textEditor.disableConfigEdit();
+          this.textEditor.showSuccess();
+        },
+        err => {
+          this.textEditor.showError();
+        }
+      );
   }
 
 }

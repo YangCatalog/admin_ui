@@ -11,17 +11,17 @@ export class ConfigService {
 
   fetchConfig(): Observable<any> {
     const headers = new HttpHeaders({
-      'Accept': 'text/plain',
+      Accept: 'text/plain',
       'Content-Type': 'text/plain'
     });
-    return this.http.get(this.configRoute, { headers, responseType: 'text'});
+    return this.http.get(this.configRoute, { headers });
   }
 
   saveConfig(config: string): Observable<any> {
     const headers = new HttpHeaders({
-      'Accept': 'text/plain',
+      Accept: 'text/plain',
       'Content-Type': 'text/plain'
     });
-    return this.http.put(this.configRoute, config, { headers, responseType: 'text'});
+    return this.http.put(this.configRoute, config, { headers, responseType: 'text' });
   }
 }
