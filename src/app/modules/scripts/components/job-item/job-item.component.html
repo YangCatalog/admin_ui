@@ -1,0 +1,21 @@
+<mat-card class="mb-2">
+  <mat-card-content>
+    <div class="d-flex">
+      <div class="mr-4"><b>Script name:</b> {{job.jobName}}</div>
+      <div><b>Job ID:</b> {{job.jobId}}</div>
+    </div>
+    <div *ngIf="!error">
+      <div>
+        <b>Status:</b>&nbsp;
+        <span *ngIf="!isLoading">{{status}}</span>
+        <span *ngIf="isLoading">- loading ...</span>
+      </div>
+      <div>
+        <b>Reason:</b>&nbsp;<span>{{reason}}</span>
+      </div>
+    </div>
+    <div *ngIf="error">
+      Error while loading.
+    </div>
+  </mat-card-content>
+</mat-card>

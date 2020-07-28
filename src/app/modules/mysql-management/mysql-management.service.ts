@@ -14,7 +14,7 @@ export class MysqlManagementService {
   }
 
   fetchTable(tableName: string): Observable<any> {
-    return this.http.get<string[]>(`${this.route}/${tableName}`);
+    return this.http.get<any>(`${this.route}/${tableName}`);
   }
 
   saveNewRecord(tableName: string, data: any): Observable<any> {
@@ -22,6 +22,6 @@ export class MysqlManagementService {
   }
 
   deleteRecord(tableName: string, recordId: number): Observable<any> {
-    return this.http.delete(`${this.route}/${tableName}/id/${recordId}`,);
+    return this.http.delete(`${this.route}/${tableName}/id/${recordId}`);
   }
 }

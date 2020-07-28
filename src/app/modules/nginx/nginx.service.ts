@@ -6,15 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class NginxService {
-
+  route = 'http://localhost:3000/yangcatalog-nginx';
   constructor(private http: HttpClient) { }
 
-  fetchConfig(): Observable<any> {
-    const headers = new HttpHeaders({
-      'Accept': 'text/plain',
-      'Content-Type': 'text/plain'
-    });
-    return this.http.get('/nginx', { headers, responseType: 'text'});
+  fetchConfigNames(): Observable<any> {
+    return this.http.get<any>(this.route);
+  }
+
+  fetchConfig(selectedNginxConf: string): Observable<any> {
+    return this.http.get<any>(`${this.route}/${selectedNginxConf}`);
   }
 
   saveConfig(config: string): Observable<any> {
@@ -22,6 +22,6 @@ export class NginxService {
       'Accept': 'text/plain',
       'Content-Type': 'text/plain'
     });
-    return this.http.post('/nginx', config, { headers, responseType: 'text'});
+    return this.http.post('/nginx', config, { headers, responseType: 'text' });
   }
 }

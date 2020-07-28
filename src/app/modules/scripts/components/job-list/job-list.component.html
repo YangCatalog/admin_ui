@@ -1,0 +1,11 @@
+<mat-card class="mb-4">
+  <mat-card-content>
+    <div *ngIf="jobs.length === 0">No jobs stored in local storage.</div>
+    <ng-container *ngIf="jobs.length > 0">
+      <div class="mb-2 d-flex justify-content-end">
+        <button mat-raised-button color="primary" (click)="onClearFinished()">Clear finished</button>
+      </div>
+      <app-job-item *ngFor="let job of jobs;trackBy: trackJob" [job]=job></app-job-item>
+    </ng-container>
+  </mat-card-content>
+</mat-card>

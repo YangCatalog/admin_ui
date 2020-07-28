@@ -1,0 +1,14 @@
+<h1 class="component-h1 primary-color">Edit File</h1>
+<div class="mb-4 text-break">{{filesService.selectedFilePath}}</div>
+
+<mat-card *ngIf="isLoading">
+  <mat-spinner class="mx-auto"></mat-spinner>
+</mat-card>
+
+<ng-container *ngIf="!error">
+  <app-text-editor #textEditor *ngIf="!isLoading" [text]="fileText" (saveConfirm)="saveChange($event)"></app-text-editor>
+</ng-container>
+
+<div *ngIf="error">
+  Error while loading.
+</div>
