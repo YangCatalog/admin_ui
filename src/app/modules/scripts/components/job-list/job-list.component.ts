@@ -31,6 +31,10 @@ export class JobListComponent implements OnInit, OnDestroy {
     this.scriptsService.change$.next('clear-finished');
   }
 
+  trackJob(index: number, job: any) {
+    return job.jobId;
+  }
+
   ngOnDestroy() {
     this.changeSubscription.unsubscribe();
   }
