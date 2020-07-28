@@ -6,22 +6,22 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ConfigService {
-
+  private configRoute = '/api/admin/yangcatalog-config';
   constructor(private http: HttpClient) { }
 
   fetchConfig(): Observable<any> {
     const headers = new HttpHeaders({
-      'Accept': 'text/plain',
+      Accept: 'text/plain',
       'Content-Type': 'text/plain'
     });
-    return this.http.get('http://localhost:3000/plaintext', { headers, responseType: 'text'});
+    return this.http.get(this.configRoute, { headers });
   }
 
   saveConfig(config: string): Observable<any> {
     const headers = new HttpHeaders({
-      'Accept': 'text/plain',
+      Accept: 'text/plain',
       'Content-Type': 'text/plain'
     });
-    return this.http.post('http://localhost:3000/plaintext', config, { headers, responseType: 'text'});
+    return this.http.put(this.configRoute, config, { headers, responseType: 'text' });
   }
 }

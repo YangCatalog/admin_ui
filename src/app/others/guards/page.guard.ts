@@ -8,14 +8,11 @@ import { AuthService } from '../services/auth.service';
 export class PageGuard implements CanActivate, CanLoad {
     constructor(private authService: AuthService, private router: Router) {}
 
-    canActivate() {
+    canActivate(): Promise<boolean> {
         return this.canLoad();
     }
 
-    canLoad() {
-        if (!this.authService.isLoggedIn()) {
-            this.router.navigate(['/login']);
-        }
-        return this.authService.isLoggedIn();
+    canLoad(): Promise<boolean> {
+        return this.authService.pingSession('page');
     }
 }

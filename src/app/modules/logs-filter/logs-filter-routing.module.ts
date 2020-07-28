@@ -5,11 +5,6 @@ import { LogsComponent } from './pages/logs/logs.component';
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'filter',
-        pathMatch: 'full'
-    },
-    {
-        path: 'filter',
         component: LogsComponent
     }
 ];

@@ -8,10 +8,7 @@ import { AuthService } from '../services/auth.service';
 export class AuthGuard implements CanActivate {
     constructor(private authService: AuthService, private router: Router) {}
 
-    canActivate(): boolean {
-        if (this.authService.isLoggedIn()) {
-            this.router.navigate(['/home']);
-        }
-        return !this.authService.isLoggedIn();
+    canActivate(): Promise<boolean> {
+        return this.authService.pingSession('auth');
     }
 }
