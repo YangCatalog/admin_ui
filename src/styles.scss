@@ -27,3 +27,34 @@ body {
     height: 50px;
     width: 120px;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+
+// Files tab
+.files-item {
+  font-size: 26px;
+}
+
+.files-item-meta {
+  font-size: 14px;
+  height: 20px;
+  position: relative;
+  top: 11px;
+}
+// END Files tab
+
+// remove arrows on input type number
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}

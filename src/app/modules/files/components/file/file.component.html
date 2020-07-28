@@ -1,0 +1,13 @@
+<div>
+  <div class="d-flex flex-nowrap">
+    <div class="files-item">
+      <mat-icon [inline]="true">text_snippet</mat-icon>
+    </div>
+    <div class="files-item pl-2">{{file.name}}&nbsp;</div>
+    <div class="file-actions-wrap files-item ml-2 d-flex flex-nowrap align-items-center">
+      <mat-icon class="cursor-pointer" (click)="onEdit()">edit</mat-icon>
+      <mat-icon class="cursor-pointer" (click)="onDelete()">delete</mat-icon>
+    </div>
+    <div class="ml-2 files-item-meta">(size:&nbsp;{{file.size | bytes}},&nbsp;permissions:&nbsp;{{file.permissions}},&nbsp;group:&nbsp;{{file.group}},&nbsp;user:&nbsp;{{file.user}})</div>
+  </div>
+</div>

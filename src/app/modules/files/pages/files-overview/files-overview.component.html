@@ -1,0 +1,11 @@
+<h1 class="component-h1 primary-color">Files Management</h1>
+
+<mat-card *ngIf="!error" class="mb-4">
+  <mat-card-content class="overflow-y-scroll">
+    <app-folder [folder]="{name: ''}" [parentPath]="''" #root></app-folder>
+  </mat-card-content>
+</mat-card>
+
+<div *ngIf="error">
+  Error while loading.
+</div>

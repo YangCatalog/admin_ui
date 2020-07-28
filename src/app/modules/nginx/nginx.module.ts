@@ -7,6 +7,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { SharedModule } from 'src/app/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   providers: [
@@ -27,7 +30,10 @@ import { SharedModule } from 'src/app/shared.module';
     NginxRoutingModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatButtonModule
   ]
 })
 export class NginxModule { }
