@@ -17,6 +17,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/d
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
 import { FolderComponent } from './components/folder/folder.component';
 import { FileComponent } from './components/file/file.component';
+import { BytesPipe } from './pipes/bytes.pipe';
 
 @NgModule({
   providers: [
@@ -31,7 +32,7 @@ import { FileComponent } from './components/file/file.component';
             }
     }
   ],
-  declarations: [FilesOverviewComponent, FileEditComponent, DeleteDialogComponent, FolderComponent, FileComponent],
+  declarations: [FilesOverviewComponent, FileEditComponent, DeleteDialogComponent, FolderComponent, FileComponent, BytesPipe],
   imports: [
     CommonModule,
     FilesRoutingModule,

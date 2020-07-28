@@ -2,7 +2,7 @@
 
 <mat-card *ngIf="!error" class="mb-4">
   <mat-card-content class="overflow-y-scroll">
-    <app-folder [name]="''" [parentPath]="''" #root></app-folder>
+    <app-folder [folder]="{name: ''}" [parentPath]="''" #root></app-folder>
   </mat-card-content>
 </mat-card>
 

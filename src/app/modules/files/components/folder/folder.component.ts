@@ -8,11 +8,12 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./folder.component.scss']
 })
 export class FolderComponent implements OnInit {
-  @Input() name: string;
+  @Input() folder;
   @Input() parentPath: string;
   newPath: string;
   closed = true;
   isLoading = false;
+  isRoot = false;
   content = {
     files: [],
     folders: []
@@ -22,15 +23,12 @@ export class FolderComponent implements OnInit {
 
   ngOnInit(): void {
     // root directory
-    if (this.parentPath === '' && this.name === '') {
+    if (this.parentPath === '' && this.folder.name === '') {
       this.newPath = '';
-    } else {
-      this.newPath = `${this.parentPath}/${this.name}`;
-    }
-
-    // root directory
-    if (this.name === '') {
       this.toggle();
+      this.isRoot = true;
+    } else {
+      this.newPath = `${this.parentPath}/${this.folder.name}`;
     }
   }
 
@@ -51,7 +49,8 @@ export class FolderComponent implements OnInit {
     }))
     .subscribe(
       response => {
-        this.content = response.data;
+        this.content.files = response.data.files;
+        this.content.folders = response.data.folders;
       },
       err => {
         this.filesService.subject$.next('files-fetch-error');

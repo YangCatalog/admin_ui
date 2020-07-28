@@ -11,10 +11,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./file.component.scss']
 })
 export class FileComponent implements OnInit {
-  @Input() name: string;
+  @Input() file;
   @Input() parentPath: string;
   path: string;
   dialogRefSubscription: Subscription;
+
 
   constructor(
     public dialog: MatDialog,
@@ -23,7 +24,7 @@ export class FileComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.path = `${this.parentPath}/${this.name}`;
+    this.path = `${this.parentPath}/${this.file.name}`;
   }
 
   onEdit() {
@@ -34,7 +35,7 @@ export class FileComponent implements OnInit {
   onDelete() {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: {
-        fileName: this.name,
+        fileName: this.file.name,
         path: this.parentPath || '/'
       }
     });

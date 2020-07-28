@@ -33,12 +33,18 @@ body {
 }
 
 
-
-.files {
-  &__main-icon-wrap {
-    font-size: 26px;
-  }
+// Files tab
+.files-item {
+  font-size: 26px;
 }
+
+.files-item-meta {
+  font-size: 14px;
+  height: 20px;
+  position: relative;
+  top: 11px;
+}
+// END Files tab
 
 // remove arrows on input type number
 /* Chrome, Safari, Edge, Opera */
