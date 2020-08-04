@@ -20,8 +20,13 @@ export class NginxService {
   saveConfig(config: string): Observable<any> {
     const headers = new HttpHeaders({
       Accept: 'text/plain',
-      'Content-Type': 'text/plain'
+      'Content-Type': 'application/json'
     });
-    return this.http.post(this.nginxRoute, config, { headers, responseType: 'text' });
+    const body = {
+      input: {
+        data: config
+      }
+    };
+    return this.http.post(this.nginxRoute, body, { headers });
   }
 }

@@ -20,8 +20,13 @@ export class ConfigService {
   saveConfig(config: string): Observable<any> {
     const headers = new HttpHeaders({
       Accept: 'text/plain',
-      'Content-Type': 'text/plain'
+      'Content-Type': 'application/json'
     });
-    return this.http.put(this.configRoute, config, { headers, responseType: 'text' });
+    const body = {
+      input: {
+        data: config
+      }
+    };
+    return this.http.put(this.configRoute, body, { headers });
   }
 }
