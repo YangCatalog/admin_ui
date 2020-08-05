@@ -1,0 +1,23 @@
+<mat-card class="hc-card">
+  <mat-card-header [style.background-color]="statusColor">
+    <mat-card-title>{{ serviceName }}</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-spinner *ngIf="isLoading; else card" class="mx-auto"></mat-spinner>
+    <ng-template #card>
+      <div>
+        <b>Info:</b>&nbsp;
+        <span>{{ info }}</span>
+      </div>
+      <div *ngIf="status !== 'down'">
+        <b>Message:</b>&nbsp;
+        <span>{{ message }}</span>
+      </div>
+      <div *ngIf="status === 'down'">
+        <b>Error:</b>&nbsp;
+        <span>{{ error }}</span>
+      </div>
+    </ng-template>
+  </mat-card-content>
+</mat-card>

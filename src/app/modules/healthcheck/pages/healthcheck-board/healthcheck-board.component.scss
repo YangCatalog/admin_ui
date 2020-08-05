@@ -1,0 +1,13 @@
+.hc-dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+}
+
+.hc-dashboard > app-healthcheck-card{
+    flex: 1 1 30%;
+    height: 250px;
+    padding: 10px;
+}

@@ -49,7 +49,7 @@ export class AuthService {
           (res: any) => {
             this.logged = res.info === 'Success';
             if (pageGuard === 'auth') {
-              this.router.navigate(['/home']);
+              this.router.navigate(['/healthcheck']);
               resolve(!this.logged);
             } else {
               resolve(this.logged);
