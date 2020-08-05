@@ -26,28 +26,28 @@ export class JobItemComponent implements OnInit, OnDestroy {
     this.getStatus();
 
     this.changeSubscription = this.scriptsService.change$
-    .subscribe(
-      subs => {
-        if (subs === 'clear-finished') {
-          if (this.status === 'Finished successfully') {
-            this.scriptsService.removeJob({
-              jobId: this.job.jobId,
-              finished: true
-            });
-          } else {
-            this.scriptsService.removeJob({
-              jobId: this.job.jobId,
-              finished: false
-            });
+      .subscribe(
+        subs => {
+          if (subs === 'clear-finished') {
+            if (this.status !== 'In progress') {
+              this.scriptsService.removeJob({
+                jobId: this.job.jobId,
+                finished: true
+              });
+            } else {
+              this.scriptsService.removeJob({
+                jobId: this.job.jobId,
+                finished: false
+              });
+            }
           }
         }
-      }
-    )
+      );
   }
 
   startTimer() {
     if (typeof this.interval === 'undefined') {
-      this.interval = setInterval( () => {
+      this.interval = setInterval(() => {
         this.sec--;
         if (this.sec === 0) {
           this.getStatus();
@@ -64,38 +64,38 @@ export class JobItemComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.sec = SECONDS;
     this.scriptsService.getJobStatus(this.job.jobId)
-    .pipe(finalize(() => this.isLoading = false))
-    .subscribe(
-      response => {
-        if (response?.info?.result) {
-          switch (response.info.result) {
-            case 'In progress':
-              this.status = response.info.result;
-              this.startTimer();
-              break;
-            case 'Failed':
-              this.status = response.info.result;
-              this.stopTimer();
-              break;
-            case 'Finished successfully':
-              this.status = response.info.result;
-              this.stopTimer();
-              break;
-            default:
-              this.error = true;
-              this.stopTimer();
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe(
+        response => {
+          if (response?.info?.result) {
+            switch (response.info.result) {
+              case 'In progress':
+                this.status = response.info.result;
+                this.startTimer();
+                break;
+              case 'Failed':
+                this.status = response.info.result;
+                this.stopTimer();
+                break;
+              case 'Finished successfully':
+                this.status = response.info.result;
+                this.stopTimer();
+                break;
+              default:
+                this.error = true;
+                this.stopTimer();
+            }
+            this.reason = response.info.reason;
+          } else {
+            this.error = true;
+            this.stopTimer();
           }
-          this.reason = response.info.reason;
-        } else {
+        },
+        err => {
           this.error = true;
           this.stopTimer();
         }
-      },
-      err => {
-        this.error = true;
-        this.stopTimer();
-      }
-    );
+      );
   }
 
   ngOnDestroy() {

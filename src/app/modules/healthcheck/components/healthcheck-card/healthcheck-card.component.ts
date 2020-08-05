@@ -15,10 +15,20 @@ export class HealthcheckCardComponent implements OnInit {
   info = '';
   error = '';
   message = '';
+  timestamp: number;
 
   constructor(private healthcheckService: HealthcheckService) { }
 
   ngOnInit(): void {
+    this.getHealthStatus();
+  }
+
+  onReloadClick() {
+    this.statusColor = '#cdcdcd';
+    this.getHealthStatus();
+  }
+
+  private getHealthStatus() {
     this.isLoading = true;
     this.healthcheckService.getServiceHealthStatus(this.serviceName)
       .pipe(finalize(() => (this.isLoading = false)))
@@ -32,6 +42,7 @@ export class HealthcheckCardComponent implements OnInit {
             this.message = response.message;
           }
           this.statusColor = this.healthcheckService.getColorByStatus(this.status);
+          this.timestamp = Date.now();
         },
         err => {
           console.log(err);

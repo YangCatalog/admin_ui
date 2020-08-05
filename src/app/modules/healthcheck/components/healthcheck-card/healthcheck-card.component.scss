@@ -2,6 +2,12 @@
   height: 100%;
 }
 
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 mat-card-header {
   align-items: center;
   justify-content: center;
