@@ -1,0 +1,15 @@
+<h1 class="component-h1 primary-color">Healthcheck</h1>
+
+<mat-card *ngIf="isLoading; else dashboard">
+  <mat-spinner class="mx-auto"></mat-spinner>
+</mat-card>
+
+<ng-template #dashboard>
+  <div *ngIf="servicesList.length > 0" class="hc-dashboard">
+    <app-healthcheck-card *ngFor="let service of servicesList" [serviceName]=service></app-healthcheck-card>
+  </div>
+</ng-template>
+
+<div *ngIf="error">
+  Error while loading.
+</div>
