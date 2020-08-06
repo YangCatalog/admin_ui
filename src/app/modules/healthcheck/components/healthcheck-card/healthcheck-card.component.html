@@ -18,6 +18,14 @@
         <b>Error:</b>&nbsp;
         <span>{{ error }}</span>
       </div>
+      <div>
+        <b>Timestamp:</b>&nbsp;
+        <span>{{ timestamp | date:'medium' }}</span>
+      </div>
     </ng-template>
   </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button [hidden]="isLoading" color="primary" (click)="onReloadClick()">Reload</button>
+  </mat-card-actions>
 </mat-card>
