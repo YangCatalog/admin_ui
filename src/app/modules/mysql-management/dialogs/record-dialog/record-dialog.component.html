@@ -1,5 +1,5 @@
-<div class="mb-2" *ngIf="!data.edit">
-  <b>Create record</b>
+<div class="mb-2">
+  <b>{{ dialogTitle }}</b>
 </div>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate autocomplete="off">

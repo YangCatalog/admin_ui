@@ -28,7 +28,7 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     public dialog: MatDialog
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -58,7 +58,7 @@ export class TextEditorComponent implements OnInit, OnDestroy {
     this.editing = false;
   }
 
-  discardChanges() {
+  cancelChanges() {
     this.form.get('text').setValue(this.text);
     this.disableConfigEdit();
   }
@@ -74,7 +74,7 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   onSubmit() {
     const dialogRef = this.dialog.open(TextEditorSaveDialogComponent, {});
 
-    this.dialogSaveSubscription = dialogRef.afterClosed().subscribe( confirm => {
+    this.dialogSaveSubscription = dialogRef.afterClosed().subscribe(confirm => {
       if (confirm) {
         this.saveConfirm.emit(this.form.value.text);
       }
@@ -93,12 +93,12 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   showSuccess() {
     this.text = this.form.value.text;
     this.success = true;
-    setTimeout(() => {this.success = false}, 3000);
+    setTimeout(() => { this.success = false; }, 3000);
   }
 
   showError() {
     this.error = true;
-    setTimeout(() => {this.error = false}, 3000);
+    setTimeout(() => { this.error = false; }, 3000);
   }
 
   ngOnDestroy() {

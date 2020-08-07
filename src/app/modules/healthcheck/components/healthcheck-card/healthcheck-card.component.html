@@ -19,8 +19,8 @@
         <span>{{ error }}</span>
       </div>
       <div>
-        <b>Timestamp:</b>&nbsp;
-        <span>{{ timestamp | date:'medium' }}</span>
+        <b>Updated:</b>&nbsp;
+        <span>{{ timestamp | date:'medium':'UTC' }} UTC</span>
       </div>
     </ng-template>
   </mat-card-content>

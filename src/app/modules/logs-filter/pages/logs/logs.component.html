@@ -1,150 +1,127 @@
 <h1 class="component-h1 primary-color">Logs filter</h1>
 
 <mat-card>
-    <ng-template #loader>
-        <mat-spinner class="loader"></mat-spinner>
-    </ng-template>
-    <mat-card-content *ngIf="!isFormLoading; else loader">
-        <form (ngSubmit)="onFormSubmit()" [formGroup]="logsFilterForm" novalidate autocomplete="off">
-            <div class="row">
-                <div class="col-4">
-                    <mat-form-field class="w-100">
-                        <mat-label>Log file</mat-label>
-                        <mat-select formControlName="file-name" required>
-                            <mat-option *ngFor="let file of fileNames" [value]="file">
-                                {{ file }}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="logsFilterForm.controls['file-name'].invalid"
-                            >You must select an option</mat-error
-                        >
-                    </mat-form-field>
-                </div>
+  <ng-template #loader>
+    <mat-spinner class="loader"></mat-spinner>
+  </ng-template>
+  <mat-card-content *ngIf="!isFormLoading; else loader">
+    <form (ngSubmit)="onFormSubmit()" [formGroup]="logsFilterForm" novalidate autocomplete="off">
+      <div class="row">
+        <div class="col-4">
+          <mat-form-field class="w-100">
+            <mat-label>Log file</mat-label>
+            <mat-select formControlName="file-name" required>
+              <mat-option *ngFor="let file of fileNames" [value]="file">
+                {{ file }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="logsFilterForm.controls['file-name'].invalid">You must select an option</mat-error>
+          </mat-form-field>
+        </div>
 
-                <div class="col-2">
-                    <mat-form-field class="w-100">
-                        <mat-label>Lines per page</mat-label>
-                        <input
-                            matInput
-                            type="number"
-                            step="1"
-                            min="1"
-                            max="2000"
-                            formControlName="lines-per-page"
-                            [value]="paginatorOptions.pageSize"
-                        />
-                    </mat-form-field>
-                </div>
-                <div class="col-2">
-                    <mat-form-field class="w-100">
-                        <mat-label>Page</mat-label>
-                        <input
-                            matInput
-                            type="number"
-                            step="1"
-                            min="1"
-                            max="4294967295"
-                            formControlName="page"
-                            [value]="paginatorOptions.pageIndex"
-                        />
-                    </mat-form-field>
-                </div>
+        <div class="col-2">
+          <mat-form-field class="w-100">
+            <mat-label>Lines per page</mat-label>
+            <input matInput type="number" step="1" min="1" max="2000" formControlName="lines-per-page"
+              [value]="paginatorOptions.pageSize" />
+          </mat-form-field>
+        </div>
+        <div class="col-2">
+          <mat-form-field class="w-100">
+            <mat-label>Page</mat-label>
+            <input matInput type="number" step="1" min="1" max="4294967295" formControlName="page"
+              [value]="paginatorOptions.pageIndex" />
+          </mat-form-field>
+        </div>
 
-                <div class="col-4">
-                    <mat-form-field class="w-100">
-                        <mat-label>Date from</mat-label>
-                        <input matInput type="datetime-local" formControlName="from-date" />
-                    </mat-form-field>
-                </div>
-            </div>
-            <ng-container formGroupName="filter">
-                <div class="row">
-                    <div class="col-2">
-                        <mat-checkbox color="primary" formControlName="match-case">Match case</mat-checkbox>
-                    </div>
+        <div class="col-2">
+          <mat-form-field class="w-100">
+            <mat-label>Date from</mat-label>
+            <input matInput type="datetime-local" formControlName="from-date" />
+          </mat-form-field>
+        </div>
+        <div class="col-2">
+          <mat-form-field class="w-100">
+            <mat-label>Date to</mat-label>
+            <input matInput type="datetime-local" formControlName="to-date" />
+          </mat-form-field>
+        </div>
+      </div>
+      <ng-container formGroupName="filter">
+        <div class="row">
+          <div class="col-2">
+            <mat-checkbox color="primary" formControlName="match-case">Match case</mat-checkbox>
+          </div>
 
-                    <div class="col-2">
-                        <mat-checkbox color="primary" formControlName="match-words">Match words</mat-checkbox>
-                    </div>
+          <div class="col-2">
+            <mat-checkbox color="primary" formControlName="match-words">Match words</mat-checkbox>
+          </div>
 
-                    <div class="col-2">
-                        <mat-form-field class="w-100">
-                            <mat-label>Level</mat-label>
-                            <mat-select formControlName="level">
-                                <mat-option *ngFor="let level of levelOptions" [value]="level">
-                                    {{ level }}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
+          <div class="col-2">
+            <mat-form-field class="w-100">
+              <mat-label>Level</mat-label>
+              <mat-select formControlName="level">
+                <mat-option *ngFor="let level of levelOptions" [value]="level">
+                  {{ level }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
 
-                    <div class="col-3">
-                        <mat-form-field class="w-100">
-                            <mat-label>Search for</mat-label>
-                            <input matInput formControlName="search-for" />
-                        </mat-form-field>
-                    </div>
+          <div class="col-3">
+            <mat-form-field class="w-100">
+              <mat-label>Search for</mat-label>
+              <input matInput formControlName="search-for" />
+            </mat-form-field>
+          </div>
 
-                    <div class="col-3">
-                        <mat-form-field class="w-100">
-                            <mat-label>Filter out</mat-label>
-                            <input matInput formControlName="filter-out" />
-                        </mat-form-field>
-                    </div>
-                </div>
-            </ng-container>
-            <button mat-raised-button type="submit" color="primary" [disabled]="isTableLoading" class="loader-button">
-                <span [hidden]="isTableLoading">Filter</span>
-                <app-loader [isLoading]="isTableLoading"></app-loader>
-            </button>
-        </form>
-    </mat-card-content>
+          <div class="col-3">
+            <mat-form-field class="w-100">
+              <mat-label>Filter out</mat-label>
+              <input matInput formControlName="filter-out" />
+            </mat-form-field>
+          </div>
+        </div>
+      </ng-container>
+      <button mat-raised-button type="submit" color="primary" [disabled]="isTableLoading" class="loader-button">
+        <span [hidden]="isTableLoading">Filter</span>
+        <app-loader [isLoading]="isTableLoading"></app-loader>
+      </button>
+    </form>
+  </mat-card-content>
 </mat-card>
 
 <div class="filtered-logs-table" *ngIf="filteredLogsDataSource">
-    <mat-form-field class="w-100">
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" #input />
-    </mat-form-field>
-    <mat-paginator
-        [length]="paginatorOptions.length"
-        [pageIndex]="paginatorOptions.pageIndex - 1"
-        [pageSize]="paginatorOptions.pageSize"
-        [pageSizeOptions]="paginatorOptions.pageSizeOptions"
-        (page)="onPageChange($event)"
-        showFirstLastButtons
-    >
-    </mat-paginator>
-    <mat-table [dataSource]="filteredLogsDataSource">
-        <ng-container matColumnDef="timestamp">
-            <mat-header-cell *matHeaderCellDef> Timestamp </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{ element.timestamp }}</mat-cell>
-        </ng-container>
-        ><ng-container matColumnDef="level">
-            <mat-header-cell *matHeaderCellDef> Level </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{ element.level }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="class">
-            <mat-header-cell *matHeaderCellDef> Class </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{ element.class }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="message">
-            <mat-header-cell *matHeaderCellDef> Log message</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{ element.message }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="lineNumber">
-            <mat-header-cell *matHeaderCellDef> Line number </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{ element.lineNumber }}</mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-    </mat-table>
+  <mat-form-field class="w-100">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input />
+  </mat-form-field>
+  <mat-paginator [length]="paginatorOptions.length" [pageIndex]="paginatorOptions.pageIndex - 1"
+    [pageSize]="paginatorOptions.pageSize" [pageSizeOptions]="paginatorOptions.pageSizeOptions"
+    (page)="onPageChange($event)" showFirstLastButtons>
+  </mat-paginator>
+  <mat-table [dataSource]="filteredLogsDataSource">
+    <ng-container matColumnDef="timestamp">
+      <mat-header-cell *matHeaderCellDef> Timestamp </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.timestamp }}</mat-cell>
+    </ng-container>
+    ><ng-container matColumnDef="level">
+      <mat-header-cell *matHeaderCellDef> Level </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.level }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="class">
+      <mat-header-cell *matHeaderCellDef> Class </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.class }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="message">
+      <mat-header-cell *matHeaderCellDef> Log message</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.message }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="lineNumber">
+      <mat-header-cell *matHeaderCellDef> Line number </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.lineNumber }}</mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
 </div>
-
-<!--
-<div class="mt-3">
-    <mat-card *ngIf="isTableLoading">
-        <mat-spinner class="loader"></mat-spinner>
-    </mat-card>
-</div>
--->
