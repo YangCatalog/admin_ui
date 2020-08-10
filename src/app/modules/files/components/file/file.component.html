@@ -8,6 +8,11 @@
       <mat-icon class="cursor-pointer" (click)="onEdit()">edit</mat-icon>
       <mat-icon class="cursor-pointer" (click)="onDelete()">delete</mat-icon>
     </div>
-    <div class="ml-2 files-item-meta">(size:&nbsp;{{file.size | bytes}},&nbsp;permissions:&nbsp;{{file.permissions}},&nbsp;group:&nbsp;{{file.group}},&nbsp;user:&nbsp;{{file.user}})</div>
+    <div class="ml-2 files-item-meta">
+      (<b>size:</b>&nbsp;{{file.size | bytes}},&nbsp;
+      <b>permissions:</b>&nbsp;{{file.permissions}},&nbsp;
+      <b>group:</b>&nbsp;{{file.group}},&nbsp;
+      <b>user:</b>&nbsp;{{file.user}})
+    </div>
   </div>
 </div>

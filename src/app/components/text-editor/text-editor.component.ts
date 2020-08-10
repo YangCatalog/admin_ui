@@ -36,6 +36,7 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
+    this.pretiffyJSONText();
     this.form = this.formBuilder.group({
       text: [this.text]
     });
@@ -99,6 +100,13 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   showError() {
     this.error = true;
     setTimeout(() => { this.error = false; }, 3000);
+  }
+
+  pretiffyJSONText() {
+    try {
+      const text = JSON.parse(this.text);
+      this.text = JSON.stringify(text, undefined, 4);
+    } catch (error) { }
   }
 
   ngOnDestroy() {

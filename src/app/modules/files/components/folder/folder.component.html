@@ -8,11 +8,17 @@
       <div class="files-item pl-2">{{folder.name || '/'}}&nbsp;</div>
     </div>
     <div class="files-item" *ngIf="isLoading">-&nbsp;loading&nbsp;…&nbsp;</div>
-    <div *ngIf="!isRoot" class="files-item-meta">(size:&nbsp;{{folder.size | bytes}},&nbsp;permissions:&nbsp;{{folder.permissions}},&nbsp;group:&nbsp;{{folder.group}},&nbsp;user:&nbsp;{{folder.user}})</div>
+    <div *ngIf="!isRoot" class="files-item-meta">
+      (<b>size:</b>&nbsp;{{folder.size | bytes}},&nbsp;
+      <b>permissions:</b>&nbsp;{{folder.permissions}},&nbsp;
+      <b>group:</b>&nbsp;{{folder.group}},&nbsp;
+      <b>user:</b>&nbsp;{{folder.user}})
+    </div>
   </div>
 
   <div class="ml-4" [hidden]=closed>
     <app-file *ngFor="let file of content.files; trackBy: trackName" [file]=file [parentPath]="newPath"></app-file>
-    <app-folder *ngFor="let folder of content.folders; trackBy: trackName" [folder]=folder [parentPath]="newPath"></app-folder>
+    <app-folder *ngFor="let folder of content.folders; trackBy: trackName" [folder]=folder [parentPath]="newPath">
+    </app-folder>
   </div>
 </div>
