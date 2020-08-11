@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FilesService } from '../../files.service';
+import { MatDialog } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
+import { FilesService } from '../../files.service';
+import { PermissionsDialogComponent } from 'src/app/dialogs/permissions-dialog/permissions-dialog.component';
 
 @Component({
   selector: 'app-folder',
@@ -23,9 +25,9 @@ export class FolderComponent implements OnInit {
   intervals = {
     files: null,
     folders: null
-  }
+  };
 
-  constructor(private filesService: FilesService) { }
+  constructor(private filesService: FilesService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     // root directory
@@ -49,28 +51,28 @@ export class FolderComponent implements OnInit {
   fetchFolderContent() {
     this.isLoading = true;
     this.filesService.fetchFolder(this.newPath)
-    .pipe(finalize(() => {
-      this.isLoading = false;
-      this.closed = !this.closed;
-    }))
-    .subscribe(
-      response => {
-        this.progressiveRender(response.data.files, 'files');
-        this.progressiveRender(response.data.folders, 'folders');
-      },
-      err => {
-        this.filesService.subject$.next('files-fetch-error');
-        console.log(err);
-      }
-    );
+      .pipe(finalize(() => {
+        this.isLoading = false;
+        this.closed = !this.closed;
+      }))
+      .subscribe(
+        response => {
+          this.progressiveRender(response.data.files, 'files');
+          this.progressiveRender(response.data.folders, 'folders');
+        },
+        err => {
+          this.filesService.subject$.next('files-fetch-error');
+          console.log(err);
+        }
+      );
   }
 
-  progressiveRender(data, type) {
+  progressiveRender(data: any, type: string) {
     let currentIndex = 0;
-    this.intervals[type] = setInterval( () => {
+    this.intervals[type] = setInterval(() => {
       const nextIndex = currentIndex + this.ITEMS_RENDERED_AT_ONCE;
 
-      for (let n = currentIndex; n <= nextIndex ; n++) {
+      for (let n = currentIndex; n <= nextIndex; n++) {
         if (n >= data.length) {
           clearInterval(this.intervals[type]);
           break;
@@ -91,5 +93,16 @@ export class FolderComponent implements OnInit {
     this.content.folders = [];
     this.closed = true;
     this.toggle();
+  }
+
+  onPermission() {
+    const dialogRef = this.dialog.open(PermissionsDialogComponent, {
+      width: '50%',
+      data: {
+        permissions: this.folder.permissions,
+        group: this.folder.group,
+        user: this.folder.user
+      }
+    });
   }
 }

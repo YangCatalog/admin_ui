@@ -5,7 +5,10 @@
         <mat-icon [inline]="true" *ngIf="!closed">folder_open</mat-icon>
         <mat-icon [inline]="true" *ngIf="closed">folder</mat-icon>
       </div>
-      <div class="files-item pl-2">{{folder.name || '/'}}&nbsp;</div>
+      <div class="files-item pl-2">{{folder.name || '/'}}</div>
+    </div>
+    <div class="folder-actions-wrap files-item ml-2 d-flex flex-nowrap align-items-center">
+      <mat-icon *ngIf="folder.name" class="cursor-pointer" (click)="onPermission()">perm_identity</mat-icon>
     </div>
     <div class="files-item" *ngIf="isLoading">-&nbsp;loading&nbsp;…&nbsp;</div>
     <div *ngIf="!isRoot" class="files-item-meta">

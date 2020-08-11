@@ -6,12 +6,15 @@ import { TextEditorComponent } from './components/text-editor/text-editor.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { PermissionsDialogComponent } from './dialogs/permissions-dialog/permissions-dialog.component';
 
 
 
 @NgModule({
-    declarations: [LoaderComponent, TextEditorComponent, TextEditorSaveDialogComponent],
-    imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatDialogModule],
-    exports: [LoaderComponent, CommonModule, TextEditorComponent, TextEditorSaveDialogComponent]
+  declarations: [LoaderComponent, TextEditorComponent, TextEditorSaveDialogComponent, PermissionsDialogComponent],
+  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatDialogModule, MatTableModule, MatCheckboxModule],
+  exports: [LoaderComponent, CommonModule, TextEditorComponent, TextEditorSaveDialogComponent, PermissionsDialogComponent]
 })
-export class SharedModule {}
+export class SharedModule { }
