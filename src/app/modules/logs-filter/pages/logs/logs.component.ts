@@ -18,6 +18,7 @@ export class LogsComponent implements OnInit {
   filteredLogsDataSource;
   isTableLoading = false;
   isFormLoading = false;
+  allFiles = false;
 
   // MatPaginator Inputs
   paginatorOptions = {
@@ -72,6 +73,15 @@ export class LogsComponent implements OnInit {
     }
   }
 
+  setAll(checked: boolean) {
+    this.allFiles = checked;
+    if (this.allFiles) {
+      this.logsFilterForm.get('file-names').setValue(this.fileNames);
+    } else {
+      this.logsFilterForm.get('file-names').setValue([]);
+    }
+  }
+
   private getLogsByFilter(formData: any) {
     this.isTableLoading = true;
     this.logsFilterForm.disable();
@@ -99,7 +109,7 @@ export class LogsComponent implements OnInit {
 
   private buildForm() {
     this.logsFilterForm = this.formBuilder.group({
-      'file-name': this.formBuilder.control(null, Validators.required),
+      'file-names': this.formBuilder.control(null, Validators.required),
       'lines-per-page': this.formBuilder.control(1000, [Validators.min(1), Validators.max(4294967295)]),
       page: this.formBuilder.control(1, [Validators.min(1)]),
       'from-date': this.formBuilder.control(''),

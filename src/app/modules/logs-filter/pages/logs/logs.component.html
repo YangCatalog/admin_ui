@@ -10,23 +10,26 @@
         <div class="col-4">
           <mat-form-field class="w-100">
             <mat-label>Log file</mat-label>
-            <mat-select formControlName="file-name" required>
+            <mat-select formControlName="file-names" required multiple>
               <mat-option *ngFor="let file of fileNames" [value]="file">
                 {{ file }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="logsFilterForm.controls['file-name'].invalid">You must select an option</mat-error>
+            <mat-error *ngIf="logsFilterForm.controls['file-names'].invalid">You must select an option</mat-error>
           </mat-form-field>
         </div>
 
         <div class="col-2">
+          <mat-checkbox color="primary" [checked]="allFiles" (change)="setAll($event.checked)">All files</mat-checkbox>
+        </div>
+        <div class="col-1">
           <mat-form-field class="w-100">
             <mat-label>Lines per page</mat-label>
             <input matInput type="number" step="1" min="1" max="2000" formControlName="lines-per-page"
               [value]="paginatorOptions.pageSize" />
           </mat-form-field>
         </div>
-        <div class="col-2">
+        <div class="col-1">
           <mat-form-field class="w-100">
             <mat-label>Page</mat-label>
             <input matInput type="number" step="1" min="1" max="4294967295" formControlName="page"
