@@ -6,7 +6,7 @@
 
 <ng-template #dashboard>
   <div *ngIf="servicesList.length > 0" class="hc-dashboard">
-    <app-healthcheck-card *ngFor="let service of servicesList" [serviceName]=service></app-healthcheck-card>
+    <app-healthcheck-card *ngFor="let service of servicesList" [service]=service></app-healthcheck-card>
   </div>
 </ng-template>
 

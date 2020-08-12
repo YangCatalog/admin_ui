@@ -9,8 +9,8 @@ export class HealthcheckService {
   private healthcheckRoute = '/api/admin/healthcheck';
   constructor(private http: HttpClient) { }
 
-  fetchServicesList(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.healthcheckRoute}/services-list`);
+  fetchServicesList(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.healthcheckRoute}/services-list`);
   }
 
   getServiceHealthStatus(serviceName: string): Observable<any> {

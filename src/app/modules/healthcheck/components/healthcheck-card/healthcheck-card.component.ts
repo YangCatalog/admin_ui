@@ -10,7 +10,7 @@ const SECONDS = 60;
   styleUrls: ['./healthcheck-card.component.scss']
 })
 export class HealthcheckCardComponent implements OnInit, OnDestroy {
-  @Input() serviceName: string;
+  @Input() service: any;
   statusColor = '#cdcdcd';
   isLoading = false;
   status = '';
@@ -40,8 +40,9 @@ export class HealthcheckCardComponent implements OnInit, OnDestroy {
   }
 
   private getHealthStatus() {
+    this.statusColor = '#cdcdcd';
     this.isLoading = true;
-    this.healthcheckService.getServiceHealthStatus(this.serviceName)
+    this.healthcheckService.getServiceHealthStatus(this.service.endpoint)
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         response => {

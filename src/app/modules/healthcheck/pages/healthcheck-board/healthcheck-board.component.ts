@@ -9,7 +9,7 @@ import { finalize } from 'rxjs/operators';
 })
 export class HealthcheckBoardComponent implements OnInit {
   isLoading = false;
-  servicesList: string[];
+  servicesList: any[];
   error = false;
 
   constructor(private healthcheckService: HealthcheckService) { }
