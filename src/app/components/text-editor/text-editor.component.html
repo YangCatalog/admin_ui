@@ -7,7 +7,7 @@
       <span [hidden]="isLoading">Save</span>
       <app-loader [isLoading]="isLoading"></app-loader>
     </button>
-    <button mat-raised-button (click)="discardChanges()" class="mb-2 ml-2">Discard</button>
+    <button mat-raised-button (click)="cancelChanges()" class="mb-2 ml-2">Cancel</button>
   </div>
   <div *ngIf="success" class="alert alert-success" role="alert">
     Saved!

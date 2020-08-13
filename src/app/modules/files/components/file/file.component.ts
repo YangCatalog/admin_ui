@@ -4,6 +4,7 @@ import { DeleteDialogComponent } from '../../dialogs/delete-dialog/delete-dialog
 import { Subscription } from 'rxjs';
 import { FilesService } from '../../files.service';
 import { Router } from '@angular/router';
+import { PermissionsDialogComponent } from 'src/app/dialogs/permissions-dialog/permissions-dialog.component';
 
 @Component({
   selector: 'app-file',
@@ -16,12 +17,11 @@ export class FileComponent implements OnInit {
   path: string;
   dialogRefSubscription: Subscription;
 
-
   constructor(
     public dialog: MatDialog,
     private filesService: FilesService,
     private router: Router
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.path = `${this.parentPath}/${this.file.name}`;
@@ -40,11 +40,22 @@ export class FileComponent implements OnInit {
       }
     });
 
-    this.dialogRefSubscription = dialogRef.afterClosed().subscribe( confirm => {
+    this.dialogRefSubscription = dialogRef.afterClosed().subscribe(confirm => {
       if (confirm) {
         this.filesService.deleteFile(this.path);
       }
       this.dialogRefSubscription.unsubscribe();
+    });
+  }
+
+  onPermission() {
+    const dialogRef = this.dialog.open(PermissionsDialogComponent, {
+      width: '50%',
+      data: {
+        permissions: this.file.permissions,
+        group: this.file.group,
+        user: this.file.user
+      }
     });
   }
 }

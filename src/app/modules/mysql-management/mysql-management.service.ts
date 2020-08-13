@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +23,9 @@ export class MysqlManagementService {
 
   deleteRecord(tableName: string, recordId: number): Observable<any> {
     return this.http.delete(`${this.route}/${tableName}/id/${recordId}`);
+  }
+
+  validateRecord(data: any): Observable<any> {
+    return of({ 'info': 'success' });
   }
 }

@@ -1,0 +1,35 @@
+<div class="mb-2">
+  <b>Permissions detail: {{ data.permissions }}</b>
+</div>
+
+<p><b>Group:</b> {{ data.group }}</p>
+<p><b>User:</b> {{ data.user }}</p>
+
+<div>
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="permission">
+      <mat-header-cell *matHeaderCellDef>Permission</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.permission }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="owner">
+      <mat-header-cell *matHeaderCellDef>Owner</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-checkbox [checked]="element.owner" [disabled]="true"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="group">
+      <mat-header-cell *matHeaderCellDef>Group</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-checkbox [checked]="element.group" [disabled]="true"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="public">
+      <mat-header-cell *matHeaderCellDef>Public</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-checkbox [checked]="element.public" [disabled]="true"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+</div>

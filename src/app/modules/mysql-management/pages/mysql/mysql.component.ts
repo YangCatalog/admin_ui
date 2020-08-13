@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MysqlManagementService } from '../../mysql-management.service';
 import { finalize } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RecordDialogComponent } from '../../dialogs/record-dialog/record-dialog.component';
 import { Subscription } from 'rxjs';
 import { DeleteDialogComponent } from '../../dialogs/delete-dialog/delete-dialog.component';
@@ -18,14 +18,14 @@ export class MysqlComponent implements OnInit {
   isLoading = false;
   isLoadingTable = false;
   headers = [
-    {label: 'ID', value: 'id'},
-    {label: 'First Name', value: 'first-name'},
-    {label: 'Last Name', value: 'last-name'},
-    {label: 'Username', value: 'username'},
-    {label: 'Email', value: 'email'},
-    {label: 'Models Provider', value: 'models-provider'},
-    {label: 'Access Rights SDO', value: 'access-rights-sdo'},
-    {label: 'Access Rights Vendor', value: 'access-rights-vendor'},
+    { label: 'ID', value: 'id' },
+    { label: 'First Name', value: 'first-name' },
+    { label: 'Last Name', value: 'last-name' },
+    { label: 'Username', value: 'username' },
+    { label: 'Email', value: 'email' },
+    { label: 'Models Provider', value: 'models-provider' },
+    { label: 'Access Rights SDO', value: 'access-rights-sdo' },
+    { label: 'Access Rights Vendor', value: 'access-rights-vendor' },
   ];
   displayedColumns: string[];
   form: FormGroup;
@@ -37,13 +37,13 @@ export class MysqlComponent implements OnInit {
   dialogRefSubscription: Subscription;
   error = false;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
     private mySqlService: MysqlManagementService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.displayedColumns = this.headers.map(headerObj => headerObj.value);
@@ -52,16 +52,16 @@ export class MysqlComponent implements OnInit {
     this.isLoading = true;
     this.buildForm();
     this.mySqlService.fetchTables()
-    .pipe(finalize(() => (this.isLoading = false)))
-    .subscribe(
-      response => {
-        this.tablesList = response;
-      },
-      err => {
-        this.error = true;
-        console.log(err);
-      }
-    );
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        response => {
+          this.tablesList = response;
+        },
+        err => {
+          this.error = true;
+          console.log(err);
+        }
+      );
   }
 
   buildForm() {
@@ -75,47 +75,55 @@ export class MysqlComponent implements OnInit {
     this.fetchTableRecords();
   }
 
-  fetchTableRecords () {
+  fetchTableRecords() {
     this.isLoadingTable = true;
     this.tableReady = false;
     this.noRecords = false;
 
     this.mySqlService.fetchTable(this.selectedTable)
-    .pipe(finalize(() => (this.isLoadingTable = false)))
-    .subscribe(
-      response => {
-        if (response.length > 0) {
-          this.tableReady = true;
-          this.dataSource = new MatTableDataSource<any>(response);
-          this.dataSource.paginator = this.paginator;
-        } else {
-          this.noRecords = true;
+      .pipe(finalize(() => (this.isLoadingTable = false)))
+      .subscribe(
+        response => {
+          if (response.length > 0) {
+            this.tableReady = true;
+            this.dataSource = new MatTableDataSource<any>(response);
+            this.dataSource.paginator = this.paginator;
+          } else {
+            this.noRecords = true;
+          }
+        },
+        err => {
+          this.error = true;
+          console.log(err);
         }
-      },
-      err => {
-        this.error = true;
-        console.log(err);
-      }
-    )
+      );
   }
 
-  recordDialog(type: string, id?: number) {
+  recordDialog(type: string, record?: any) {
+    let dialogRef: MatDialogRef<RecordDialogComponent>;
+
     switch (type) {
       case 'create':
-        const dialogRef = this.dialog.open(RecordDialogComponent, {
+        dialogRef = this.dialog.open(RecordDialogComponent, {
           data: {
             edit: false,
             tableName: this.selectedTable
           }
         });
-
-        this.dialogRefSubscription = dialogRef.afterClosed().subscribe( closeMsg => {
-          if (closeMsg === 'success') {
-            this.fetchTableRecords();
-          } else if (closeMsg === 'fail') {
-            this.error = true;
+        this.dialogRefSubscription = dialogRef.afterClosed().subscribe(closeMsg => {
+          this.updateTable(closeMsg);
+        });
+        break;
+      case 'edit':
+        dialogRef = this.dialog.open(RecordDialogComponent, {
+          data: {
+            edit: true,
+            tableName: this.selectedTable,
+            record
           }
-          this.dialogRefSubscription.unsubscribe();
+        });
+        this.dialogRefSubscription = dialogRef.afterClosed().subscribe(closeMsg => {
+          this.updateTable(closeMsg);
         });
         break;
     }
@@ -128,25 +136,38 @@ export class MysqlComponent implements OnInit {
       }
     });
 
-    this.dialogRefSubscription = dialogRef.afterClosed().subscribe( confirm => {
+    this.dialogRefSubscription = dialogRef.afterClosed().subscribe(confirm => {
       if (confirm) {
         this.mySqlService.deleteRecord(this.selectedTable, record.id)
-        .subscribe(
-          response => {
-            this.fetchTableRecords();
-          },
-          err => {
-            this.error = true;
-            console.log(err);
-          }
-        );
+          .subscribe(
+            response => {
+              this.fetchTableRecords();
+            },
+            err => {
+              this.error = true;
+              console.log(err);
+            }
+          );
       }
       this.dialogRefSubscription.unsubscribe();
     });
   }
 
+  onValidate(record: any) {
+    this.recordDialog('edit', record);
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  updateTable(closeMsg: string) {
+    if (closeMsg === 'success') {
+      this.fetchTableRecords();
+    } else if (closeMsg === 'fail') {
+      this.error = true;
+    }
+    this.dialogRefSubscription.unsubscribe();
   }
 }

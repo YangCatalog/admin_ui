@@ -1,6 +1,6 @@
 <mat-card class="hc-card">
   <mat-card-header [style.background-color]="statusColor">
-    <mat-card-title>{{ serviceName }}</mat-card-title>
+    <mat-card-title>{{ service.name }}</mat-card-title>
   </mat-card-header>
 
   <mat-card-content>
@@ -19,13 +19,14 @@
         <span>{{ error }}</span>
       </div>
       <div>
-        <b>Timestamp:</b>&nbsp;
-        <span>{{ timestamp | date:'medium' }}</span>
+        <b>Updated:</b>&nbsp;
+        <span>{{ timestamp | date:'medium':'UTC' }} UTC</span>
       </div>
     </ng-template>
   </mat-card-content>
 
   <mat-card-actions>
-    <button mat-raised-button [hidden]="isLoading" color="primary" (click)="onReloadClick()">Reload</button>
+    <button mat-raised-button class="hc-reload" [hidden]="isLoading" color="primary"
+      (click)="onReloadClick()">Reload</button>
   </mat-card-actions>
 </mat-card>

@@ -1,14 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { HealthcheckService } from '../../healthcheck.service';
 import { finalize } from 'rxjs/operators';
+
+const SECONDS = 60;
 
 @Component({
   selector: 'app-healthcheck-card',
   templateUrl: './healthcheck-card.component.html',
   styleUrls: ['./healthcheck-card.component.scss']
 })
-export class HealthcheckCardComponent implements OnInit {
-  @Input() serviceName: string;
+export class HealthcheckCardComponent implements OnInit, OnDestroy {
+  @Input() service: any;
   statusColor = '#cdcdcd';
   isLoading = false;
   status = '';
@@ -16,11 +18,16 @@ export class HealthcheckCardComponent implements OnInit {
   error = '';
   message = '';
   timestamp: number;
+  miliseconds = SECONDS * 1000;
+  interval: any;
 
   constructor(private healthcheckService: HealthcheckService) { }
 
   ngOnInit(): void {
     this.getHealthStatus();
+    this.interval = setInterval(() => {
+      this.getHealthStatus();
+    }, this.miliseconds);
   }
 
   onReloadClick() {
@@ -28,9 +35,14 @@ export class HealthcheckCardComponent implements OnInit {
     this.getHealthStatus();
   }
 
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
+  }
+
   private getHealthStatus() {
+    this.statusColor = '#cdcdcd';
     this.isLoading = true;
-    this.healthcheckService.getServiceHealthStatus(this.serviceName)
+    this.healthcheckService.getServiceHealthStatus(this.service.endpoint)
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         response => {
