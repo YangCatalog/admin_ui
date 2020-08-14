@@ -30,20 +30,20 @@ export class ScriptExecuteComponent implements OnInit {
     private scriptsService: ScriptsService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.scriptsService.fetchScripts()
-    .pipe(finalize(() => this.isLoadingScripts = false))
-    .subscribe(
-      response => {
-        this.scripts = response.data;
-      },
-      err => {
-        console.log(err);
-        this.errorLoadingScripts = true;
-      }
-    );
+      .pipe(finalize(() => this.isLoadingScripts = false))
+      .subscribe(
+        response => {
+          this.scripts = response.data;
+        },
+        err => {
+          console.log(err);
+          this.errorLoadingScripts = true;
+        }
+      );
   }
 
   onScriptSelectChange() {
@@ -51,18 +51,18 @@ export class ScriptExecuteComponent implements OnInit {
     this.isLoadingOptions = true;
     this.errorLoadingOptions = false;
     this.scriptsService.fetchOptions(this.selectedScript)
-    .subscribe(
-      response => {
-        this.scriptOptions = response.data;
-        this.buildForm();
-        this.isLoadingOptions = false;
-      },
-      err => {
-        console.log(err);
-        this.isLoadingOptions = false;
-        this.errorLoadingOptions = true;
-      }
-    );
+      .subscribe(
+        response => {
+          this.scriptOptions = response.data;
+          this.buildForm();
+          this.isLoadingOptions = false;
+        },
+        err => {
+          console.log(err);
+          this.isLoadingOptions = false;
+          this.errorLoadingOptions = true;
+        }
+      );
   }
 
   buildForm() {
@@ -92,26 +92,26 @@ export class ScriptExecuteComponent implements OnInit {
     this.clearAlert();
     const dialogRef = this.dialog.open(ConfirmComponent, {});
 
-    this.dialogRefSubscription = dialogRef.afterClosed().subscribe( confirm => {
+    this.dialogRefSubscription = dialogRef.afterClosed().subscribe(confirm => {
       if (confirm) {
 
         this.isLoadingExecute = true;
         this.scriptsService.postScripts(this.form.value, this.selectedScript)
-        .pipe(finalize(() => this.isLoadingExecute = false))
-        .subscribe(
-          response => {
-            if (response.info === 'Verification successful') {
-              this.successExecute = true;
-              this.scriptsService.storeJob(this.selectedScript, response['job-id']);
-              this.jobIdToCopy = response['job-id'];
-            } else {
+          .pipe(finalize(() => this.isLoadingExecute = false))
+          .subscribe(
+            response => {
+              if (response.info === 'Verification successful') {
+                this.successExecute = true;
+                this.scriptsService.storeJob(this.selectedScript, response['job-id']);
+                this.jobIdToCopy = response['job-id'];
+              } else {
+                this.errorExecute = true;
+              }
+            },
+            err => {
               this.errorExecute = true;
             }
-          },
-          err => {
-            this.errorExecute = true;
-          }
-        );
+          );
       }
       this.dialogRefSubscription.unsubscribe();
     });
@@ -121,8 +121,6 @@ export class ScriptExecuteComponent implements OnInit {
     this.successExecute = false;
     this.errorExecute = false;
     this.jobIdToCopy = '';
-    console.log('hm');
-
   }
 
 }
