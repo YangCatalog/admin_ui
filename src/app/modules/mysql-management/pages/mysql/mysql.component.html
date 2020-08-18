@@ -1,19 +1,19 @@
-<h1 class="component-h1 primary-color">MySQL Tables Management</h1>
+<h1 class="component-h1 primary-color">Users Management</h1>
 <mat-card class="mb-4" *ngIf="!isLoading && !error">
   <mat-card-content>
     <form [formGroup]="form" (ngSubmit)="formSubmit()">
       <mat-form-field class="mr-4">
-        <mat-label>Select table</mat-label>
+        <mat-label>Select user category</mat-label>
         <mat-select formControlName="tableName">
-          <mat-option *ngFor="let tableName of tablesList" [value]="tableName">
-            {{tableName}}
+          <mat-option *ngFor="let tableDetail of tableDetailsList" [value]="tableDetail.name">
+            {{tableDetail.label}}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="form.get('tableName').hasError('required')">
           This field is required
         </mat-error>
       </mat-form-field>
-      <button type="submit" [disabled]="form.invalid" mat-raised-button color="primary">Load table</button>
+      <button type="submit" [disabled]="form.invalid" mat-raised-button color="primary">Load category</button>
     </form>
   </mat-card-content>
 </mat-card>

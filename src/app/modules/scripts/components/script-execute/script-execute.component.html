@@ -1,7 +1,7 @@
 <mat-card *ngIf="!isLoadingScripts && !errorLoadingScripts" class=" mb-4">
   <mat-card-content>
     <mat-form-field>
-      <mat-label>Select script</mat-label>
+      <mat-label>Select job to run</mat-label>
       <mat-select [(value)]="selectedScript" (selectionChange)="onScriptSelectChange()">
         <mat-option *ngFor="let script of scripts" [value]="script">
           {{script}}
@@ -21,7 +21,8 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
       <ng-container *ngFor="let opt of scriptOptions | keyvalue">
         <div *ngIf="opt.value.type === 'bool'" class="mb-2">
-          <mat-checkbox formControlName="{{opt.key}}" class="mr-4" color="primary">{{opt.key | labelParser}}</mat-checkbox>
+          <mat-checkbox formControlName="{{opt.key}}" class="mr-4" color="primary">{{opt.key | labelParser}}
+          </mat-checkbox>
         </div>
 
         <div *ngIf="opt.value.type !== 'bool'">
@@ -53,7 +54,8 @@
 <div class="mb-4" *ngIf="successExecute" class="alert alert-success" role="alert">
   Job has started!
   <br>
-  <b>Job ID:</b>&nbsp;{{jobIdToCopy}}&nbsp;<span class="cursor-pointer alert-link" [cdkCopyToClipboard]="jobIdToCopy">copy</span>
+  <b>Job ID:</b>&nbsp;{{jobIdToCopy}}&nbsp;<span class="cursor-pointer alert-link"
+    [cdkCopyToClipboard]="jobIdToCopy">copy</span>
   <button type="button" (click)="clearAlert()" class="close">
     <span aria-hidden="true">&times;</span>
   </button>
