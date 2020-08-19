@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,8 @@ export class FilesService {
   route = '/api/admin/directory-structure';
   selectedFilePath: string;
   subject$ = new Subject<string>();
+  currentMessage$ = new BehaviorSubject<any>(null);
+  currentPath$ = new BehaviorSubject<string>('/');
 
   constructor(private http: HttpClient) { }
 

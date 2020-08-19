@@ -1,0 +1,7 @@
+<div *ngIf="labels && labels.length > 0">
+  <div class="chart-title">
+    <p>{{ title }}</p>
+  </div>
+  <canvas baseChart [data]="data" [labels]="labels" [chartType]="pieChartType" [options]="pieChartOptions">
+  </canvas>
+</div>

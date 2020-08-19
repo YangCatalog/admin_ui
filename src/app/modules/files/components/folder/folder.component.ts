@@ -18,7 +18,8 @@ export class FolderComponent implements OnInit {
   isRoot = false;
   content = {
     files: [],
-    folders: []
+    folders: [],
+    name: ''
   };
   ITEMS_RENDERED_AT_ONCE = 200;
   INTERVAL_IN_MS = 10;
@@ -41,9 +42,11 @@ export class FolderComponent implements OnInit {
   }
 
   toggle() {
+    this.filesService.currentPath$.next(this.newPath);
     if (this.content.files.length === 0 && this.content.folders.length === 0) {
       this.fetchFolderContent();
     } else {
+      this.filesService.currentMessage$.next(this.content);
       this.closed = !this.closed;
     }
   }
@@ -57,8 +60,10 @@ export class FolderComponent implements OnInit {
       }))
       .subscribe(
         response => {
+          this.filesService.currentMessage$.next(response.data);
           this.progressiveRender(response.data.files, 'files');
           this.progressiveRender(response.data.folders, 'folders');
+          this.content.name = response.data.name;
         },
         err => {
           this.filesService.subject$.next('files-fetch-error');
