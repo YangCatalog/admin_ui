@@ -19,18 +19,19 @@ import { JobItemComponent } from './components/job-item/job-item.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { JobStatusCheckComponent } from './components/job-status-check/job-status-check.component';
 import { SharedModule } from 'src/app/shared.module';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   providers: [
     {
-        provide: MAT_DIALOG_DEFAULT_OPTIONS,
-        useValue:
-            {
-                autoFocus: false,
-                hasBackdrop: true,
-                position: { top: '80px' },
-                maxHeight: 'calc(100vh - 100px)'
-            }
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useValue:
+      {
+        autoFocus: false,
+        hasBackdrop: true,
+        position: { top: '80px' },
+        maxHeight: 'calc(100vh - 100px)'
+      }
     }
   ],
   declarations: [ScriptsComponent, ConfirmComponent, LabelParserPipe, ScriptExecuteComponent, JobListComponent, JobItemComponent, JobStatusCheckComponent],
@@ -46,7 +47,8 @@ import { SharedModule } from 'src/app/shared.module';
     MatDialogModule,
     MatInputModule,
     ClipboardModule,
-    SharedModule
+    SharedModule,
+    MatIconModule
   ]
 })
 export class ScriptsModule { }

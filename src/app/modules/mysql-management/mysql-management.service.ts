@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MysqlManagementService {
   private route = '/api/admin/sql-tables';
+  private validateUserRoute = '/api/admin/move-user';
   constructor(private http: HttpClient) { }
 
-  fetchTables(): Observable<string[]> {
-    return this.http.get<string[]>(this.route);
+  fetchTables(): Observable<any[]> {
+    return this.http.get<any[]>(this.route);
   }
 
   fetchTable(tableName: string): Observable<any> {
@@ -26,6 +27,6 @@ export class MysqlManagementService {
   }
 
   validateRecord(data: any): Observable<any> {
-    return of({ 'info': 'success' });
+    return this.http.post(`${this.validateUserRoute}`, data);
   }
 }

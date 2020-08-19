@@ -21,12 +21,17 @@ export class RecordDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
-    this.form.setValidators(this.accessRightsValidator());
-    if (this.data.edit) {
+
+    if (this.data.validate) {
+      this.form.setValidators(this.accessRightsValidator());
       this.dialogTitle = 'Validate record';
       this.fillForm(this.data.record);
     } else {
       this.dialogTitle = 'Create record';
+    }
+
+    if (this.data.tableName === 'users') {
+      this.form.setValidators(this.accessRightsValidator());
     }
   }
 
@@ -50,10 +55,13 @@ export class RecordDialogComponent implements OnInit {
 
   onSubmit() {
     const data = {
-      input: this.form.value
+      input: this.form.getRawValue()
     };
 
-    if (this.data.edit) {
+    if (this.data.validate) {
+      data.input['id'] = this.data.record.id;
+      delete data.input.password;
+
       this.mySqlService.validateRecord(data)
         .subscribe(
           response => {
@@ -83,20 +91,22 @@ export class RecordDialogComponent implements OnInit {
 
   private buildForm() {
     this.form = this.formBuilder.group({
-      'first-name': [{ value: '', disabled: this.data.edit }, Validators.required,],
-      'last-name': [{ value: '', disabled: this.data.edit }, Validators.required],
-      'username': [{ value: '', disabled: this.data.edit }, Validators.required],
-      'password': [{ value: '', disabled: this.data.edit }, Validators.required],
-      'email': [{ value: '', disabled: this.data.edit }, [Validators.required, Validators.email]],
-      'models-provider': [{ value: '', disabled: this.data.edit }],
-      'access-rights-sdo': [{ value: '' }],
-      'access-rights-vendor': [{ value: '' }]
+      'first-name': [{ value: '', disabled: this.data.validate }, Validators.required,],
+      'last-name': [{ value: '', disabled: this.data.validate }, Validators.required],
+      'username': [{ value: '', disabled: this.data.validate }, Validators.required],
+      'password': [{ value: '', disabled: this.data.validate }, Validators.required],
+      'email': [{ value: '', disabled: this.data.validate }, [Validators.required, Validators.email]],
+      'models-provider': [{ value: '', disabled: this.data.validate }],
+      'access-rights-sdo': '',
+      'access-rights-vendor': ''
     });
   }
 
   private fillForm(record: any) {
     Object.getOwnPropertyNames(record).forEach((prop: string) => {
-      this.form.patchValue({ [prop]: record[prop] });
+      if (prop !== 'access-rights-sdo' && prop !== 'access-rights-vendor') {
+        this.form.patchValue({ [prop]: record[prop] });
+      }
     });
   }
 }

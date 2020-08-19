@@ -31,11 +31,9 @@ export class AuthService {
         .post<any>(this.logoutRoute, {})
         .pipe(first())
         .subscribe(response => {
-          if (response.info === 'Success') {
-            this.deleteCookie('session');
-            this.router.navigate(['/login']);
-            this.logged = false;
-          }
+          this.deleteCookie('session');
+          this.router.navigate(['/login']);
+          this.logged = false;
         });
     }
   }

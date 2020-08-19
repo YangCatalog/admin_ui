@@ -124,6 +124,7 @@ export class LogsComponent implements OnInit {
     });
   }
 
+  // Different parsing and displaying based on whether the logs are formatted or not
   private parseResponse(response: any) {
     let parsedData: any[] = [];
     if (response.meta.format) {
@@ -164,10 +165,8 @@ export class LogsComponent implements OnInit {
 
   private parseData(output: string[]): any[] {
     const parsedOutput = [];
-    const splittedData = output.length === 1 ? output[0].split('\n') : output.join('').split('\n');
 
-    splittedData.pop();
-    splittedData.forEach(line => {
+    output.forEach(line => {
       if (line !== '') {
         parsedOutput.push({
           message: line

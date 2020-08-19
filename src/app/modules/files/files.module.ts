@@ -18,21 +18,24 @@ import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.com
 import { FolderComponent } from './components/folder/folder.component';
 import { FileComponent } from './components/file/file.component';
 import { BytesPipe } from './pipes/bytes.pipe';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { ChartsModule } from 'ng2-charts';
+import { FilesSizeGraphComponent } from './pages/files-size-graph/files-size-graph.component';
 
 @NgModule({
   providers: [
     {
-        provide: MAT_DIALOG_DEFAULT_OPTIONS,
-        useValue:
-            {
-                autoFocus: false,
-                hasBackdrop: true,
-                position: { top: '80px' },
-                maxHeight: 'calc(100vh - 100px)'
-            }
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useValue:
+      {
+        autoFocus: false,
+        hasBackdrop: true,
+        position: { top: '80px' },
+        maxHeight: 'calc(100vh - 100px)'
+      }
     }
   ],
-  declarations: [FilesOverviewComponent, FileEditComponent, DeleteDialogComponent, FolderComponent, FileComponent, BytesPipe],
+  declarations: [FilesOverviewComponent, FileEditComponent, DeleteDialogComponent, FolderComponent, FileComponent, BytesPipe, PieChartComponent, FilesSizeGraphComponent],
   imports: [
     CommonModule,
     FilesRoutingModule,
@@ -45,7 +48,8 @@ import { BytesPipe } from './pipes/bytes.pipe';
     MatSelectModule,
     MatIconModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    ChartsModule
   ]
 })
 export class FilesModule { }

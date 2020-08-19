@@ -32,7 +32,7 @@ export class MysqlComponent implements OnInit {
   tableReady = false;
   noRecords = false;
   dataSource;
-  tablesList: string[];
+  tableDetailsList: any[];
   selectedTable: string;
   dialogRefSubscription: Subscription;
   error = false;
@@ -55,7 +55,7 @@ export class MysqlComponent implements OnInit {
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         response => {
-          this.tablesList = response;
+          this.tableDetailsList = response;
         },
         err => {
           this.error = true;
@@ -106,7 +106,7 @@ export class MysqlComponent implements OnInit {
       case 'create':
         dialogRef = this.dialog.open(RecordDialogComponent, {
           data: {
-            edit: false,
+            validate: false,
             tableName: this.selectedTable
           }
         });
@@ -114,10 +114,10 @@ export class MysqlComponent implements OnInit {
           this.updateTable(closeMsg);
         });
         break;
-      case 'edit':
+      case 'validate':
         dialogRef = this.dialog.open(RecordDialogComponent, {
           data: {
-            edit: true,
+            validate: true,
             tableName: this.selectedTable,
             record
           }
@@ -154,7 +154,7 @@ export class MysqlComponent implements OnInit {
   }
 
   onValidate(record: any) {
-    this.recordDialog('edit', record);
+    this.recordDialog('validate', record);
   }
 
   applyFilter(event: Event) {
