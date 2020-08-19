@@ -10,7 +10,7 @@ export class FilesService {
   selectedFilePath: string;
   subject$ = new Subject<string>();
   currentMessage$ = new BehaviorSubject<any>(null);
-  currentPath$ = new BehaviorSubject<string>('/');
+  currentPath$ = new BehaviorSubject<string>('');
 
   constructor(private http: HttpClient) { }
 

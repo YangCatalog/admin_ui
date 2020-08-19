@@ -16,8 +16,9 @@ export class PieChartComponent implements OnInit {
   pieChartOptions: ChartOptions = {
     legend: {
       position: 'right',
-      fullWidth: false
     },
+    responsive: true,
+    aspectRatio: 3,
     tooltips: {
       callbacks: {
         label: (tooltipItem, data) => {

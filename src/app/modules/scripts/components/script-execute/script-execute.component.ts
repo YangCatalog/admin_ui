@@ -21,9 +21,11 @@ export class ScriptExecuteComponent implements OnInit {
   successExecute = false;
   errorExecute = false;
   form: FormGroup;
-  scripts;
+  scripts: string[];
+  help: string;
   dialogRefSubscription: Subscription;
   scriptOptions;
+  scriptOptionsHelp: any[];
   jobIdToCopy = '';
 
   constructor(
@@ -54,6 +56,8 @@ export class ScriptExecuteComponent implements OnInit {
       .subscribe(
         response => {
           this.scriptOptions = response.data;
+          this.help = response.help;
+          this.scriptOptionsHelp = response.options;
           this.buildForm();
           this.isLoadingOptions = false;
         },

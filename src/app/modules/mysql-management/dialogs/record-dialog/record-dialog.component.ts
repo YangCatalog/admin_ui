@@ -104,7 +104,9 @@ export class RecordDialogComponent implements OnInit {
 
   private fillForm(record: any) {
     Object.getOwnPropertyNames(record).forEach((prop: string) => {
-      this.form.patchValue({ [prop]: record[prop] });
+      if (prop !== 'access-rights-sdo' && prop !== 'access-rights-vendor') {
+        this.form.patchValue({ [prop]: record[prop] });
+      }
     });
   }
 }
