@@ -68,6 +68,27 @@ export class AuthService {
     return promise;
   }
 
+  oidcLogin(): Promise<boolean> {
+    const promise = new Promise<boolean>((resolve, reject) => {
+      this.http
+        .get(this.loginRoute)
+        .toPromise()
+        .then(
+          (res: any) => {
+            this.logged = res.info === 'Success';
+            this.router.navigate(['/healthcheck']);
+            resolve(!this.logged);
+          },
+          err => {
+            this.router.navigate(['/login']);
+            this.logged = false;
+            resolve(!this.logged);
+          }
+        );
+    });
+    return promise;
+  }
+
   setLoggedIn(logged: boolean) {
     this.logged = logged;
   }
