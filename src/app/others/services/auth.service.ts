@@ -74,10 +74,17 @@ export class AuthService {
         .get(this.loginRoute)
         .toPromise()
         .then(
-          (res: any) => {
-            this.logged = res.info === 'Success';
-            this.router.navigate(['/healthcheck']);
-            resolve(!this.logged);
+          (response: any) => {
+            if (response.info === 'Redirect') {
+              const redirectURL = response.redirectURL;
+              this.logged = false;
+              resolve(this.logged);
+              window.location.href = redirectURL;
+            } else {
+              this.logged = response.info === 'Success';
+              this.router.navigate(['/healthcheck']);
+              resolve(!this.logged);
+            }
           },
           err => {
             this.router.navigate(['/login']);
