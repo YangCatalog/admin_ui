@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -68,28 +68,32 @@ export class AuthService {
     return promise;
   }
 
+  // oidcLoginRequest(): Observable<any> {
+  //   const headers = new HttpHeaders();
+  //   headers.append('Content-Type', 'text/html');
+  //   return this.http.get<any>(this.loginRoute, { headers });
+  // }
+
   oidcLogin(): Promise<boolean> {
     const promise = new Promise<boolean>((resolve, reject) => {
       this.http
         .get(this.loginRoute)
         .toPromise()
         .then(
-          (response: any) => {
-            if (response.info === 'Redirect') {
-              const redirectURL = response.redirectURL;
-              this.logged = false;
-              resolve(this.logged);
-              window.location.href = redirectURL;
-            } else {
-              this.logged = response.info === 'Success';
-              this.router.navigate(['/healthcheck']);
-              resolve(!this.logged);
-            }
+          (res: any) => {
+            console.log(res);
+            // this.logged = res.info === 'Success';
+            // this.router.navigate(['/healthcheck']);
+            // resolve(!this.logged);
+            this.logged = true;
+            resolve(false);
           },
           err => {
-            this.router.navigate(['/login']);
-            this.logged = false;
-            resolve(!this.logged);
+            console.log(err);
+            if (err.url) {
+              window.open(err.url, '_self');
+            }
+            resolve(false);
           }
         );
     });
