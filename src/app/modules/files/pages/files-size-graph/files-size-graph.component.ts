@@ -13,7 +13,7 @@ export class FilesSizeGraphComponent implements OnInit, OnDestroy {
   foldersChartData: number[];
   foldersChartTitle: string;
 
-  diskUsageChartLabels = ['Free space', 'Used space'];
+  diskUsageChartLabels: Label[];
   diskUsageChartData: number[];
   diskUsageChartTitle = 'Disk usage';
 
@@ -48,10 +48,24 @@ export class FilesSizeGraphComponent implements OnInit, OnDestroy {
         this.foldersChartTitle = path === '' ? this.homeDirectory : `${this.homeDirectory}${path}`;
       })
     );
+
+    this.getDiskUsageData();
   };
 
   ngOnDestroy() {
     this.filesService.currentMessage$.next(null);
     this.subscription.unsubscribe();
+  }
+
+  private getDiskUsageData() {
+    this.filesService.getDiskUsage().subscribe(response => {
+      const diskUsageData = response.data;
+
+      this.diskUsageChartData = [];
+      this.diskUsageChartData.push(diskUsageData.free);
+      this.diskUsageChartData.push(diskUsageData.used);
+
+      this.diskUsageChartLabels = ['Free space', 'Used space'];
+    });
   }
 }

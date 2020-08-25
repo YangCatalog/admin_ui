@@ -7,6 +7,7 @@ import { Observable, Subject, BehaviorSubject } from 'rxjs';
 })
 export class FilesService {
   route = '/api/admin/directory-structure';
+  diskUsageRoute = '/api/admin/disk-usage';
   selectedFilePath: string;
   subject$ = new Subject<string>();
   currentMessage$ = new BehaviorSubject<any>(null);
@@ -44,5 +45,9 @@ export class FilesService {
         this.subject$.next('file-delete-error');
       }
     );
+  }
+
+  getDiskUsage(): Observable<any> {
+    return this.http.get<any>(this.diskUsageRoute);
   }
 }
