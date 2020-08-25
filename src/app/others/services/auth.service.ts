@@ -68,12 +68,6 @@ export class AuthService {
     return promise;
   }
 
-  // oidcLoginRequest(): Observable<any> {
-  //   const headers = new HttpHeaders();
-  //   headers.append('Content-Type', 'text/html');
-  //   return this.http.get<any>(this.loginRoute, { headers });
-  // }
-
   oidcLogin(): Promise<boolean> {
     const promise = new Promise<boolean>((resolve, reject) => {
       this.http
@@ -81,19 +75,14 @@ export class AuthService {
         .toPromise()
         .then(
           (res: any) => {
-            console.log(res);
-            // this.logged = res.info === 'Success';
-            // this.router.navigate(['/healthcheck']);
-            // resolve(!this.logged);
-            this.logged = true;
-            resolve(false);
+            this.logged = res.info === 'Success';
+            this.router.navigate(['/healthcheck']);
+            resolve(!this.logged);
           },
           err => {
             console.log(err);
-            if (err.url) {
-              window.open(err.url, '_self');
-            }
-            resolve(false);
+            this.logged = false;
+            resolve(!this.logged);
           }
         );
     });
