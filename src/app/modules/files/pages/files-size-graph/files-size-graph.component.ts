@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FilesService } from '../../files.service';
 import { Subscription } from 'rxjs';
-import { Label } from 'ng2-charts';
+import { Label, Color } from 'ng2-charts';
 
 @Component({
   selector: 'app-files-size-graph',
@@ -16,6 +16,7 @@ export class FilesSizeGraphComponent implements OnInit, OnDestroy {
   diskUsageChartLabels: Label[];
   diskUsageChartData: number[];
   diskUsageChartTitle = 'Disk usage';
+  diskUsageChartColors: Color[];
 
   private homeDirectory = '/var/yang';
   private subscription = new Subscription();
@@ -66,6 +67,7 @@ export class FilesSizeGraphComponent implements OnInit, OnDestroy {
       this.diskUsageChartData.push(diskUsageData.used);
 
       this.diskUsageChartLabels = ['Free space', 'Used space'];
+      this.diskUsageChartColors = [{ backgroundColor: ['#95d37d', '#f0514c'] }];
     });
   }
 }

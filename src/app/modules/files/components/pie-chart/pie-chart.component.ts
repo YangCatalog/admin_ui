@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChartType, ChartOptions } from 'chart.js';
-import { Label, SingleDataSet } from 'ng2-charts';
+import { Label, SingleDataSet, Color } from 'ng2-charts';
 
 @Component({
   selector: 'app-pie-chart',
@@ -11,6 +11,7 @@ export class PieChartComponent implements OnInit {
   @Input() title: string;
   @Input() labels: Label[];
   @Input() data: SingleDataSet[];
+  @Input() colors?: Color[];
 
   pieChartType: ChartType = 'pie';
   pieChartOptions: ChartOptions = {
