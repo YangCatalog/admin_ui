@@ -29,4 +29,8 @@ export class MysqlManagementService {
   validateRecord(data: any): Observable<any> {
     return this.http.post(`${this.validateUserRoute}`, data);
   }
+
+  editRecord(tableName: string, recordId: number, data: any): Observable<any> {
+    return this.http.put(`${this.route}/${tableName}/id/${recordId}`, data);
+  }
 }

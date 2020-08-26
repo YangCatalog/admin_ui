@@ -8,6 +8,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RecordDialogComponent } from '../../dialogs/record-dialog/record-dialog.component';
 import { Subscription } from 'rxjs';
 import { DeleteDialogComponent } from '../../dialogs/delete-dialog/delete-dialog.component';
+import { UsersTableHeaders, UsersTempTableHeaders } from './mysql.headers';
 
 @Component({
   selector: 'app-mysql',
@@ -17,16 +18,7 @@ import { DeleteDialogComponent } from '../../dialogs/delete-dialog/delete-dialog
 export class MysqlComponent implements OnInit {
   isLoading = false;
   isLoadingTable = false;
-  headers = [
-    { label: 'ID', value: 'id' },
-    { label: 'First Name', value: 'first-name' },
-    { label: 'Last Name', value: 'last-name' },
-    { label: 'Username', value: 'username' },
-    { label: 'Email', value: 'email' },
-    { label: 'Models Provider', value: 'models-provider' },
-    { label: 'Access Rights SDO', value: 'access-rights-sdo' },
-    { label: 'Access Rights Vendor', value: 'access-rights-vendor' },
-  ];
+  headers: any[];
   displayedColumns: string[];
   form: FormGroup;
   tableReady = false;
@@ -46,9 +38,6 @@ export class MysqlComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.displayedColumns = this.headers.map(headerObj => headerObj.value);
-    this.displayedColumns.push('actions');
-
     this.isLoading = true;
     this.buildForm();
     this.mySqlService.fetchTables()
@@ -85,6 +74,7 @@ export class MysqlComponent implements OnInit {
       .subscribe(
         response => {
           if (response.length > 0) {
+            this.getDisplayedColumns();
             this.tableReady = true;
             this.dataSource = new MatTableDataSource<any>(response);
             this.dataSource.paginator = this.paginator;
@@ -106,8 +96,8 @@ export class MysqlComponent implements OnInit {
       case 'create':
         dialogRef = this.dialog.open(RecordDialogComponent, {
           data: {
-            validate: false,
-            tableName: this.selectedTable
+            tableName: this.selectedTable,
+            type
           }
         });
         this.dialogRefSubscription = dialogRef.afterClosed().subscribe(closeMsg => {
@@ -117,9 +107,21 @@ export class MysqlComponent implements OnInit {
       case 'validate':
         dialogRef = this.dialog.open(RecordDialogComponent, {
           data: {
-            validate: true,
             tableName: this.selectedTable,
-            record
+            record,
+            type
+          }
+        });
+        this.dialogRefSubscription = dialogRef.afterClosed().subscribe(closeMsg => {
+          this.updateTable(closeMsg);
+        });
+        break;
+      case 'edit':
+        dialogRef = this.dialog.open(RecordDialogComponent, {
+          data: {
+            tableName: this.selectedTable,
+            record,
+            type
           }
         });
         this.dialogRefSubscription = dialogRef.afterClosed().subscribe(closeMsg => {
@@ -157,6 +159,10 @@ export class MysqlComponent implements OnInit {
     this.recordDialog('validate', record);
   }
 
+  onEdit(record: any) {
+    this.recordDialog('edit', record);
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -169,5 +175,11 @@ export class MysqlComponent implements OnInit {
       this.error = true;
     }
     this.dialogRefSubscription.unsubscribe();
+  }
+
+  private getDisplayedColumns() {
+    this.headers = this.selectedTable === 'users' ? UsersTableHeaders : UsersTempTableHeaders;
+    this.displayedColumns = this.headers.map(headerObj => headerObj.value);
+    this.displayedColumns.push('actions');
   }
 }
