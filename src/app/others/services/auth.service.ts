@@ -69,6 +69,8 @@ export class AuthService {
   }
 
   oidcLogin(): Promise<boolean> {
+    const headers = new HttpHeaders();
+    headers.append('Access-Control-Allow-Origin', '*');
     const promise = new Promise<boolean>((resolve, reject) => {
       this.http
         .get(this.loginRoute)
