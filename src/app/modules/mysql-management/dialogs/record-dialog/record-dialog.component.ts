@@ -10,7 +10,9 @@ import { MysqlManagementService } from '../../mysql-management.service';
 })
 export class RecordDialogComponent implements OnInit {
   form: FormGroup;
-  dialogTitle: string;
+  isEdit: boolean;
+  isValidate: boolean;
+  isCreate: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -20,14 +22,17 @@ export class RecordDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isEdit = this.data.type === 'edit';
+    this.isValidate = this.data.type === 'validate';
+    this.isCreate = this.data.type === 'create';
+
     this.buildForm();
 
-    if (this.data.validate) {
+    if (this.isValidate) {
       this.form.setValidators(this.accessRightsValidator());
-      this.dialogTitle = 'Validate record';
       this.fillForm(this.data.record);
-    } else {
-      this.dialogTitle = 'Create record';
+    } else if (this.isEdit) {
+      this.fillForm(this.data.record);
     }
 
     if (this.data.tableName === 'users') {
@@ -58,7 +63,7 @@ export class RecordDialogComponent implements OnInit {
       input: this.form.getRawValue()
     };
 
-    if (this.data.validate) {
+    if (this.isValidate) {
       data.input['id'] = this.data.record.id;
       delete data.input.password;
 
@@ -71,8 +76,22 @@ export class RecordDialogComponent implements OnInit {
             console.log(err);
             this.close('fail');
           });
-    } else {
+    } else if (this.isCreate) {
       this.mySqlService.saveNewRecord(this.data.tableName, data)
+        .subscribe(
+          response => {
+            this.close('success');
+          },
+          err => {
+            console.log(err);
+            this.close('fail');
+          }
+        );
+    } else {
+      data.input['id'] = this.data.record.id;
+      delete data.input.password;
+
+      this.mySqlService.editRecord(this.data.tableName, this.data.record.id, data)
         .subscribe(
           response => {
             this.close('success');
@@ -91,22 +110,31 @@ export class RecordDialogComponent implements OnInit {
 
   private buildForm() {
     this.form = this.formBuilder.group({
-      'first-name': [{ value: '', disabled: this.data.validate }, Validators.required,],
-      'last-name': [{ value: '', disabled: this.data.validate }, Validators.required],
-      'username': [{ value: '', disabled: this.data.validate }, Validators.required],
-      'password': [{ value: '', disabled: this.data.validate }, Validators.required],
-      'email': [{ value: '', disabled: this.data.validate }, [Validators.required, Validators.email]],
-      'models-provider': [{ value: '', disabled: this.data.validate }],
+      'first-name': [{ value: '', disabled: this.isValidate }, Validators.required],
+      'last-name': [{ value: '', disabled: this.isValidate }, Validators.required],
+      'username': [{ value: '', disabled: this.isValidate }, Validators.required],
+      'password': [{ value: '', disabled: this.isValidate || this.isEdit }, Validators.required],
+      'email': [{ value: '', disabled: this.isValidate }, [Validators.required, Validators.email]],
+      'models-provider': [{ value: '', disabled: this.isValidate }],
       'access-rights-sdo': '',
       'access-rights-vendor': ''
     });
   }
 
   private fillForm(record: any) {
-    Object.getOwnPropertyNames(record).forEach((prop: string) => {
-      if (prop !== 'access-rights-sdo' && prop !== 'access-rights-vendor') {
-        this.form.patchValue({ [prop]: record[prop] });
-      }
-    });
+    switch (this.data.tableName) {
+      case 'users':
+        Object.getOwnPropertyNames(record).forEach((prop: string) => {
+          this.form.patchValue({ [prop]: record[prop] });
+        });
+        break;
+      case 'users_temp':
+        Object.getOwnPropertyNames(record).forEach((prop: string) => {
+          if (prop !== 'access-rights-sdo' && prop !== 'access-rights-vendor') {
+            this.form.patchValue({ [prop]: record[prop] });
+          }
+        });
+        break;
+    }
   }
 }
