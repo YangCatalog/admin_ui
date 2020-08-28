@@ -11,6 +11,7 @@ import { LoginComponent } from './others/login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './others/helpers/error.interceptor';
 import { SharedModule } from './shared.module';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, LoginComponent],
@@ -21,7 +22,8 @@ import { SharedModule } from './shared.module';
     HttpClientModule,
     ReactiveFormsModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    OAuthModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
