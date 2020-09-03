@@ -1,0 +1,23 @@
+.hc-card {
+  height: 100%;
+}
+
+mat-card-header {
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+mat-card-title {
+  color: #ffffff;
+}
+
+mat-card-content {
+  padding: 10px 0;
+}
+
+:host {
+  .title-actions-wrap {
+    position: relative;
+  }
+}

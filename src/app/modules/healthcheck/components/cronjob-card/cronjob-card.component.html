@@ -1,0 +1,28 @@
+<mat-card class="hc-card">
+  <mat-card-header [style.background-color]="statusColor">
+    <mat-card-title>
+      <div class="title-actions-wrap ml-2 d-flex flex-nowrap align-items-center">
+        {{ cronjobName }}&nbsp;
+        <mat-icon *ngIf="errorMessage" class="cursor-pointer" (click)="onInfoClick()">info</mat-icon>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-spinner *ngIf="isLoading; else card" class="mx-auto"></mat-spinner>
+    <ng-template #card>
+      <div>
+        <b>Start:</b>&nbsp;
+        <span>{{ startDate | date:'medium':'UTC' }} UTC</span>
+      </div>
+      <div>
+        <b>End:</b>&nbsp;
+        <span>{{ endDate | date:'medium':'UTC' }} UTC</span>
+      </div>
+      <div>
+        <b>Last successfull:</b>&nbsp;
+        <span>{{ endDate | date:'medium':'UTC' }} UTC</span>
+      </div>
+    </ng-template>
+  </mat-card-content>
+</mat-card>
