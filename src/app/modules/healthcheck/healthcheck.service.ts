@@ -17,13 +17,19 @@ export class HealthcheckService {
     return this.http.get<string[]>(`${this.healthcheckRoute}/${serviceName}`);
   }
 
+  getCronjobsStatus(): Observable<any> {
+    return this.http.get<any[]>(`${this.healthcheckRoute}/cronjobs`);
+  }
+
   getColorByStatus(status: string) {
     switch (status) {
       case 'down':
+      case 'Fail':
         return '#f0514c'; // red
       case 'problem':
         return '#fbce41'; // yellow
       case 'running':
+      case 'Success':
         return '#95d37d'; // green
     }
   }

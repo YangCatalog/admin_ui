@@ -7,17 +7,21 @@ import { HealthcheckCardComponent } from './components/healthcheck-card/healthch
 import { SharedModule } from 'src/app/shared.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import { CronjobCardComponent } from './components/cronjob-card/cronjob-card.component';
+import { MatIconModule } from '@angular/material/icon';
+import { ErrorMessageDialogComponent } from './dialogs/error-message-dialog/error-message-dialog.component';
 
 
 @NgModule({
-  declarations: [HealthcheckBoardComponent, HealthcheckCardComponent],
+  declarations: [HealthcheckBoardComponent, HealthcheckCardComponent, CronjobCardComponent, ErrorMessageDialogComponent],
   imports: [
     CommonModule,
     SharedModule,
     HealthcheckRoutingModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ]
 })
 export class HealthcheckModule { }
