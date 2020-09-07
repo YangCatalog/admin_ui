@@ -7,14 +7,12 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './navigation/header/header.component';
 import { MaterialModule } from './material/material.module';
-import { LoginComponent } from './others/login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './others/helpers/error.interceptor';
 import { SharedModule } from './shared.module';
-import { OAuthModule } from 'angular-oauth2-oidc';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, LoginComponent],
+  declarations: [AppComponent, HeaderComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -22,8 +20,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     HttpClientModule,
     ReactiveFormsModule,
     MaterialModule,
-    SharedModule,
-    OAuthModule.forRoot(),
+    SharedModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }

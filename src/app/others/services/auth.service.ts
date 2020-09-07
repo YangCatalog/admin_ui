@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { first } from 'rxjs/operators';
 
 @Injectable({
@@ -9,21 +8,11 @@ import { first } from 'rxjs/operators';
 })
 export class AuthService {
   logged = false;
-  private loginRoute = `/api/admin/login`;
+  readonly loginRoute = `/api/admin/login`;
   private logoutRoute = `/api/admin/logout`;
-  private pingRoute = `/api/admin/ping`;
+  private pingRoute = `/api/admin/check`;
 
   constructor(private router: Router, private http: HttpClient) { }
-
-  logIn(username: string, password: string): Observable<any> {
-    const payload = {
-      input: {
-        username,
-        password
-      }
-    };
-    return this.http.post<any>(this.loginRoute, payload);
-  }
 
   logOut() {
     if (this.logged) {
@@ -31,60 +20,25 @@ export class AuthService {
         .post<any>(this.logoutRoute, {})
         .pipe(first())
         .subscribe(response => {
-          this.deleteCookie('session');
-          this.router.navigate(['/login']);
-          this.logged = false;
+          this.logged = response.info === 'Success';
         });
     }
   }
 
-  pingSession(pageGuard: string) {
+  checkUserSession() {
     const promise = new Promise<boolean>((resolve, reject) => {
       this.http
         .get(this.pingRoute)
         .toPromise()
         .then(
-          (res: any) => {
-            this.logged = res.info === 'Success';
-            if (pageGuard === 'auth') {
-              this.router.navigate(['/healthcheck']);
-              resolve(!this.logged);
-            } else {
-              resolve(this.logged);
-            }
+          (response: any) => {
+            this.logged = response.info === 'Success';
+            resolve(this.logged);
           },
           err => {
-            if (pageGuard === 'auth') {
-              this.logged = false;
-              resolve(!this.logged);
-            } else {
-              this.router.navigate(['/login']);
-              this.logged = false;
-              resolve(this.logged);
-            }
-          }
-        );
-    });
-    return promise;
-  }
-
-  oidcLogin(): Promise<boolean> {
-    const headers = new HttpHeaders();
-    headers.append('Access-Control-Allow-Origin', '*');
-    const promise = new Promise<boolean>((resolve, reject) => {
-      this.http
-        .get(this.loginRoute)
-        .toPromise()
-        .then(
-          (res: any) => {
-            this.logged = res.info === 'Success';
-            this.router.navigate(['/healthcheck']);
-            resolve(!this.logged);
-          },
-          err => {
-            console.log(err);
+            window.location.pathname = this.loginRoute;
             this.logged = false;
-            resolve(!this.logged);
+            resolve(this.logged);
           }
         );
     });
@@ -93,9 +47,5 @@ export class AuthService {
 
   setLoggedIn(logged: boolean) {
     this.logged = logged;
-  }
-
-  private deleteCookie(cookieName: string) {
-    document.cookie = cookieName + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
   }
 }
