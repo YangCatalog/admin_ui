@@ -20,7 +20,10 @@ export class AuthService {
         .post<any>(this.logoutRoute, {})
         .pipe(first())
         .subscribe(response => {
-          this.logged = response.info === 'Success';
+          this.deleteCookie('session');
+          this.deleteCookie('oidc_token');
+          window.location.pathname = this.loginRoute;
+          this.logged = !(response.info === 'Success');
         });
     }
   }
@@ -47,5 +50,9 @@ export class AuthService {
 
   setLoggedIn(logged: boolean) {
     this.logged = logged;
+  }
+
+  private deleteCookie(cookieName: string) {
+    document.cookie = cookieName + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
   }
 }
