@@ -22,7 +22,7 @@ export class AuthService {
         .subscribe(response => {
           this.deleteCookie('session');
           this.deleteCookie('oidc_token');
-          window.location.pathname = this.loginRoute;
+          window.location.pathname = '/';
           this.logged = !(response.info === 'Success');
         });
     }

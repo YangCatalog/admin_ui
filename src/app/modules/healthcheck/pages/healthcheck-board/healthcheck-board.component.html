@@ -1,4 +1,4 @@
-<h1 class="component-h1 primary-color">Healthcheck</h1>
+<h1 class="component-h1 primary-color">Services Healthcheck</h1>
 
 <mat-card *ngIf="isLoading; else dashboard">
   <mat-spinner class="mx-auto"></mat-spinner>
@@ -8,10 +8,14 @@
   <div *ngIf="servicesList.length > 0" class="hc-dashboard">
     <app-healthcheck-card *ngFor="let service of servicesList" [service]="service"></app-healthcheck-card>
   </div>
-  <div *ngIf="cronjobsList.length > 0" class="hc-dashboard">
-    <app-cronjob-card *ngFor="let cronjobName of cronjobsList" [cronjobData]="cronjobsData[cronjobName]"
-      [cronjobName]="cronjobName">
-    </app-cronjob-card>
+
+  <div *ngIf="cronjobsList.length > 0">
+    <h1 class="component-h1 primary-color">Cronjobs Healthcheck</h1>
+    <div class="hc-dashboard">
+      <app-cronjob-card *ngFor="let cronjobName of cronjobsList" [cronjobData]="cronjobsData[cronjobName]"
+        [cronjobName]="cronjobName">
+      </app-cronjob-card>
+    </div>
   </div>
 </ng-template>
 
