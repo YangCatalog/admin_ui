@@ -19,9 +19,9 @@
         <b>End:</b>&nbsp;
         <span>{{ endDate | date:'medium':'UTC' }} UTC</span>
       </div>
-      <div>
+      <div *ngIf="lastSuccessfullDate">
         <b>Last successfull:</b>&nbsp;
-        <span>{{ endDate | date:'medium':'UTC' }} UTC</span>
+        <span>{{ lastSuccessfullDate | date:'medium':'UTC' }} UTC</span>
       </div>
     </ng-template>
   </mat-card-content>
