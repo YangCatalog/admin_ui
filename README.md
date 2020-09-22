@@ -132,7 +132,7 @@ Directory structure displays information about the size and permission of each f
 
 ## Actions
 
-Last tab allows users to manually run some of the scripts that can be selected from the list. Each script has its own arguments, which can be set by user. Script itself and also each of the arguments has its own help message to help the user better understand their meaning.
+Last tab allows users to manually run some of the scripts that can be selected from the list. Each script has its own arguments, which can be set by user. Script itself and also each of the arguments has its own help message (on mouse hover on argument default value) to help the user better understand their meaning.
 List of scripts that can be executed:
 
 -   **populate** - This script runs first a runCapabilities.py script to create a JSON files which are used to populate confd database.
@@ -142,7 +142,7 @@ List of scripts that can be executed:
 -   **openconfigPullLocal** - Run populate script on all openconfig files to parse all modules and populate the metadata to yangcatalog if there are any new.
 -   **statistics** - Run the statistics on all yang modules populated in yangcatalog.org and from yangModels/yang repository and auto generate html page located at yangcatalog.org/statistics.html.
 -   **recovery** - This serves to save or load all information in yangcatalog.org to json in case the server will go down and we would lose all the information we have got. Saving makes a GET request to file with name that would be set as a argument or it will be set to a current time and date. Load will read the file and make a PUT request to write all data to yangcatalog.org.
--   **elkRecovery** (deprecated)
+-   **elkRecovery** (deprecated) - AWS provides Elasticsearch service and therefore this is managed by AWS at the moment
 -   **elkFill** - This serves to save or load all information in yangcatalog.org in ELK in case the server will go down and we would lose all the information we have got.
 -   **resolveExpiration** - Resolve expiration metadata for each module and set it to actual state in confd if changed.
 
