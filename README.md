@@ -74,7 +74,17 @@ This tab has mostly informative value, the background colors of individual headi
 ## Logs
 
 The logs tab is used to display and filter log messages from selected log files. Log messages are displayed from the newest to the oldest.
-It is possible to display log messages from several log files at once. In this case the logs from first log file are displayed, followed by logs from second file etc.
+It is possible to display log messages from several log files at once. In this case the logs from first log file are displayed, followed by logs from second file etc. Following settings can be used within the log filter:
+
+-   **Lines per page** - Number of log messages shown by one page
+-   **Page** - Number of page to display
+-   **Date from** - Filter logs from certain timestamp
+-   **Date to** - Filter logs to certain timestamp
+-   **Match case** - Case sensitive or not (used with Search for field)
+-   **Match words** - Match only whole words, not substrings (used with Search for field)
+-   **Level** - Select level of log messages (INFO, WARNING, DEBUG, ERROR)
+-   **Search for** - Display rows which contain specified string
+-   **Filter out** - Display rows which do not contain specified string
 
 ### Usage
 
@@ -97,7 +107,7 @@ The config tab simply displays the content of the configuration file, which cont
 
 ### Usage
 
-Users with the permissions granted have the option to update the content of the configuration file by clicking on the **Edit** button. After applying the changes, it is necessary to click the **Save** button for saving changes.
+Users with the permissions granted have the option to update the content of the configuration file by clicking on the **Edit** button. After applying the changes, it is necessary to click the **Save** button for saving changes. The save will automatically reload configuration of each service (e.g. backend, yang-search, yangvalidator ...) so it should take effect immediately and next usage of these services should use the newly set configuration variables.
 
 ## Nginx
 
@@ -105,7 +115,7 @@ The NGINX tab displays the content of the NGINX files. There are 3 NGINX files w
 
 ### Usage
 
-This tab works exactly like a config tab file, except that it is necessary to first select which NGINX file you want to display.
+This tab works exactly same like a config tab, except you are not able to update selected NGINX file.
 
 ## Files
 
@@ -125,16 +135,16 @@ Directory structure displays information about the size and permission of each f
 Last tab allows users to manually run some of the scripts that can be selected from the list. Each script has its own arguments, which can be set by user. Script itself and also each of the arguments has its own help message to help the user better understand their meaning.
 List of scripts that can be executed:
 
--   **populate**
--   **runCapabilities**
--   **draftPull**
--   **draftPullLocal**
--   **openconfigPullLocal**
--   **statistics**
--   **recovery**
--   **elkRecovery**
--   **elkFill**
--   **resolveExpiration**
+-   **populate** - This script runs first a runCapabilities.py script to create a JSON files which are used to populate confd database.
+-   **runCapabilities** - Parse modules on given directory and generate JSON with module metadata that can be populated to confd database.
+-   **draftPull** - Pull the latest ietf files and add them to github if there are any new ietf draft files. If thereare new RFC files it will produce automated message that these need to be added to yangModels/yang github manualy.
+-   **draftPullLocal** - Run populate script on all ietf RFC and DRAFT files to parse all ietf modules and populate the metadata to yangcatalog if there are any new.
+-   **openconfigPullLocal** - Run populate script on all openconfig files to parse all modules and populate the metadata to yangcatalog if there are any new.
+-   **statistics** - Run the statistics on all yang modules populated in yangcatalog.org and from yangModels/yang repository and auto generate html page located at yangcatalog.org/statistics.html.
+-   **recovery** - This serves to save or load all information in yangcatalog.org to json in case the server will go down and we would lose all the information we have got. Saving makes a GET request to file with name that would be set as a argument or it will be set to a current time and date. Load will read the file and make a PUT request to write all data to yangcatalog.org.
+-   **elkRecovery** (deprecated)
+-   **elkFill** - This serves to save or load all information in yangcatalog.org in ELK in case the server will go down and we would lose all the information we have got.
+-   **resolveExpiration** - Resolve expiration metadata for each module and set it to actual state in confd if changed.
 
 ### Usage
 
