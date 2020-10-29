@@ -11,6 +11,7 @@
     </div>
     <div class="ml-2 files-item-meta">
       (<b>size:</b>&nbsp;{{file.size | bytes}},&nbsp;
+      <b>modification:</b>&nbsp;{{modificationDate | date:'MMM d, y, H:mm'}} UTC,&nbsp;
       <b>permissions:</b>&nbsp;{{file.permissions}},&nbsp;
       <b>group:</b>&nbsp;{{file.group}},&nbsp;
       <b>user:</b>&nbsp;{{file.user}})

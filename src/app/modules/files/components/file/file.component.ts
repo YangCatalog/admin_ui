@@ -16,6 +16,7 @@ export class FileComponent implements OnInit {
   @Input() parentPath: string;
   path: string;
   dialogRefSubscription: Subscription;
+  modificationDate: Date;
 
   constructor(
     public dialog: MatDialog,
@@ -25,6 +26,7 @@ export class FileComponent implements OnInit {
 
   ngOnInit(): void {
     this.path = `${this.parentPath}/${this.file.name}`;
+    this.modificationDate = this.file['modification'] ? new Date(this.file['modification'] * 1000) : null;
   }
 
   onEdit() {

@@ -12,6 +12,7 @@ import { PermissionsDialogComponent } from 'src/app/dialogs/permissions-dialog/p
 export class FolderComponent implements OnInit {
   @Input() folder;
   @Input() parentPath: string;
+  modificationDate: Date;
   newPath: string;
   closed = true;
   isLoading = false;
@@ -39,6 +40,7 @@ export class FolderComponent implements OnInit {
     } else {
       this.newPath = `${this.parentPath}/${this.folder.name}`;
     }
+    this.modificationDate = this.folder['modification'] ? new Date(this.folder['modification'] * 1000) : null;
   }
 
   toggle() {

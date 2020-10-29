@@ -13,6 +13,7 @@
     <div class="files-item" *ngIf="isLoading">-&nbsp;loading&nbsp;…&nbsp;</div>
     <div *ngIf="!isRoot" class="files-item-meta">
       (<b>size:</b>&nbsp;{{folder.size | bytes}},&nbsp;
+      <b>modification:</b>&nbsp;{{modificationDate | date:'MMM d, y, H:mm'}} UTC,&nbsp;
       <b>permissions:</b>&nbsp;{{folder.permissions}},&nbsp;
       <b>group:</b>&nbsp;{{folder.group}},&nbsp;
       <b>user:</b>&nbsp;{{folder.user}})
