@@ -3,7 +3,8 @@
     <mat-card-title>
       <div class="title-actions-wrap ml-2 d-flex flex-nowrap align-items-center">
         {{ cronjobName }}&nbsp;
-        <mat-icon *ngIf="errorMessage" class="cursor-pointer" (click)="onInfoClick()">info</mat-icon>
+        <mat-icon *ngIf="errorMessage" class="cursor-pointer" (click)="onErrorInfoClick()">info</mat-icon>
+        <mat-icon *ngIf="infoMessages && infoMessages.length > 0" class="cursor-pointer" (click)="onMessageInfoClick()">info</mat-icon>
       </div>
     </mat-card-title>
   </mat-card-header>
@@ -13,11 +14,11 @@
     <ng-template #card>
       <div>
         <b>Start:</b>&nbsp;
-        <span>{{ startDate | date:'medium':'UTC' }} UTC</span>
+        <span>{{ startDate | date:'MMM d, y, H:mm':'UTC' }} UTC</span>
       </div>
       <div>
         <b>End:</b>&nbsp;
-        <span>{{ endDate | date:'medium':'UTC' }} UTC</span>
+        <span>{{ endDate | date:'MMM d, y, H:mm':'UTC' }} UTC</span>
       </div>
       <div *ngIf="lastSuccessfullDate">
         <b>Last successfull:</b>&nbsp;

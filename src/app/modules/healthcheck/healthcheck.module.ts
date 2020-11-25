@@ -1,19 +1,21 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HealthcheckBoardComponent } from './pages/healthcheck-board/healthcheck-board.component';
-import { HealthcheckRoutingModule } from './healthcheck-routing.module';
-import { MatCardModule } from '@angular/material/card';
-import { HealthcheckCardComponent } from './components/healthcheck-card/healthcheck-card.component';
-import { SharedModule } from 'src/app/shared.module';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { CronjobCardComponent } from './components/cronjob-card/cronjob-card.component';
+import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
+import { SharedModule } from 'src/app/shared.module';
+import { CronjobCardComponent } from './components/cronjob-card/cronjob-card.component';
+import { HealthcheckCardComponent } from './components/healthcheck-card/healthcheck-card.component';
 import { ErrorMessageDialogComponent } from './dialogs/error-message-dialog/error-message-dialog.component';
+import { InfoMessageDialogComponent } from './dialogs/info-message-dialog/info-message-dialog.component';
+import { HealthcheckRoutingModule } from './healthcheck-routing.module';
+import { HealthcheckBoardComponent } from './pages/healthcheck-board/healthcheck-board.component';
 
 
 @NgModule({
-  declarations: [HealthcheckBoardComponent, HealthcheckCardComponent, CronjobCardComponent, ErrorMessageDialogComponent],
+  declarations: [HealthcheckBoardComponent, HealthcheckCardComponent, CronjobCardComponent, ErrorMessageDialogComponent, InfoMessageDialogComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -21,7 +23,8 @@ import { ErrorMessageDialogComponent } from './dialogs/error-message-dialog/erro
     MatCardModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule
   ]
 })
 export class HealthcheckModule { }
