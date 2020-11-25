@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class HealthcheckService {
   private healthcheckRoute = '/api/admin/healthcheck';
+  private jobsRoute = '/api/job';
   constructor(private http: HttpClient) { }
 
   fetchServicesList(): Observable<any[]> {
@@ -32,5 +33,9 @@ export class HealthcheckService {
       case 'Success':
         return '#95d37d'; // green
     }
+  }
+
+  getJobStatus(jobId: string): Observable<any> {
+    return this.http.get<any>(`${this.jobsRoute}/${jobId}`);
   }
 }
