@@ -10,6 +10,10 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
+## Docker build
+
+Docker build will build the project using `ng build --base-href /admin/ --prod` and once built it will execute `cp` command to copy all the built files and directories of admin UI to a specific nginx admin directory with appropriate permissions. After this the container will shut itself down.
+
 # User Manual
 
 Admin UI is used to manage yangcatalog.org, its users and databases, together with running scripts
