@@ -1,5 +1,8 @@
 ## Backend Release Notes
-* ##### v3.0.0 - 2021-02-DD
+
+* ##### vm.m.p - 2021-MM-DD
+
+* ##### v3.0.0 - 2021-02-10
 
   * Display additional messages in cronjob healthcheck [#46](https://github.com/YangCatalog/admin_ui/issues/46)
   * Files and folders modification date info added [#45](https://github.com/YangCatalog/admin_ui/issues/45)
