@@ -2,6 +2,10 @@
 
 * ##### vm.m.p - 2021-MM-DD
 
+* ##### v3.0.1 - 2021-02-26
+
+  * No changes - released with other [deployment submodules](https://github.com/YangCatalog/deployment)
+
 * ##### v3.0.0 - 2021-02-10
 
   * Display additional messages in cronjob healthcheck [#46](https://github.com/YangCatalog/admin_ui/issues/46)
@@ -16,7 +20,6 @@
   * Help and tooltips added to Run tab [#38](https://github.com/YangCatalog/admin_ui/issues/38)
   * Pie chart displaying disk usage [#37](https://github.com/YangCatalog/admin_ui/issues/37)
   * Labels changed through app [#36](https://github.com/YangCatalog/admin_ui/issues/36)
-
 
 * ##### v2.0.0 - 2020-08-14
 
