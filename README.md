@@ -73,7 +73,7 @@ Unlike services healthcheck, the cronjobs healthcheck are not refreshed at one m
 
 ### Usage
 
-This tab has mostly informative value, the background colors of individual headings corresponds to the status of service/cronjob runs (the same colors are used as for the traffic light). However, it is possible to click on reload button at services, to send request to the service manually. Also, if an error occurs while running the cron job, a small icon with letter "i" is displayed next to the name of job. After clicking on the icon, an error message will be displayed in the modal window.
+This tab has mostly informative value, the background colors of individual headings corresponds to the status of service/cronjob runs (the same colors are used as for the traffic light). However, it is possible to click on reload button at services, to send request to the service manually. Also, if an error occurs while running the cron job, a small icon with letter "i" is displayed next to the name of job. After clicking on the icon, an error message will be displayed in the modal window. This "i" icon may also be available for some successful cronjobs or services, when additional information can be displayed after clicking.
 
 ## Logs
 
