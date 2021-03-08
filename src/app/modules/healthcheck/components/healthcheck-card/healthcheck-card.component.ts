@@ -1,6 +1,8 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { HealthcheckService } from '../../healthcheck.service';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
+import { InfoMessageDialogComponent } from '../../dialogs/info-message-dialog/info-message-dialog.component';
+import { HealthcheckService } from '../../healthcheck.service';
 
 const SECONDS = 60;
 
@@ -17,11 +19,12 @@ export class HealthcheckCardComponent implements OnInit, OnDestroy {
   info = '';
   error = '';
   message = '';
+  additionalInfo = [];
   timestamp: number;
   miliseconds = SECONDS * 1000;
   interval: any;
 
-  constructor(private healthcheckService: HealthcheckService) { }
+  constructor(public dialog: MatDialog, private healthcheckService: HealthcheckService) { }
 
   ngOnInit(): void {
     this.getHealthStatus();
@@ -53,6 +56,7 @@ export class HealthcheckCardComponent implements OnInit, OnDestroy {
           } else {
             this.message = response.message;
           }
+          this.additionalInfo = response['additional_info'] ? response['additional_info'] : [];
           this.statusColor = this.healthcheckService.getColorByStatus(this.status);
           this.timestamp = Date.now();
         },
@@ -60,5 +64,15 @@ export class HealthcheckCardComponent implements OnInit, OnDestroy {
           console.log(err);
         }
       );
+  }
+
+  onMessageInfoClick() {
+    const dialogRef = this.dialog.open(InfoMessageDialogComponent, {
+      data: {
+        infoMessages: this.additionalInfo
+      },
+      width: '40%',
+      height: '70%'
+    });
   }
 }

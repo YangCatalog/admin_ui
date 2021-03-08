@@ -1,6 +1,11 @@
 <mat-card class="hc-card">
   <mat-card-header [style.background-color]="statusColor">
-    <mat-card-title>{{ service.name }}</mat-card-title>
+    <mat-card-title>
+      <div class="title-actions-wrap ml-2 d-flex flex-nowrap align-items-center">
+        {{ service.name }}&nbsp;
+        <mat-icon *ngIf="additionalInfo && additionalInfo.length > 0" class="cursor-pointer" (click)="onMessageInfoClick()">info</mat-icon>
+      </div>
+    </mat-card-title>
   </mat-card-header>
 
   <mat-card-content>

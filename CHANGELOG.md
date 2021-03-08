@@ -2,6 +2,8 @@
 
 * ##### vm.m.p - 2021-MM-DD
 
+  * Display additional information in service healthcheck card [#50](https://github.com/YangCatalog/admin_ui/issues/50)
+
 * ##### v3.0.1 - 2021-02-26
 
   * No changes - released with other [deployment submodules](https://github.com/YangCatalog/deployment)
