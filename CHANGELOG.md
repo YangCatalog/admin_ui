@@ -1,6 +1,8 @@
-## Backend Release Notes
+## Admin UI Release Notes
 
 * ##### vm.m.p - 2021-MM-DD
+
+  * Logs table modified - added filename column [#53](https://github.com/YangCatalog/admin_ui/issues/53)
 
 * ##### vm.m.p - 2021-03-18
 

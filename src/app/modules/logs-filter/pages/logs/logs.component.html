@@ -106,23 +106,27 @@
   </mat-paginator>
   <mat-table [dataSource]="filteredLogsDataSource">
     <ng-container matColumnDef="timestamp">
-      <mat-header-cell *matHeaderCellDef> Timestamp </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Timestamp</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ element.timestamp }}</mat-cell>
     </ng-container>
-    ><ng-container matColumnDef="level">
-      <mat-header-cell *matHeaderCellDef> Level </mat-header-cell>
+    <ng-container matColumnDef="level">
+      <mat-header-cell *matHeaderCellDef>Level</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ element.level }}</mat-cell>
     </ng-container>
+    <ng-container matColumnDef="filename">
+      <mat-header-cell *matHeaderCellDef>Filename</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.filename }}</mat-cell>
+    </ng-container>
     <ng-container matColumnDef="class">
-      <mat-header-cell *matHeaderCellDef> Class </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Class</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ element.class }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="message">
-      <mat-header-cell *matHeaderCellDef> Log message</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Log message</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ element.message }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="lineNumber">
-      <mat-header-cell *matHeaderCellDef> Line number </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Line number</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ element.lineNumber }}</mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

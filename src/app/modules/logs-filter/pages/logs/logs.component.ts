@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LogsFilterService } from '../../logs-filter.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { finalize } from 'rxjs/operators';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { LogsFilterService } from '../../logs-filter.service';
 
 @Component({
   selector: 'app-logs',
@@ -129,7 +129,7 @@ export class LogsComponent implements OnInit {
     let parsedData: any[] = [];
     if (response.meta.format) {
       parsedData = this.parseFormatedData(response.output);
-      this.displayedColumns = ['timestamp', 'level', 'class', 'message', 'lineNumber'];
+      this.displayedColumns = ['timestamp', 'level', 'filename', 'class', 'message', 'lineNumber'];
     } else {
       parsedData = this.parseData(response.output);
       this.displayedColumns = ['message'];
@@ -145,17 +145,18 @@ export class LogsComponent implements OnInit {
       const parsedLine = {
         timestamp: splittedLine.slice(0, 2).join(' '),
         level: splittedLine[2],
-        class: splittedLine[3],
+        filename: splittedLine[3],
+        class: splittedLine[4],
         message: '',
         lineNumber: ''
       };
       // Traceback logs have different format (position of line number not at the very end
       if (this.logsFilterService.isTracebackMessage(line)) {
         const tracebackWord = splittedLine.find(word => word.includes('Traceback'));
-        parsedLine.message = splittedLine.slice(5).join(' ');
+        parsedLine.message = splittedLine.slice(6).join(' ');
         parsedLine.lineNumber = tracebackWord.split('\n')[0];
       } else {
-        parsedLine.message = splittedLine.slice(5, -2).join(' ');
+        parsedLine.message = splittedLine.slice(6, -2).join(' ');
         parsedLine.lineNumber = [...splittedLine.slice(-1)].pop();
       }
       parsedOutput.push(parsedLine);
