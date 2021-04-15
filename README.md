@@ -1,6 +1,6 @@
 # YangCatalogAdmin
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.8.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.11.
 
 ## Development server
 
@@ -144,7 +144,7 @@ List of scripts that can be executed:
 -   **draftPull** - Pull the latest ietf files and add them to github if there are any new ietf draft files. If thereare new RFC files it will produce automated message that these need to be added to yangModels/yang github manualy.
 -   **draftPullLocal** - Run populate script on all ietf RFC and DRAFT files to parse all ietf modules and populate the metadata to yangcatalog if there are any new.
 -   **openconfigPullLocal** - Run populate script on all openconfig files to parse all modules and populate the metadata to yangcatalog if there are any new.
--   **statistics** - Run the statistics on all yang modules populated in yangcatalog.org and from yangModels/yang repository and auto generate html page located at yangcatalog.org/statistics.html.
+-   **statistics** - Run the statistics on all yang modules populated in yangcatalog.org and from yangModels/yang repository and auto generate html page located at [yangcatalog.org/statistics.html](https://yangcatalog.org/statistics.html).
 -   **recovery** - This serves to save or load all information in yangcatalog.org to json in case the server will go down and we would lose all the information we have got. Saving makes a GET request to file with name that would be set as a argument or it will be set to a current time and date. Load will read the file and make a PUT request to write all data to yangcatalog.org.
 -   **elkRecovery** (deprecated) - AWS provides Elasticsearch service and therefore this is managed by AWS at the moment
 -   **elkFill** - This serves to save or load all information in yangcatalog.org in ELK in case the server will go down and we would lose all the information we have got.
@@ -156,4 +156,4 @@ The user first selects a script from the list. Then the arguments with their def
 
 ## Logging out
 
-To logout press logout button which will remove all the created sessions and redirect user to yangcatalog.org page.
+To logout press logout button which will remove all the created sessions and redirect user to [yangcatalog.org](https://yangcatalog.org/) page.
