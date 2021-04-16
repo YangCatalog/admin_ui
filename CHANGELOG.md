@@ -2,9 +2,11 @@
 
 * ##### vm.m.p - 2021-MM-DD
 
+* ##### v3.2.0 - 2021-04-15
+
   * Logs table modified - added filename column [#53](https://github.com/YangCatalog/admin_ui/issues/53)
 
-* ##### vm.m.p - 2021-03-18
+* ##### v3.1.0 - 2021-03-18
 
   * Display additional information in service healthcheck card [#50](https://github.com/YangCatalog/admin_ui/issues/50)
 
