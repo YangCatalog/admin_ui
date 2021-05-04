@@ -2,6 +2,10 @@
 
 * ##### vm.m.p - 2021-MM-DD
 
+* ##### v3.2.1 - 2021-05-04
+
+  * No changes - released with other [deployment submodules](https://github.com/YangCatalog/deployment)
+
 * ##### v3.2.0 - 2021-04-15
 
   * Logs table modified - added filename column [#53](https://github.com/YangCatalog/admin_ui/issues/53)
