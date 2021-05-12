@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { ScriptsService } from '../../scripts.service';
-import { finalize } from 'rxjs/operators';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { ScriptsService } from '../../scripts.service';
 
 const SECONDS = 10;
 
@@ -78,6 +78,10 @@ export class JobItemComponent implements OnInit, OnDestroy {
                 this.stopTimer();
                 break;
               case 'Finished successfully':
+                this.status = response.info.result;
+                this.stopTimer();
+                break;
+              case 'Partially done':
                 this.status = response.info.result;
                 this.stopTimer();
                 break;
