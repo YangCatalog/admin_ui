@@ -1,6 +1,7 @@
 # YangCatalogAdmin
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.11.
+Current Angular version is 10.2.5.
 
 ## Development server
 

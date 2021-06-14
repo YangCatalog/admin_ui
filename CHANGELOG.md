@@ -2,6 +2,9 @@
 
 * ##### vm.m.p - 2021-MM-DD
 
+  * Angular core updated from version 9.1 to 10.2
+  * Node.js base image set to version 14
+
 * ##### v3.2.1 - 2021-05-04
 
   * No changes - released with other [deployment submodules](https://github.com/YangCatalog/deployment)
