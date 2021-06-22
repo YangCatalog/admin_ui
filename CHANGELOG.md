@@ -2,6 +2,7 @@
 
 * ##### vm.m.p - 2021-MM-DD
 
+  * Angular core updated from version 10.2 to 12
   * Angular core updated from version 9.1 to 10.2
   * Node.js base image set to version 14
 
