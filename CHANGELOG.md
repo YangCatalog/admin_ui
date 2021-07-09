@@ -2,9 +2,11 @@
 
 * ##### vm.m.p - 2021-MM-DD
 
+* ##### v4.0.0 - 2021-07-09
+
   * Angular core updated from version 10.2 to 12
   * Angular core updated from version 9.1 to 10.2
-  * Node.js base image set to version 14
+  * Node.js base image set to version 14 [#56](https://github.com/YangCatalog/admin_ui/issues/56)
 
 * ##### v3.2.1 - 2021-05-04
 
