@@ -2,6 +2,10 @@
 
 * ##### vm.m.p - 2021-MM-DD
 
+* ##### v4.1.0 - 2021-08-10
+
+  * No changes - released with other [deployment submodules](https://github.com/YangCatalog/deployment)
+
 * ##### v4.0.0 - 2021-07-09
 
   * Angular core updated from version 10.2 to 12
