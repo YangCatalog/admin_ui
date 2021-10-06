@@ -2,6 +2,10 @@
 
 * ##### vm.m.p - 2021-MM-DD
 
+* ##### v4.2.1 - 2021-10-06
+  
+  * Display registration date in the users table [#58](https://github.com/YangCatalog/admin_ui/issues/58)
+  
 * ##### v4.2.0 - 2021-09-09
 
   * No changes - released with other [deployment submodules](https://github.com/YangCatalog/deployment)
