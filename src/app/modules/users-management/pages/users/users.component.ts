@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MysqlManagementService } from '../../mysql-management.service';
+import { UsersManagementService } from '../../users-management.service';
 import { finalize } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,14 +8,14 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RecordDialogComponent } from '../../dialogs/record-dialog/record-dialog.component';
 import { Subscription } from 'rxjs';
 import { DeleteDialogComponent } from '../../dialogs/delete-dialog/delete-dialog.component';
-import { UsersTableHeaders, UsersTempTableHeaders } from './mysql.headers';
+import { UsersTableHeaders, UsersTempTableHeaders } from './users.headers';
 
 @Component({
-  selector: 'app-mysql',
-  templateUrl: './mysql.component.html',
-  styleUrls: ['./mysql.component.scss']
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.scss']
 })
-export class MysqlComponent implements OnInit {
+export class UsersComponent implements OnInit {
   isLoading = false;
   isLoadingTable = false;
   headers: any[];
@@ -24,7 +24,10 @@ export class MysqlComponent implements OnInit {
   tableReady = false;
   noRecords = false;
   dataSource;
-  tableDetailsList: any[];
+  tableDetailsList = [
+    { 'name': 'approved', 'label': 'approved users' },
+    { 'name': 'temp', 'label': 'users waiting for approval' }
+  ]
   selectedTable: string;
   dialogRefSubscription: Subscription;
   error = false;
@@ -32,25 +35,13 @@ export class MysqlComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
-    private mySqlService: MysqlManagementService,
+    private usersService: UsersManagementService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.isLoading = true;
     this.buildForm();
-    this.mySqlService.fetchTables()
-      .pipe(finalize(() => (this.isLoading = false)))
-      .subscribe(
-        response => {
-          this.tableDetailsList = response;
-        },
-        err => {
-          this.error = true;
-          console.log(err);
-        }
-      );
   }
 
   buildForm() {
@@ -69,12 +60,13 @@ export class MysqlComponent implements OnInit {
     this.tableReady = false;
     this.noRecords = false;
 
-    this.mySqlService.fetchTable(this.selectedTable)
+    this.usersService.fetchTable(this.selectedTable)
       .pipe(finalize(() => (this.isLoadingTable = false)))
       .subscribe(
         response => {
           if (response.length > 0) {
             this.getDisplayedColumns();
+            console.log(response)
             this.tableReady = true;
             this.dataSource = new MatTableDataSource<any>(response);
             this.dataSource.paginator = this.paginator;
@@ -132,6 +124,7 @@ export class MysqlComponent implements OnInit {
   }
 
   onDelete(record: any) {
+    console.log(record)
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: {
         record
@@ -140,7 +133,7 @@ export class MysqlComponent implements OnInit {
 
     this.dialogRefSubscription = dialogRef.afterClosed().subscribe(confirm => {
       if (confirm) {
-        this.mySqlService.deleteRecord(this.selectedTable, record.id)
+        this.usersService.deleteRecord(this.selectedTable, record.id)
           .subscribe(
             response => {
               this.fetchTableRecords();
@@ -178,7 +171,7 @@ export class MysqlComponent implements OnInit {
   }
 
   private getDisplayedColumns() {
-    this.headers = this.selectedTable === 'users' ? UsersTableHeaders : UsersTempTableHeaders;
+    this.headers = this.selectedTable === 'approved' ? UsersTableHeaders : UsersTempTableHeaders;
     this.displayedColumns = this.headers.map(headerObj => headerObj.value);
     this.displayedColumns.push('actions');
   }
