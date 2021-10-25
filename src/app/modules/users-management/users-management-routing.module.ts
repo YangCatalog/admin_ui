@@ -1,11 +1,11 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { MysqlComponent } from './pages/mysql/mysql.component';
+import { UsersComponent } from './pages/users/users.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: MysqlComponent
+        component: UsersComponent
     }
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class MysqlRoutingModule {}
+export class UsersRoutingModule { }

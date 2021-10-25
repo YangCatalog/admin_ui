@@ -38,8 +38,8 @@
       <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
       <mat-cell *matCellDef="let record">
         <mat-icon (click)="onEdit(record)" class="cursor-pointer">edit</mat-icon>
-        <mat-icon *ngIf="selectedTable === 'users_temp'" (click)="onValidate(record)"
-          class="cursor-pointer green-color">check</mat-icon>
+        <mat-icon *ngIf="selectedTable === 'temp'" (click)="onValidate(record)" class="cursor-pointer green-color">check
+        </mat-icon>
         <mat-icon (click)="onDelete(record)" class="cursor-pointer red-color">close</mat-icon>
       </mat-cell>
     </ng-container>

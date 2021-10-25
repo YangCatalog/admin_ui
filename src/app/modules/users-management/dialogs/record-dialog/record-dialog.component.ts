@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { MysqlManagementService } from '../../mysql-management.service';
+import { UsersManagementService } from '../../users-management.service';
 
 @Component({
   selector: 'app-record-dialog',
@@ -18,7 +18,7 @@ export class RecordDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<RecordDialogComponent>,
-    private mySqlService: MysqlManagementService
+    private usersService: UsersManagementService
   ) { }
 
   ngOnInit(): void {
@@ -35,7 +35,7 @@ export class RecordDialogComponent implements OnInit {
       this.fillForm(this.data.record);
     }
 
-    if (this.data.tableName === 'users') {
+    if (this.data.tableName === 'approved') {
       this.form.setValidators(this.accessRightsValidator());
     }
   }
@@ -67,7 +67,7 @@ export class RecordDialogComponent implements OnInit {
       data.input['id'] = this.data.record.id;
       delete data.input.password;
 
-      this.mySqlService.validateRecord(data)
+      this.usersService.validateRecord(data)
         .subscribe(
           response => {
             this.close('success');
@@ -77,7 +77,7 @@ export class RecordDialogComponent implements OnInit {
             this.close('fail');
           });
     } else if (this.isCreate) {
-      this.mySqlService.saveNewRecord(this.data.tableName, data)
+      this.usersService.saveNewRecord(this.data.tableName, data)
         .subscribe(
           response => {
             this.close('success');
@@ -91,7 +91,7 @@ export class RecordDialogComponent implements OnInit {
       data.input['id'] = this.data.record.id;
       delete data.input.password;
 
-      this.mySqlService.editRecord(this.data.tableName, this.data.record.id, data)
+      this.usersService.editRecord(this.data.tableName, this.data.record.id, data)
         .subscribe(
           response => {
             this.close('success');
@@ -123,12 +123,12 @@ export class RecordDialogComponent implements OnInit {
 
   private fillForm(record: any) {
     switch (this.data.tableName) {
-      case 'users':
+      case 'approved':
         Object.getOwnPropertyNames(record).forEach((prop: string) => {
           this.form.patchValue({ [prop]: record[prop] });
         });
         break;
-      case 'users_temp':
+      case 'temp':
         Object.getOwnPropertyNames(record).forEach((prop: string) => {
           if (prop !== 'access-rights-sdo' && prop !== 'access-rights-vendor') {
             this.form.patchValue({ [prop]: record[prop] });

@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class MysqlManagementService {
-  private route = '/api/admin/sql-tables';
+export class UsersManagementService {
+  private route = '/api/admin/users';
   private validateUserRoute = '/api/admin/move-user';
   constructor(private http: HttpClient) { }
 

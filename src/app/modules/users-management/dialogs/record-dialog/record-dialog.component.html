@@ -63,7 +63,7 @@
     </mat-form-field>
   </div>
 
-  <div class="mb-1" *ngIf="isValidate || data.tableName == 'users'">
+  <div class="mb-1" *ngIf="isValidate || data.tableName == 'approved'">
     <mat-form-field class="w-100">
       <mat-label>Access Rights SDO</mat-label>
       <input matInput formControlName="access-rights-sdo">
@@ -73,7 +73,7 @@
     </mat-form-field>
   </div>
 
-  <div class="mb-1" *ngIf="isValidate || data.tableName == 'users'">
+  <div class="mb-1" *ngIf="isValidate || data.tableName == 'approved'">
     <mat-form-field class="w-100">
       <mat-label>Access Rights Vendor</mat-label>
       <input matInput formControlName="access-rights-vendor">

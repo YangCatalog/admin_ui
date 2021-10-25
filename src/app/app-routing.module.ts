@@ -15,8 +15,8 @@ const routes: Routes = [
     canLoad: [PageGuard]
   },
   {
-    path: 'mysql-management',
-    loadChildren: () => import('./modules/mysql-management/mysql-management.module').then(mod => mod.MysqlManagementModule),
+    path: 'users-management',
+    loadChildren: () => import('./modules/users-management/users-management.module').then(mod => mod.UsersManagementModule),
     canActivate: [PageGuard],
     canLoad: [PageGuard]
   },

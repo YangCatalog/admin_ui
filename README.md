@@ -97,7 +97,7 @@ The filter provides several properties according to which log messages can be fi
 
 ## Users
 
-It is possible to perform CRUD operation over MySQL tables, where information about users are stored. Currently there are two tables available:
+It is possible to perform CRUD operation over users tables, where information about users are stored. Currently there are two tables available:
 
 -   **approved users**
 -   **users waiting for approval**

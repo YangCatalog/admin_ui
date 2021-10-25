@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MysqlComponent } from './pages/mysql/mysql.component';
-import { MysqlRoutingModule } from './mysql-management-routing.module';
+import { UsersComponent } from './pages/users/users.component';
+import { UsersRoutingModule } from './users-management-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -18,20 +18,20 @@ import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.com
 @NgModule({
   providers: [
     {
-        provide: MAT_DIALOG_DEFAULT_OPTIONS,
-        useValue:
-            {
-                autoFocus: false,
-                hasBackdrop: true,
-                position: { top: '80px' },
-                maxHeight: 'calc(100vh - 100px)'
-            }
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useValue:
+      {
+        autoFocus: false,
+        hasBackdrop: true,
+        position: { top: '80px' },
+        maxHeight: 'calc(100vh - 100px)'
+      }
     }
   ],
-  declarations: [MysqlComponent, RecordDialogComponent, DeleteDialogComponent],
+  declarations: [UsersComponent, RecordDialogComponent, DeleteDialogComponent],
   imports: [
     CommonModule,
-    MysqlRoutingModule,
+    UsersRoutingModule,
     ReactiveFormsModule,
     MatCardModule,
     MatProgressSpinnerModule,
@@ -44,4 +44,4 @@ import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.com
     MatIconModule
   ]
 })
-export class MysqlManagementModule { }
+export class UsersManagementModule { }
