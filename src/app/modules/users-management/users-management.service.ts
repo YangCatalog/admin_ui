@@ -10,10 +10,6 @@ export class UsersManagementService {
   private validateUserRoute = '/api/admin/move-user';
   constructor(private http: HttpClient) { }
 
-  fetchTables(): Observable<any[]> {
-    return this.http.get<any[]>(this.route);
-  }
-
   fetchTable(tableName: string): Observable<any> {
     return this.http.get<any>(`${this.route}/${tableName}`);
   }

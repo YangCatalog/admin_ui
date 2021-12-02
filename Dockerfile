@@ -9,7 +9,8 @@ ENV YANG_GID "$YANG_GID"
 
 WORKDIR /usr/src
 COPY package.json ./
-RUN npm install
+COPY package-lock.json ./
+RUN npm ci
 COPY . .
 RUN npm run build-prod
 

@@ -66,7 +66,6 @@ export class UsersComponent implements OnInit {
         response => {
           if (response.length > 0) {
             this.getDisplayedColumns();
-            console.log(response)
             this.tableReady = true;
             this.dataSource = new MatTableDataSource<any>(response);
             this.dataSource.paginator = this.paginator;
@@ -124,7 +123,6 @@ export class UsersComponent implements OnInit {
   }
 
   onDelete(record: any) {
-    console.log(record)
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: {
         record
