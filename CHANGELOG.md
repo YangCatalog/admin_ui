@@ -2,6 +2,11 @@
 
 * ##### vm.m.p - 2021-MM-DD
 
+* ##### v4.3.0 - 2021-12-03
+
+  * Use npm clean install while building image [#62](https://github.com/YangCatalog/admin_ui/issues/62)
+  * Rename mysql-management to users-management [#60](https://github.com/YangCatalog/admin_ui/issues/60)
+
 * ##### v4.2.1 - 2021-10-06
   
   * Display registration date in the users table [#58](https://github.com/YangCatalog/admin_ui/issues/58)
