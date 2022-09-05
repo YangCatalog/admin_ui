@@ -18,8 +18,9 @@
   </mat-card-content>
 </mat-card>
 
+<button *ngIf="selectedTable" mat-raised-button color="primary" (click)="recordDialog('create')" class="mb-2">Create
+  record</button>
 <div [hidden]="!tableReady || error">
-  <button mat-raised-button color="primary" (click)="recordDialog('create')" class="mb-2">Create record</button>
   <div>
     <mat-form-field class="w-100">
       <mat-label>Filter</mat-label>

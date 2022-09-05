@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UsersManagementService } from '../../users-management.service';
-import { finalize } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { RecordDialogComponent } from '../../dialogs/record-dialog/record-dialog.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { DeleteDialogComponent } from '../../dialogs/delete-dialog/delete-dialog.component';
+import { RecordDialogComponent } from '../../dialogs/record-dialog/record-dialog.component';
+import { UsersManagementService } from '../../users-management.service';
 import { UsersTableHeaders, UsersTempTableHeaders } from './users.headers';
 
 @Component({
