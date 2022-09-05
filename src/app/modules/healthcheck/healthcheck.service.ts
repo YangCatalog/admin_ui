@@ -28,10 +28,12 @@ export class HealthcheckService {
       case 'Fail':
         return '#f0514c'; // red
       case 'problem':
-        return '#fbce41'; // yellow
+        return '#fbc941'; // yellow
       case 'running':
       case 'Success':
-        return '#95d37d'; // green
+        return '#96c87d'; // green
+      case 'In Progress':
+        return '#7dc8d3' // blue
     }
   }
 
