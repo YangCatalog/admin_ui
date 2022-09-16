@@ -56,9 +56,10 @@ Services healthcheck check status of each of the running services at one minute 
 
 #### Cronjob healthcheck
 
-Unlike services healthcheck, the cronjobs healthcheck are not refreshed at one minute intervals. They simply show the status of the last cronjob run. Most of them are performed once a day, so there is no need for refresh. The status of each cronjob can acquire following 2 states:
+Unlike services healthcheck, the cronjobs healthcheck are not refreshed at one minute intervals. They simply show the status of the last cronjob run. Most of them are performed once a day, so there is no need to refresh. A cronjob can be in one of the following 3 states:
 
--   **Fail** - Error occurred while running the script and the script did not finished successfully.
+-   **In Progress** - The script is still running.
+-   **Fail** - An error occurred while running the script.
 -   **Success** - The script ran successfully, without errors.
 
 #### Usage
@@ -129,16 +130,19 @@ Directory structure displays information about the size and permission of each f
 Last tab allows users to manually run some of the scripts that can be selected from the list. Each script has its own arguments, which can be set by user. Script itself and also each of the arguments has its own help message (on mouse hover on argument default value) to help the user better understand their meaning.
 List of scripts that can be executed:
 
--   **populate** - This script runs first a runCapabilities.py script to create a JSON files which are used to populate confd database.
--   **runCapabilities** - Parse modules on given directory and generate JSON with module metadata that can be populated to confd database.
--   **draftPull** - Pull the latest ietf files and add them to github if there are any new ietf draft files. If thereare new RFC files it will produce automated message that these need to be added to yangModels/yang github manualy.
--   **draftPullLocal** - Run populate script on all ietf RFC and DRAFT files to parse all ietf modules and populate the metadata to yangcatalog if there are any new.
--   **openconfigPullLocal** - Run populate script on all openconfig files to parse all modules and populate the metadata to yangcatalog if there are any new.
--   **statistics** - Run the statistics on all yang modules populated in yangcatalog.org and from yangModels/yang repository and auto generate html page located at [yangcatalog.org/statistics.html](https://yangcatalog.org/statistics.html).
--   **recovery** - This serves to save or load all information in yangcatalog.org to json in case the server will go down and we would lose all the information we have got. Saving makes a GET request to file with name that would be set as a argument or it will be set to a current time and date. Load will read the file and make a PUT request to write all data to yangcatalog.org.
+-   **populate** - Populate modules from a directory to Redis.
+-   **parse_directory** - Parse modules in a given directory and generate a JSON with module metadata that can be populated to Redis.
+-   **draftPull** - Pull the latest IETF files and upload them to Github. If there are new RFC files, produce an automated message that these need to be added to the yangModels/yang repository manualy.
+-   **draftPullLocal** - Populate all new IETF modules from RFCs and I-Ds.
+-   **openconfigPullLocal** - Populate all new Openconfig modules.
+-   **ianaPull** - Populate all new IANA modules.
+-   **statistics** - Generate the statistics page located at [yangcatalog.org/statistics.html](https://yangcatalog.org/statistics.html).
+-   **recovery** - Load or restore YANG Catalog's modules and vendors databases. The file name defaults to the current date and time when saving, and to the last existing backup when loading.
 -   **elkRecovery** (deprecated) - AWS provides Elasticsearch service and therefore this is managed by AWS at the moment
--   **elkFill** - This serves to save or load all information in yangcatalog.org in ELK in case the server will go down and we would lose all the information we have got.
--   **resolveExpiration** - Resolve expiration metadata for each module and set it to actual state in confd if changed.
+-   **elkFill** - Sets up all modules to be reprocessed by Elasticsearch.
+-   **redis_users_recovery** - Load or restore the user database.
+-   **resolveExpiration** - Resolve expiration metadata for each module and set it to actual state in Redis if changed.
+-   **reviseSemver** - Revise the derived semantic version of modules.
 
 #### Usage
 
